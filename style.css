@@ -145,7 +145,7 @@ header {
 /* ===== TRUE MASONRY GRID ===== */
 #gallery {
   columns: 5 210px;
-  column-gap: 28px;
+  column-gap: 35px;
   padding: 42px 2vw 48px 2vw;
   background: #101010;
   max-width: 1920px;
