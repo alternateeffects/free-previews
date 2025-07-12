@@ -18,10 +18,12 @@ for %%F in (%input_dir%\*.mp4) do (
 
         echo Processing !filename!
 
+        rem LANDSCAPE
         if %%A GEQ %%B (
-            %ffmpeg% -i "%%F" -i "%landscape%" -filter_complex "overlay=W-w-20:H-h-20" -c:a copy "!output!"
+            %ffmpeg% -i "%%F" -i "%landscape%" -filter_complex "overlay=0:0" -c:a copy "!output!"
         ) else (
-            %ffmpeg% -i "%%F" -i "%portrait%" -filter_complex "overlay=W-w-20:H-h-20" -c:a copy "!output!"
+            rem PORTRAIT - zostaw scale2ref jeśli watermark może być inny niż 720x1280
+            %ffmpeg% -i "%%F" -i "%portrait%" -filter_complex "[1][0]scale2ref=iw:ih[wm][vid];[vid][wm]overlay=0:0" -c:a copy "!output!"
         )
     )
 )
