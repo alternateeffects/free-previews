@@ -57,8 +57,8 @@ body {
 }
 header {
   height: 64px;
-  #padding-top: 24px;
-  #padding-bottom: 24px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-left: 4vw;
   padding-right: 4vw;
   display: flex;
