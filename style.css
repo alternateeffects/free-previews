@@ -22,7 +22,7 @@ body {
   padding: 0;
 }
 header {
-  height: 56px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
