@@ -260,94 +260,83 @@ footer {
 }
 
 /* RESPONSYWNOŚĆ NA MOBILE (karty, header, etc.): */
-@media (max-width: 600px) {
-  #gallery {
-    columns: 1 100vw;
-    padding: 8px 0 12px 0;
-    column-gap: 0;
-  }
-  .clip-card {
-    width: 99vw;
-    max-width: none;
-    min-width: 0;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 4vw 0 4vw 0;
-    border-radius: 10px;
-    box-sizing: border-box;
-  }
-  .clip-card video {
-    width: 98vw !important;
-    max-width: 98vw !important;
-    min-width: 0;
-    margin: 0 auto 8px auto;
-    border-radius: 8px;
-    display: block;
-    object-fit: contain;
-  }
-  .clip-info {
-    align-items: center;
-    width: 100%;
-  }
-  .clip-tags {
-    width: 97vw;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-  .download-btn {
-    width: 93vw !important;
-    min-width: 170px;
-    padding: 12px 0;
-    font-size: 1.11rem;
-    border-radius: 22px;
-    margin: 8px auto 4px auto;
-    box-sizing: border-box;
-    display: block;
-    text-align: center;
-  }
-  /* HERO BUTTONS - mniej paddingu i bez mega obwódki */
-  .hero-btn-row {
+@media (max-width: 650px) {
+  .announcement-bar {
+    font-size: 0.97rem;
+    height: auto;
+    min-height: 38px;
+    line-height: 1.3;
     flex-direction: column;
-    gap: 10px;
-    align-items: stretch;
-    width: 96vw;
-    margin: 0 auto 17px auto;
-  }
-  .filter-btn {
-    width: 97vw;
-    padding: 13px 0;
-    font-size: 1.15rem;
-    margin: 0 auto;
-    border-radius: 19px;
-    border-width: 2px;
+    justify-content: center;
+    text-align: center !important;
+    word-break: break-word;
+    padding: 6px 8px;
     box-sizing: border-box;
   }
   header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 9px 2vw 6px 4vw;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px 4vw 0 4vw;
     height: auto;
+    position: relative;
   }
   .logo {
-    font-size: 1.07rem;
+    margin: 0 auto;
+    font-size: 1.25rem;
+    flex: 1;
+    justify-content: center;
   }
   .back-main {
-    margin-top: 5px;
-    font-size: 1rem;
+    position: absolute;
+    top: 13px;
+    right: 5vw;
     padding: 7px 9px;
+    font-size: 1.4rem;
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: #fff;
   }
-  .announcement-bar {
-    font-size: 0.93rem;
-    height: 34px;
+  .hero, .hero h1, .subtitle {
+    text-align: center !important;
   }
-  .clip-tags .tag {
-    padding: 3px 13px;
-    font-size: 0.93rem;
+  .clip-card {
+    width: 90vw;
+    margin: 0 auto 14px auto;
+    max-width: 340px;
+    min-width: 0;
+    border-radius: 13px;
+    padding: 14px 0 8px 0;
   }
+  .clip-card video {
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    max-width: 94vw;
+    min-width: 0;
+    border-radius: 9px;
+  }
+  .clip-info { align-items: center; width: 100%; }
+  .clip-tags { justify-content: center; flex-wrap: wrap; gap: 4px; width: 100%; }
+  .download-btn {
+    text-align: center;
+    width: 92vw;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 24px;
+    font-size: 1.07rem;
+    font-weight: bold;
+    padding: 13px 0;
+  }
+  .hero-btn-row { flex-direction: column; gap: 7px; align-items: stretch; width: 100%; }
+  .filter-btn { width: 100%; padding: 10px 0; box-sizing: border-box; }
   footer {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     margin: 12px 0 7px 0;
-    padding-top: 8px;
+    padding-top: 10px;
   }
 }
