@@ -20,9 +20,9 @@
   justify-content: center;
   align-items: center;
   font-family: 'Cabin', Arial, sans-serif;
-  font-weight: 400;  /* NORMAL! */
+  font-weight: 800;  /* NORMAL! */
   font-size: 1.24rem;
-  height: 80px;
+  height: 70px;
   text-align: center;
   letter-spacing: 0.01em;
   z-index: 10;
