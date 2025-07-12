@@ -3,58 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Alternate Effects – Free Clips</title>
+  <title>Freebie Gallery | Alternate Effects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <h1>🎬 Free Clips by AlternateEffects</h1>
-    <select id="tagFilter">
-      <option value="all">Show all</option>
-    </select>
+    <span class="logo">ALTERNATE<br> EFFECTS</span>
+    <a class="back-main" href="https://alternateeffects.com">← Back to Main Site</a>
   </header>
 
+  <section class="hero">
+    <h1>FREEBIE GALLERY</h1>
+    <p class="subtitle">Professional motion clips // Royalty-free // Instant download.<br> For content creators, designers & editors.</p>
+    <a href="https://alternateeffects.com" class="cta-btn">Explore all products</a>
+  </section>
+
   <main id="gallery"></main>
+  
+  <footer>
+    <span>© 2025 Alternate Effects. Free stock for creators.</span>
+  </footer>
 
   <script>
     const gallery = document.getElementById('gallery');
-    const tagFilter = document.getElementById('tagFilter');
-
     async function loadClips() {
       const response = await fetch('clips.json');
       const data = await response.json();
-
-      const allTags = new Set();
-      data.forEach(clip => clip.tags.forEach(tag => allTags.add(tag)));
-      allTags.forEach(tag => {
-        const option = document.createElement('option');
-        option.value = tag;
-        option.textContent = tag;
-        tagFilter.appendChild(option);
-      });
-
-      function renderClips(filter = "all") {
+      function renderClips() {
         gallery.innerHTML = "";
         data.forEach(clip => {
-          if (filter === "all" || clip.tags.includes(filter)) {
-            const container = document.createElement('div');
-            container.className = 'clip';
-
-            container.innerHTML = `
-              <video controls src="${clip.file}" preload="metadata"></video>
-              <p>${clip.title}</p>
-              <a href="${clip.file}" download>⬇ Download</a>
-              <div class="tags">${clip.tags.map(t => `<span>${t}</span>`).join(' ')}</div>
-            `;
-            gallery.appendChild(container);
-          }
+          const container = document.createElement('div');
+          container.className = 'clip-card';
+          container.innerHTML = `
+            <video controls src="${clip.file}" preload="metadata" poster="" tabindex="0"></video>
+            <div class="clip-info">
+              <div class="clip-title">${clip.title.toUpperCase()}</div>
+              <div class="clip-tags">
+                ${clip.tags.map(t => `<span class="tag">${t.toUpperCase()}</span>`).join("")}
+              </div>
+              <a href="${clip.file}" download class="download-btn">⬇ Download</a>
+            </div>
+          `;
+          gallery.appendChild(container);
         });
       }
-
-      tagFilter.addEventListener('change', () => renderClips(tagFilter.value));
       renderClips();
     }
-
     loadClips();
   </script>
 </body>
