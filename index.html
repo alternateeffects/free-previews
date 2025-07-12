@@ -13,13 +13,14 @@
     Want watermark-free, 4K 60fps versions?<br>
     <a href="https://alternateeffects.com" class="announcement-link">Visit our shop for full access!</a>
   </div>
-
+  
   <header>
     <button class="hamburger" aria-label="menu">&#9776;</button>
     <span class="logo">ALTERNATE EFFECTS</span>
+    <a class="back-main" href="https://alternateeffects.com" title="Back to Shop">Shop</a>
   </header>
 
-  <!-- Hamburger modal menu -->
+  <!-- Hamburger modal menu (mobile only via CSS) -->
   <div class="mobile-modal-overlay" id="mobileMenuOverlay">
     <nav class="mobile-modal">
       <button class="close-modal" aria-label="close">&times;</button>
@@ -51,13 +52,13 @@
   <script>
     // Hamburger menu logic
     document.querySelector('.hamburger').onclick = function() {
-        document.getElementById('mobileMenuOverlay').classList.add('active');
+      document.getElementById('mobileMenuOverlay').classList.add('active');
     };
     document.querySelector('.close-modal').onclick = function() {
-        document.getElementById('mobileMenuOverlay').classList.remove('active');
+      document.getElementById('mobileMenuOverlay').classList.remove('active');
     };
     document.getElementById('mobileMenuOverlay').onclick = function(e) {
-        if(e.target===this) this.classList.remove('active');
+      if(e.target===this) this.classList.remove('active');
     };
 
     // Gallery masonry
@@ -94,7 +95,7 @@
     }
     loadClips();
 
-    // Przyciski filtrów galerii
+    // Filter buttons
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {

@@ -6,8 +6,7 @@
   font-style: normal;
   font-display: swap;
 }
-
-.logo, .hero h1, .clip-title {
+.logo, .hero h1 {
   font-family: 'Monument Extended', 'Bebas Neue', Arial, sans-serif;
   font-weight: 900;
   letter-spacing: 0.07em;
@@ -29,8 +28,6 @@
   letter-spacing: 0.01em;
   z-index: 10;
   position: relative;
-  top: 0;
-  left: 0;
   margin: 0;
   padding: 0;
   box-shadow: 0 1px 7px #89050533;
@@ -47,7 +44,11 @@
   text-decoration: underline;
 }
 
-/* ===== LAYOUT ===== */
+/* ===== HAMBURGER MENU / HIDDEN BY DEFAULT ===== */
+.hamburger { display: none; }
+.mobile-modal-overlay { display: none; }
+
+/* ===== LAYOUT HEADER ===== */
 body {
   font-family: 'Montserrat', Arial, sans-serif;
   background: #101010;
@@ -56,25 +57,28 @@ body {
   padding: 0;
 }
 header {
-  height: 64px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 4vw;
-  padding-right: 4vw;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   background: #000;
+  padding: 10px 4vw;
+  height: 64px;
+  min-height: 52px;
+  position: relative;
 }
 .logo {
   font-size: 1.4rem;
   color: #fff;
   text-transform: uppercase;
   line-height: 1;
-  display: flex;
-  align-items: center;
   margin: 0;
   padding: 0;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  letter-spacing: 0.08em;
 }
 .back-main {
   color: #fff;
@@ -141,7 +145,6 @@ header {
   border-color: #000;
 }
 
-
 /* ===== TRUE MASONRY GRID ===== */
 #gallery {
   columns: 5 210px;
@@ -163,7 +166,6 @@ header {
 @media (max-width: 600px) {
   #gallery { columns: 1 99vw; }
 }
-
 .clip-card {
   display: inline-block;
   width: 100%;
@@ -180,15 +182,13 @@ header {
 .clip-info {
   display: flex;
   flex-direction: column;
-  align-items: center;  /* TO CENTRUJE WSZYSTKO wewnątrz .clip-info */
+  align-items: center;
   width: 100%;
 }
 .clip-card:hover {
   border-color: #fff;
   box-shadow: 0 4px 48px #300606bd;
 }
-
-/* ==== VIDEO BEZ WYMUSZANIA ROZMIARU ==== */
 .clip-card video {
   display: block;
   width: 100%;
@@ -200,8 +200,6 @@ header {
   margin-bottom: 17px;
   object-fit: contain;
 }
-
-/* Tagi i download pod video */
 .clip-tags {
   margin-bottom: 7px;
   display: flex;
@@ -226,7 +224,6 @@ header {
   border-color: #ff1a1a;
   font-weight: 700;
 }
-
 .download-btn {
   display: inline-block;
   background: #ff1a1a;
@@ -240,6 +237,7 @@ header {
   margin-top: 12px;
   transition: background 0.2s, color 0.2s, transform 0.2s;
   border: none;
+  text-align: center;
   margin-left: 0;
   margin-right: 0;
 }
@@ -248,7 +246,6 @@ header {
   color: #ff1a1a;
   transform: scale(1.08);
 }
-
 footer {
   text-align: center;
   font-size: 1rem;
@@ -259,9 +256,8 @@ footer {
   background: #101010;
 }
 
-/* RESPONSYWNOŚĆ NA MOBILE (karty, header, etc.): */
+/* ==== RESPONSIVE MOBILE ==== */
 @media (max-width: 650px) {
-  /* Announcement bar */
   .announcement-bar {
     font-size: 0.97rem;
     height: auto;
@@ -275,40 +271,40 @@ footer {
     box-sizing: border-box;
   }
 
-  /* MOBILE HEADER */
+  /* HEADER MOBILE: hamburger - LOGO - (BACK HIDDEN) */
   header {
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 11px 4vw 11px 4vw;
+    padding: 11px 2vw 11px 2vw;
     min-height: 46px;
     height: auto;
     position: relative;
     gap: 0;
+    background: #000;
   }
-  .logo {
-    margin: 0 auto;
-    font-size: 1.07rem;
-    flex: 1;
-    justify-content: center;
-    letter-spacing: 0.04em;
-    text-align: center;
-  }
-  /* HAMBURGER ONLY ON MOBILE */
   .hamburger {
     display: flex !important;
     background: none;
     border: none;
     color: #fff;
     font-size: 2.15rem;
-    margin-right: 1vw;
-    margin-left: -6px;
+    margin-right: 2vw;
+    margin-left: -2px;
     cursor: pointer;
-    padding: 4px 12px 4px 2px;
+    padding: 4px 12px 4px 0;
     align-items: center;
   }
-  /* SCHOWAJ .back-main */
+  .logo {
+    margin: 0 auto;
+    font-size: 1.09rem;
+    flex: 1;
+    justify-content: center;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
   .back-main { display: none !important; }
 
   /* HERO + FILTRY */
@@ -344,7 +340,7 @@ footer {
     box-sizing: border-box;
   }
 
-  /* GALLERY + KARTY */
+  /* GALERIA + KARTY */
   #gallery {
     columns: 1 98vw;
     column-gap: 0;
@@ -353,7 +349,7 @@ footer {
     text-align: center;
   }
   .clip-card {
-    width: 88vw;
+    width: 90vw;
     max-width: 350px;
     margin: 0 auto 13px auto;
     border-radius: 13px;
@@ -370,6 +366,7 @@ footer {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    object-fit: contain;
   }
   .clip-info {
     align-items: center;
