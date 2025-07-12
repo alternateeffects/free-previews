@@ -144,22 +144,24 @@ header {
 
 /* ===== TRUE MASONRY GRID ===== */
 #gallery {
-  columns: 4 337px;
-  column-gap: 36px;
-  padding: 42px 4vw 48px 4vw;
+  columns: 5 210px;
+  column-gap: 28px;
+  padding: 42px 2vw 48px 2vw;
   background: #101010;
-  max-width: 1800px;
+  max-width: 1920px;
   margin: 0 auto;
 }
-
-@media (max-width: 1300px) {
-  #gallery { columns: 3 320px; }
+@media (max-width: 1500px) {
+  #gallery { columns: 4 210px; }
 }
-@media (max-width: 950px) {
-  #gallery { columns: 2 94vw; }
+@media (max-width: 1150px) {
+  #gallery { columns: 3 200px; }
 }
-@media (max-width: 670px) {
-  #gallery { columns: 1 98vw; }
+@media (max-width: 850px) {
+  #gallery { columns: 2 95vw; }
+}
+@media (max-width: 600px) {
+  #gallery { columns: 1 99vw; }
 }
 
 .clip-card {
@@ -169,11 +171,17 @@ header {
   border-radius: 22px;
   border: 2px solid #ff1a1a;
   box-shadow: 0 2px 32px #1a0a09a0;
-  margin: 0 0 32px 0;
+  margin: 0 0 28px 0;
   padding: 17px 12px 18px 12px;
   vertical-align: top;
   break-inside: avoid-column;
   transition: box-shadow 0.23s, border-color 0.23s;
+}
+.clip-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* TO CENTRUJE WSZYSTKO wewnątrz .clip-info */
+  width: 100%;
 }
 .clip-card:hover {
   border-color: #fff;
@@ -232,6 +240,8 @@ header {
   margin-top: 12px;
   transition: background 0.2s, color 0.2s, transform 0.2s;
   border: none;
+  margin-left: 0;
+  margin-right: 0;
 }
 .download-btn:hover {
   background: #fff;
