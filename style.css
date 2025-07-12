@@ -260,29 +260,95 @@ footer {
 }
 
 /* RESPONSYWNOŚĆ NA MOBILE (karty, header, etc.): */
-@media (max-width: 700px) {
+@media (max-width: 650px) {
+  #gallery {
+    columns: 1 99vw;
+    column-gap: 8vw;
+    padding: 10px 0 18px 0;
+  }
+  .clip-card {
+    width: 96vw;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 7px 0 10px 0;
+    border-radius: 13px;
+  }
+  .clip-card video {
+    width: 100% !important;
+    max-width: 95vw !important;
+    max-height: 53vw !important;
+    border-radius: 7px;
+    margin-bottom: 9px;
+    object-fit: contain;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  .clip-info {
+    align-items: center;
+    width: 100%;
+  }
+  .clip-tags {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    width: 100%;
+  }
+  .download-btn {
+    font-size: 1.03rem;
+    padding: 8px 0;
+    min-width: 70vw;
+    margin-top: 7px;
+    margin-bottom: 1px;
+  }
+  .hero {
+    padding: 22px 2vw 18px 2vw;
+  }
+  .hero h1 {
+    font-size: 1.22rem;
+    text-align: left;
+    letter-spacing: 0.02em;
+    margin-bottom: 7px;
+  }
+  .subtitle {
+    font-size: 0.88rem;
+    line-height: 1.35;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+  .hero-btn-row {
+    flex-direction: column;
+    gap: 7px;
+    align-items: stretch;
+    width: 100%;
+  }
+  .filter-btn {
+    width: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+  }
   header {
     flex-direction: column;
     align-items: flex-start;
-    padding: 24px 6vw 0 6vw;
+    padding: 12px 6vw 0 6vw;
+    height: auto;
   }
   .logo {
-    font-size: 2.1rem;
+    font-size: 1.10rem;
   }
   .back-main {
-    margin-top: 14px;
+    margin-top: 5px;
     font-size: 1rem;
-    padding: 8px 18px;
+    padding: 7px 9px;
   }
-  .hero h1 {
-    font-size: 2.1rem;
+  .announcement-bar {
+    font-size: 0.94rem;
+    height: 38px;
   }
-  .cta-btn {
-    font-size: 1rem;
-    padding: 11px 18px;
-  }
-  .clip-card {
-    border-radius: 13px;
-    padding: 7px 1vw 13px 1vw;
+  footer {
+    font-size: 0.85rem;
+    margin: 12px 0 7px 0;
+    padding-top: 10px;
   }
 }
