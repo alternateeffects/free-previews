@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Freebie Gallery | Alternate Effects</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Bebas+Neue&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400&family=Bebas+Neue&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -21,8 +21,13 @@
 
   <section class="hero">
     <h1>FREEBIE GALLERY</h1>
-    <p class="subtitle">Professional motion clips // Royalty-free // Instant download.<br> For content creators, designers & editors.</p>
-    <a href="https://alternateeffects.com" class="cta-btn">Explore all products</a>
+    <p class="subtitle">Professional motion clips // Royalty-free // Instant download.<br>
+      For content creators, designers & editors.</p>
+    <div class="hero-btn-row">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="landscape">Landscape</button>
+      <button class="filter-btn" data-filter="portrait">Portrait</button>
+    </div>
   </section>
 
   <main id="gallery"></main>
@@ -33,30 +38,62 @@
 
   <script>
     const gallery = document.getElementById('gallery');
-    async function loadClips() {
-      const response = await fetch('clips.json');
-      const data = await response.json();
-      function renderClips() {
-        gallery.innerHTML = "";
-        data.forEach(clip => {
-          const container = document.createElement('div');
-          container.className = 'clip-card';
-          container.innerHTML = `
-            <video controls src="${clip.file}" preload="metadata" poster="" tabindex="0"></video>
+    let allClipsData = [];
+
+    // Render masonry grid with orientation filter
+    function renderClips(filter = "all") {
+      gallery.innerHTML = "";
+      allClipsData.forEach(clip => {
+        if (filter === "all" || (clip.orientation === filter)) {
+          // Dopasuj klasę orientacji do karty
+          const cardClass = `clip-card ${clip.orientation || ""}`;
+
+          // Możesz dodać aspect-ratio automatycznie jeśli masz (lub ustaw manualnie w CSS)
+          let vidStyle = 'width: 100%; height: auto;';
+          if (clip.orientation === "portrait") {
+            vidStyle += 'max-width: 300px; max-height: 430px;';
+          }
+          else if (clip.orientation === "landscape") {
+            vidStyle += 'max-width: 470px; max-height: 270px;';
+          }
+          // Domyślnie max dla safety
+
+          const card = document.createElement('div');
+          card.className = cardClass;
+          card.innerHTML = `
+            <video controls src="${clip.file}" preload="metadata" tabindex="0" style="${vidStyle}"></video>
             <div class="clip-info">
               <div class="clip-title">${clip.title.toUpperCase()}</div>
               <div class="clip-tags">
                 ${clip.tags.map(t => `<span class="tag">${t.toUpperCase()}</span>`).join("")}
+                <span class="tag orientation-tag">${clip.orientation ? clip.orientation.toUpperCase() : ""}</span>
               </div>
               <a href="${clip.file}" download class="download-btn">⬇ Download</a>
             </div>
           `;
-          gallery.appendChild(container);
-        });
-      }
-      renderClips();
+          gallery.appendChild(card);
+        }
+      });
+    }
+
+    async function loadClips() {
+      const response = await fetch('clips.json');
+      allClipsData = await response.json();
+      renderClips("all");
     }
     loadClips();
+
+    // Przyciski filtrowania
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.dataset.filter;
+          renderClips(filter);
+        });
+      });
+    });
   </script>
 </body>
 </html>

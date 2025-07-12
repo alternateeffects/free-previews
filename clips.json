@@ -5,7 +5,8 @@
         "tags":  [
                      "neon icons"
                  ],
-        "thumbnail":  ""
+        "thumbnail":  "",
+		"orientation": "landscape"
     },
     {
         "title":  "red-black-silhouettes (1)-watermarked",
@@ -13,7 +14,8 @@
         "tags":  [
                      "silhouettes"
                  ],
-        "thumbnail":  ""
+        "thumbnail":  "",
+		"orientation": "landscape"
     },
     {
         "title":  "viral reel -lego (10)-watermarked",
@@ -21,7 +23,8 @@
         "tags":  [
                      "viral reels"
                  ],
-        "thumbnail":  ""
+        "thumbnail":  "",
+		"orientation": "portrait"
     },
     {
         "title":  "viral reel -lego (13)-watermarked",
@@ -29,6 +32,7 @@
         "tags":  [
                      "viral reels"
                  ],
-        "thumbnail":  ""
+        "thumbnail":  "",
+		"orientation": "portrait"
     }
 ]
