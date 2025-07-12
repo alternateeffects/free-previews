@@ -35,7 +35,6 @@
   padding: 0;
   box-shadow: 0 1px 7px #89050533;
 }
-
 .announcement-bar a.announcement-link {
   color: #111;
   text-decoration: underline;
@@ -143,65 +142,58 @@ header {
 }
 
 
-/* ===== MASONRY GRID ===== */
+/* ===== TRUE MASONRY GRID ===== */
 #gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-  gap: 28px;
+  columns: 4 337px;
+  column-gap: 36px;
   padding: 42px 4vw 48px 4vw;
   background: #101010;
-  max-width: 1600px;
+  max-width: 1800px;
   margin: 0 auto;
 }
+
+@media (max-width: 1300px) {
+  #gallery { columns: 3 320px; }
+}
+@media (max-width: 950px) {
+  #gallery { columns: 2 94vw; }
+}
+@media (max-width: 670px) {
+  #gallery { columns: 1 98vw; }
+}
+
 .clip-card {
+  display: inline-block;
+  width: 100%;
   background: #161616;
   border-radius: 22px;
   border: 2px solid #ff1a1a;
   box-shadow: 0 2px 32px #1a0a09a0;
-  padding: 22px 14px 18px 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  break-inside: avoid;
+  margin: 0 0 32px 0;
+  padding: 17px 12px 18px 12px;
+  vertical-align: top;
+  break-inside: avoid-column;
+  transition: box-shadow 0.23s, border-color 0.23s;
 }
 .clip-card:hover {
   border-color: #fff;
   box-shadow: 0 4px 48px #300606bd;
 }
 
-/* Proporcje video wg orientacji */
+/* ==== VIDEO BEZ WYMUSZANIA ROZMIARU ==== */
 .clip-card video {
   display: block;
-  margin: 0 auto 17px auto;
+  width: 100%;
+  height: auto;
   border-radius: 13px;
   background: #232323;
   box-shadow: 0 2px 9px #0006;
   outline: none;
-  width: 100%;
-  height: auto;
-  /* poniższe max wartości mogą być nadpisane niżej, dla portrait i landscape */
-  max-width: 390px;
-  max-height: 460px;
+  margin-bottom: 17px;
+  object-fit: contain;
 }
 
-/* Dla portrait vs landscape karty */
-.clip-card.portrait video {
-  max-width: 275px !important;
-  max-height: 430px !important;
-}
-.clip-card.landscape video {
-  max-width: 470px !important;
-  max-height: 270px !important;
-}
-
-.clip-title {
-  font-weight: 900;
-  font-size: 1.30rem;
-  letter-spacing: 1px;
-  margin-bottom: 7px;
-  color: #fff;
-  text-align: center;
-}
+/* Tagi i download pod video */
 .clip-tags {
   margin-bottom: 7px;
   display: flex;
@@ -257,6 +249,7 @@ footer {
   background: #101010;
 }
 
+/* RESPONSYWNOŚĆ NA MOBILE (karty, header, etc.): */
 @media (max-width: 700px) {
   header {
     flex-direction: column;
@@ -278,12 +271,8 @@ footer {
     font-size: 1rem;
     padding: 11px 18px;
   }
-  #gallery {
-    gap: 18px;
-    padding-left: 3vw; padding-right: 3vw;
-  }
   .clip-card {
-    padding: 13px 6px 13px 6px;
-    border-radius: 15px;
+    border-radius: 13px;
+    padding: 7px 1vw 13px 1vw;
   }
 }

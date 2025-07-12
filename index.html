@@ -10,7 +10,7 @@
 <body>
   <!-- Announcement bar -->
   <div class="announcement-bar">
-    Want watermark-free, 4K 60fps versions? 
+    Want watermark-free, 4K 60fps versions?
     <a href="https://alternateeffects.com" class="announcement-link">Visit our shop for full access!</a>
   </div>
 
@@ -31,7 +31,7 @@
   </section>
 
   <main id="gallery"></main>
-  
+
   <footer>
     <span>© 2025 Alternate Effects. Free stock for creators.</span>
   </footer>
@@ -40,30 +40,19 @@
     const gallery = document.getElementById('gallery');
     let allClipsData = [];
 
-    // Render masonry grid with orientation filter
+    // Render masonry grid with orientation filter, BEZ TYTUŁÓW
     function renderClips(filter = "all") {
       gallery.innerHTML = "";
       allClipsData.forEach(clip => {
         if (filter === "all" || (clip.orientation === filter)) {
-          // Dopasuj klasę orientacji do karty
+          // Dodaj klasę orientation (dla style)
           const cardClass = `clip-card ${clip.orientation || ""}`;
-
-          // Możesz dodać aspect-ratio automatycznie jeśli masz (lub ustaw manualnie w CSS)
-          let vidStyle = 'width: 100%; height: auto;';
-          if (clip.orientation === "portrait") {
-            vidStyle += 'max-width: 300px; max-height: 430px;';
-          }
-          else if (clip.orientation === "landscape") {
-            vidStyle += 'max-width: 470px; max-height: 270px;';
-          }
-          // Domyślnie max dla safety
-
           const card = document.createElement('div');
           card.className = cardClass;
+
           card.innerHTML = `
-            <video controls src="${clip.file}" preload="metadata" tabindex="0" style="${vidStyle}"></video>
+            <video controls src="${clip.file}" preload="metadata" tabindex="0" style="width:100%;height:auto;display:block;"></video>
             <div class="clip-info">
-              <div class="clip-title">${clip.title.toUpperCase()}</div>
               <div class="clip-tags">
                 ${clip.tags.map(t => `<span class="tag">${t.toUpperCase()}</span>`).join("")}
                 <span class="tag orientation-tag">${clip.orientation ? clip.orientation.toUpperCase() : ""}</span>
@@ -86,7 +75,7 @@
     // Przyciski filtrowania
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', () => {
           document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           const filter = btn.dataset.filter;
