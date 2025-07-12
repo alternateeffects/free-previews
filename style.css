@@ -137,7 +137,7 @@ header {
 }
 .filter-btn.active, .filter-btn:hover {
   background: #ff1a1a;
-  color: #fff;
+  color: #000;
   border-color: #000;
 }
 
