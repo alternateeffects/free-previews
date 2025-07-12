@@ -103,14 +103,14 @@ header {
   border-bottom: 2px solid #222;
 }
 .hero h1 {
-  font-size: 3.2rem;
+  font-size: 2.2rem;
   letter-spacing: 0.045em;
   font-weight: 900;
   margin: 0 0 10px 0;
   color: #fff;
 }
 .subtitle {
-  font-size: 1.22rem;
+  font-size: 1rem;
   margin-bottom: 30px;
   color: #d5d5d5;
   letter-spacing: 0.01em;
@@ -138,7 +138,7 @@ header {
 .filter-btn.active, .filter-btn:hover {
   background: #ff1a1a;
   color: #fff;
-  border-color: #fff;
+  border-color: #000;
 }
 
 
