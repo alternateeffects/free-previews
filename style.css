@@ -1,3 +1,19 @@
+@font-face {
+  font-family: 'Monument Extended';
+  src: url('fonts/MonumentExtended-Ultrabold.woff2') format('woff2'),
+       url('fonts/MonumentExtended-Ultrabold.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.logo, .hero h1, .clip-title {
+  font-family: 'Monument Extended', 'Bebas Neue', Arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+}
+
+/* ---- reszta stylów poniżej ---- */
 body {
   font-family: 'Montserrat', Arial, sans-serif;
   background: #101010;
