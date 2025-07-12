@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alternate Effects – Free Clips</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🎬 Free Clips by AlternateEffects</h1>
+    <select id="tagFilter">
+      <option value="all">Show all</option>
+    </select>
+  </header>
+
+  <main id="gallery"></main>
+
+  <script>
+    const gallery = document.getElementById('gallery');
+    const tagFilter = document.getElementById('tagFilter');
+
+    async function loadClips() {
+      const response = await fetch('clips.json');
+      const data = await response.json();
+
+      const allTags = new Set();
+      data.forEach(clip => clip.tags.forEach(tag => allTags.add(tag)));
+      allTags.forEach(tag => {
+        const option = document.createElement('option');
+        option.value = tag;
+        option.textContent = tag;
+        tagFilter.appendChild(option);
+      });
+
+      function renderClips(filter = "all") {
+        gallery.innerHTML = "";
+        data.forEach(clip => {
+          if (filter === "all" || clip.tags.includes(filter)) {
+            const container = document.createElement('div');
+            container.className = 'clip';
+
+            container.innerHTML = `
+              <video controls src="${clip.file}" preload="metadata"></video>
+              <p>${clip.title}</p>
+              <a href="${clip.file}" download>⬇ Download</a>
+              <div class="tags">${clip.tags.map(t => `<span>${t}</span>`).join(' ')}</div>
+            `;
+            gallery.appendChild(container);
+          }
+        });
+      }
+
+      tagFilter.addEventListener('change', () => renderClips(tagFilter.value));
+      renderClips();
+    }
+
+    loadClips();
+  </script>
+</body>
+</html>
