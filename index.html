@@ -15,9 +15,21 @@
   </div>
 
   <header>
+    <button class="hamburger" aria-label="menu">&#9776;</button>
     <span class="logo">ALTERNATE EFFECTS</span>
-    <a class="back-main" href="https://alternateeffects.com" title="Back to Shop">&#8678;</a>
   </header>
+
+  <!-- Hamburger modal menu -->
+  <div class="mobile-modal-overlay" id="mobileMenuOverlay">
+    <nav class="mobile-modal">
+      <button class="close-modal" aria-label="close">&times;</button>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#gallery">Freebies</a></li>
+        <li><a href="https://alternateeffects.com">Shop</a></li>
+      </ul>
+    </nav>
+  </div>
 
   <section class="hero">
     <h1>FREEBIE GALLERY</h1>
@@ -37,15 +49,25 @@
   </footer>
 
   <script>
+    // Hamburger menu logic
+    document.querySelector('.hamburger').onclick = function() {
+        document.getElementById('mobileMenuOverlay').classList.add('active');
+    };
+    document.querySelector('.close-modal').onclick = function() {
+        document.getElementById('mobileMenuOverlay').classList.remove('active');
+    };
+    document.getElementById('mobileMenuOverlay').onclick = function(e) {
+        if(e.target===this) this.classList.remove('active');
+    };
+
+    // Gallery masonry
     const gallery = document.getElementById('gallery');
     let allClipsData = [];
 
-    // Render masonry grid with orientation filter, BEZ TYTUŁÓW
     function renderClips(filter = "all") {
       gallery.innerHTML = "";
       allClipsData.forEach(clip => {
         if (filter === "all" || (clip.orientation === filter)) {
-          // Dodaj klasę orientation (dla style)
           const cardClass = `clip-card ${clip.orientation || ""}`;
           const card = document.createElement('div');
           card.className = cardClass;
@@ -72,7 +94,7 @@
     }
     loadClips();
 
-    // Przyciski filtrowania
+    // Przyciski filtrów galerii
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {

@@ -261,69 +261,70 @@ footer {
 
 /* RESPONSYWNOŚĆ NA MOBILE (karty, header, etc.): */
 @media (max-width: 650px) {
-
-  /* Announcement bar -- dwie linie */
+  /* Announcement bar */
   .announcement-bar {
     font-size: 0.97rem;
     height: auto;
-    min-height: 38px;
+    min-height: 36px;
     line-height: 1.3;
     flex-direction: column;
     justify-content: center;
     text-align: center !important;
     word-break: break-word;
-    padding: 6px 8px;
+    padding: 7px 10px;
     box-sizing: border-box;
   }
 
-  /* Header z logo na środku i ikoną po prawej */
+  /* MOBILE HEADER */
   header {
     flex-direction: row;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 14px 4vw 14px 4vw;
-    min-height: 54px;
+    padding: 11px 4vw 11px 4vw;
+    min-height: 46px;
     height: auto;
     position: relative;
+    gap: 0;
   }
   .logo {
     margin: 0 auto;
-    font-size: 1.25rem;
+    font-size: 1.07rem;
     flex: 1;
     justify-content: center;
-    line-height: 1.2;
+    letter-spacing: 0.04em;
     text-align: center;
   }
-  .back-main {
-    position: absolute;
-    top: 50%;
-    right: 4vw;
-    transform: translateY(-50%);
-    padding: 7px 9px;
-    font-size: 1.4rem;
+  /* HAMBURGER ONLY ON MOBILE */
+  .hamburger {
+    display: flex !important;
     background: none;
     border: none;
-    box-shadow: none;
     color: #fff;
-    line-height: 1;
-    z-index: 10;
+    font-size: 2.15rem;
+    margin-right: 1vw;
+    margin-left: -6px;
+    cursor: pointer;
+    padding: 4px 12px 4px 2px;
+    align-items: center;
   }
+  /* SCHOWAJ .back-main */
+  .back-main { display: none !important; }
 
-  /* Hero i sekcja filtrów -- 100% centrowanie */
+  /* HERO + FILTRY */
   .hero, .hero h1, .subtitle {
     text-align: center !important;
   }
   .hero {
-    padding: 22px 2vw 18px 2vw;
+    padding: 18px 2vw 14px 2vw;
   }
   .hero h1 {
-    font-size: 1.22rem;
-    letter-spacing: 0.02em;
+    font-size: 1.19rem;
     margin-bottom: 7px;
+    letter-spacing: 0.02em;
   }
   .subtitle {
-    font-size: 0.88rem;
+    font-size: 0.87rem;
     line-height: 1.35;
     margin-bottom: 10px;
   }
@@ -336,57 +337,128 @@ footer {
   .filter-btn {
     width: 100%;
     padding: 10px 0;
-    box-sizing: border-box;
-    font-size: 1.1rem;
     margin: 0 auto;
+    font-size: 1.08rem;
+    text-align: center;
     border-radius: 19px;
-    border-width: 2px;
+    box-sizing: border-box;
   }
 
-  /* Galeria -- karty wyśrodkowane, margines od krawędzi */
+  /* GALLERY + KARTY */
   #gallery {
     columns: 1 98vw;
     column-gap: 0;
-    padding: 10px 0 18px 0;
+    padding: 10px 0 12px 0;
     margin: 0 auto;
     text-align: center;
   }
   .clip-card {
-    width: 90vw;
-    max-width: 340px;
-    margin: 0 auto 14px auto;
+    width: 88vw;
+    max-width: 350px;
+    margin: 0 auto 13px auto;
     border-radius: 13px;
-    padding: 14px 0 8px 0;
+    padding: 10px 0 10px 0;
     display: inline-block;
     float: none;
   }
   .clip-card video {
-    width: 98%;
-    max-width: 96vw;
-    display: block;
+    width: 99%;
+    max-width: 97vw;
+    min-width: 0;
     border-radius: 9px;
     margin-bottom: 9px;
+    display: block;
     margin-left: auto;
     margin-right: auto;
-    object-fit: contain;
   }
-  .clip-info { align-items: center; width: 100%; }
-  .clip-tags { justify-content: center; flex-wrap: wrap; gap: 4px; width: 100%; }
+  .clip-info {
+    align-items: center;
+    width: 100%;
+  }
+  .clip-tags {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    width: 100%;
+  }
   .download-btn {
     text-align: center;
-    width: 90vw;
-    max-width: 260px;
+    width: 88vw;
+    max-width: 270px;
     margin-left: auto;
     margin-right: auto;
     border-radius: 24px;
-    font-size: 1.07rem;
+    font-size: 1.04rem;
     font-weight: bold;
     padding: 13px 0;
-    min-width: 140px;
+    min-width: 130px;
     display: block;
   }
 
-  /* Footer, logo mniejsze */
+  /* MODAL MENU (tylko mobile) */
+  .mobile-modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(10,10,10,0.93);
+    z-index: 1200;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.18s;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .mobile-modal-overlay.active {
+    opacity: 1; pointer-events: all;
+  }
+  .mobile-modal {
+    width: 250px; max-width: 78vw;
+    background: #111;
+    padding: 18px 0 18px 0;
+    border-radius: 0 12px 12px 0;
+    margin-top: 0;
+    min-height: 100vh;
+    box-shadow: 2px 0 34px #0007;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .close-modal {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2.4rem;
+    position: absolute;
+    top: 8px; right: 12px;
+    cursor: pointer;
+    padding: 3px 8px;
+  }
+  .mobile-modal ul {
+    list-style: none;
+    padding: 38px 0 0 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    align-items: left;
+  }
+  .mobile-modal ul li a {
+    color: #fff;
+    font-size: 1.16rem;
+    text-decoration: none;
+    font-family: 'Montserrat', Arial, sans-serif;
+    padding: 7px 26px;
+    display: block;
+    border-left: 3px solid #ff1a1a;
+    border-radius: 3px;
+    transition: background 0.18s;
+  }
+  .mobile-modal ul li a:hover {
+    background: #181818;
+  }
+
+  /* Footer */
   footer {
     font-size: 0.85rem;
     margin: 12px 0 7px 0;
