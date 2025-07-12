@@ -1,26 +1,34 @@
-[
-  {
-    "title": "Neon-Liquid-Icons (16)",
-    "file": "clips-watermarked/neon-liquid-icons-(16)-watermarked.mp4",
-    "tags": ["neon icons"],
-    "thumbnail": ""
-  },
-  {
-    "title": "Red-Black-Silhouettes (1)",
-    "file": "clips-watermarked/red-black-silhouettes-(1)-watermarked.mp4",
-    "tags": ["silhouettes"],
-    "thumbnail": ""
-  },
-  {
-    "title": "Viral Reel -Lego (10)",
-    "file": "clips-watermarked/viral-reel--lego-(10)-watermarked.mp4",
-    "tags": ["viral reels"],
-    "thumbnail": ""
-  },
-  {
-    "title": "Viral Reel -Lego (13)",
-    "file": "clips-watermarked/viral-reel--lego-(13)-watermarked.mp4",
-    "tags": ["viral reels"],
-    "thumbnail": ""
-  }
+﻿[
+    {
+        "title":  "neon-liquid-icons (16)-watermarked",
+        "file":  "clips-watermarked/neon-liquid-icons (16)-watermarked.mp4",
+        "tags":  [
+                     "neon icons"
+                 ],
+        "thumbnail":  ""
+    },
+    {
+        "title":  "red-black-silhouettes (1)-watermarked",
+        "file":  "clips-watermarked/red-black-silhouettes (1)-watermarked.mp4",
+        "tags":  [
+                     "silhouettes"
+                 ],
+        "thumbnail":  ""
+    },
+    {
+        "title":  "viral reel -lego (10)-watermarked",
+        "file":  "clips-watermarked/viral reel -lego (10)-watermarked.mp4",
+        "tags":  [
+                     "viral reels"
+                 ],
+        "thumbnail":  ""
+    },
+    {
+        "title":  "viral reel -lego (13)-watermarked",
+        "file":  "clips-watermarked/viral reel -lego (13)-watermarked.mp4",
+        "tags":  [
+                     "viral reels"
+                 ],
+        "thumbnail":  ""
+    }
 ]
