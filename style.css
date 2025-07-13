@@ -353,6 +353,94 @@ footer {
 .tag-btn:hover:not(.active) {
   color: #ff3636;
 }
+/* PROGRESS BAR CSS */
+.clipbar-container {
+  width: 97vw;
+  max-width: 520px;
+  margin: 32px auto 16px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.clipbar-title {
+  color: #ff1a1a;
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: .03em;
+  margin-bottom: 10px;
+  text-align: center;
+  text-shadow: 0 1px 9px #fff1, 0 0 5px #ff000088;
+}
+
+.clipbar-bar {
+  width: 100%;
+  background: #19191a;
+  border-radius: 21px;
+  height: 25px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 15px #0008;
+  margin-bottom: 9px;
+  border: 2px solid #ff1a1a;
+}
+
+.clipbar-inner {
+  background: linear-gradient(90deg, #ff1a1a 0% , #ffe39a 100%);
+  border-radius: 21px;
+  height: 100%;
+  width: 0%;
+  position: absolute;
+  left: 0; top: 0;
+  z-index: 1;
+  box-shadow: 0 0 16px #ffd40099;
+  transition: width 1.3s cubic-bezier(.24, 1.3, .48, 1.2);
+}
+
+.clipbar-icon {
+  position: absolute;
+  top: 47%; left: 0;
+  transform: translate(-38%, -50%);
+  width: 28px; height: 28px;
+  z-index: 2;
+  transition: left 1.2s cubic-bezier(.24, 1.32, .48, 1.2);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+.clipbar-icon img, .clipbar-icon svg {
+  width: 28px; height: 28px; display: block;
+  filter: drop-shadow(0 2px 18px #fff6) drop-shadow(0 0 3px #ffe32155);
+}
+
+.clipbar-percent {
+  margin-top: 3px;
+  font-family: 'Cabin', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffe400;
+  text-shadow: 0 1px 9px #18181888;
+  letter-spacing: 0.07em;
+  text-align: center;
+}
+
+@media (max-width:600px) {
+  .clipbar-container { max-width: 99vw; }
+  .clipbar-bar { min-width: 82vw;}
+}
+
+/* Opcjonalne: mikro styl do liczby w labelu (zauważ jak to wygląda u Ciebie) */
+.clipbar-title span#clipbar-cur {
+  color: #ffe400;
+  font-weight: 900;
+  font-size: 1.11em;
+}
+.clipbar-title span#clipbar-goal {
+  color: #ff1a1a;
+  font-weight: 900;
+}
 
 /* ==== RESPONSIVE MOBILE ==== */
 @media (max-width: 650px) {
