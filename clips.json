@@ -5,7 +5,7 @@
         "tags":  [
                      "neon icons"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-landscape.png",
         "orientation":  "landscape",
         "watermark":  "light",
         "has_watermark":  true
@@ -16,7 +16,7 @@
         "tags":  [
                      "silhouettes"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-landscape.png",
         "orientation":  "landscape",
         "watermark":  "strong",
         "has_watermark":  true
@@ -27,7 +27,7 @@
         "tags":  [
                      "silhouettes"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-landscape.png",
         "orientation":  "landscape",
         "watermark":  "strong",
         "has_watermark":  true
@@ -38,7 +38,7 @@
         "tags":  [
                      "silhouettes"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-landscape.png",
         "orientation":  "landscape",
         "watermark":  "strong",
         "has_watermark":  true
@@ -49,7 +49,7 @@
         "tags":  [
                      "silhouettes"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-landscape.png",
         "orientation":  "landscape",
         "watermark":  "strong",
         "has_watermark":  true
@@ -60,7 +60,7 @@
         "tags":  [
                      "silhouettes"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-landscape.png",
         "orientation":  "landscape",
         "watermark":  "strong",
         "has_watermark":  true
@@ -71,7 +71,7 @@
         "tags":  [
                      "silhouettes"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-landscape.png",
         "orientation":  "landscape",
         "watermark":  "strong",
         "has_watermark":  true
@@ -82,7 +82,7 @@
         "tags":  [
                      "silhouettes"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-landscape.png",
         "orientation":  "landscape",
         "watermark":  "strong",
         "has_watermark":  true
@@ -93,7 +93,7 @@
         "tags":  [
                      "silhouettes"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-landscape.png",
         "orientation":  "landscape",
         "watermark":  "strong",
         "has_watermark":  true
@@ -104,7 +104,7 @@
         "tags":  [
                      "silhouettes"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-landscape.png",
         "orientation":  "landscape",
         "watermark":  "strong",
         "has_watermark":  true
@@ -115,7 +115,7 @@
         "tags":  [
                      "viral reels"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-portrait.png",
         "orientation":  "portrait",
         "watermark":  "none",
         "has_watermark":  false
@@ -126,7 +126,7 @@
         "tags":  [
                      "viral reels"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-portrait.png",
         "orientation":  "portrait",
         "watermark":  "none",
         "has_watermark":  false
@@ -137,7 +137,7 @@
         "tags":  [
                      "viral reels"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-portrait.png",
         "orientation":  "portrait",
         "watermark":  "none",
         "has_watermark":  false
@@ -148,7 +148,7 @@
         "tags":  [
                      "viral reels"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-portrait.png",
         "orientation":  "portrait",
         "watermark":  "none",
         "has_watermark":  false
@@ -159,7 +159,7 @@
         "tags":  [
                      "viral reels"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-portrait.png",
         "orientation":  "portrait",
         "watermark":  "none",
         "has_watermark":  false
@@ -170,7 +170,7 @@
         "tags":  [
                      "viral reels"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-portrait.png",
         "orientation":  "portrait",
         "watermark":  "none",
         "has_watermark":  false
@@ -181,7 +181,7 @@
         "tags":  [
                      "viral reels"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-portrait.png",
         "orientation":  "portrait",
         "watermark":  "none",
         "has_watermark":  false
@@ -192,7 +192,7 @@
         "tags":  [
                      "viral reels"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-portrait.png",
         "orientation":  "portrait",
         "watermark":  "none",
         "has_watermark":  false
@@ -203,7 +203,7 @@
         "tags":  [
                      "viral reels"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-portrait.png",
         "orientation":  "portrait",
         "watermark":  "none",
         "has_watermark":  false
@@ -214,7 +214,7 @@
         "tags":  [
                      "viral reels"
                  ],
-        "thumbnail":  "",
+        "thumbnail":  "assets/thumbnail-portrait.png",
         "orientation":  "portrait",
         "watermark":  "none",
         "has_watermark":  false
