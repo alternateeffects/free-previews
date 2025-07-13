@@ -53,12 +53,12 @@
       </div>
       <div class="v-sep"></div>
       <!-- Tag-scroll: przesuwalne, po prawej -->
-      <div class="tag-scroll">
+      <div class="tag-scroll" id="tagScrollBar">
         <button class="tag-btn active" data-tag="all">All tags</button>
         <button class="tag-btn" data-tag="silhouettes">Silhouettes</button>
-        <button class="tag-btn" data-tag="neon">Neon icons</button>
-        <button class="tag-btn" data-tag="viral">Viral reels</button>
-        <button class="tag-btn" data-tag="paper">Paper animations</button>
+        <button class="tag-btn" data-tag="neon icons">Neon icons</button>
+        <button class="tag-btn" data-tag="viral reels">Viral reels</button>
+        <button class="tag-btn" data-tag="paper animations">Paper animations</button>
         <!-- ...więcej tagów wygenerujesz dynamicznie w JS później -->
       </div>
     </div>
@@ -82,53 +82,78 @@
       if(e.target===this) this.classList.remove('active');
     };
 
-    // Gallery masonry
+    // --- SORTOWANIE LOGIKA ---
     const gallery = document.getElementById('gallery');
     let allClipsData = [];
+    let currentOrientation = "all";
+    let currentWatermark = "all";
+    let currentTag = "all";
 
-    function renderClips(filter = "all") {
+    function renderClips() {
       gallery.innerHTML = "";
       allClipsData.forEach(clip => {
-        if (filter === "all" || (clip.orientation === filter)) {
-          const cardClass = `clip-card ${clip.orientation || ""}`;
-          const card = document.createElement('div');
-          card.className = cardClass;
+        // Filtr orientacja
+        if (currentOrientation !== "all" && clip.orientation !== currentOrientation) return;
+        // Filtr watermark
+        if (currentWatermark !== "all" && clip.watermark !== currentWatermark) return;
+        // Filtr tag: dopuszczamy tagi w różnych formatach
+        if (currentTag !== "all" && !clip.tags.map(t => t.toLowerCase()).includes(currentTag)) return;
 
-          card.innerHTML = `
-            <video controls src="${clip.file}" preload="metadata" tabindex="0" style="width:100%;height:auto;display:block;"></video>
-            <div class="clip-info">
-              <div class="clip-tags">
-                ${clip.tags.map(t => `<span class="tag">${t.toUpperCase()}</span>`).join("")}
-                <span class="tag orientation-tag">${clip.orientation ? clip.orientation.toUpperCase() : ""}</span>
-              </div>
-              <a href="${clip.file}" download class="download-btn">DOWNLOAD</a>
+        const cardClass = `clip-card ${clip.orientation || ""}`;
+        const card = document.createElement('div');
+        card.className = cardClass;
+
+        card.innerHTML = `
+          <video controls src="${clip.file}" preload="metadata" tabindex="0" style="width:100%;height:auto;display:block;"></video>
+          <div class="clip-info">
+            <div class="clip-tags">
+              ${clip.tags.map(t => `<span class="tag">${t.toUpperCase()}</span>`).join("")}
+              <span class="tag orientation-tag">${clip.orientation ? clip.orientation.toUpperCase() : ""}</span>
             </div>
-          `;
-          gallery.appendChild(card);
-        }
+            <a href="${clip.file}" download class="download-btn">DOWNLOAD</a>
+          </div>
+        `;
+        gallery.appendChild(card);
       });
     }
 
     async function loadClips() {
       const response = await fetch('clips.json');
       allClipsData = await response.json();
-      renderClips("all");
+      renderClips();
     }
+
     loadClips();
 
-    // Filter buttons
     document.addEventListener('DOMContentLoaded', () => {
+      // Orientacja
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
-          const filter = btn.dataset.filter;
-          renderClips(filter);
+          currentOrientation = btn.dataset.filter;
+          renderClips();
+        });
+      });
+      // Watermark
+      document.querySelectorAll('.mark-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.mark-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentWatermark = btn.dataset.watermark;
+          renderClips();
+        });
+      });
+      // Tag (scroll)
+      document.querySelectorAll('.tag-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentTag = btn.dataset.tag;
+          renderClips();
         });
       });
     });
-
-    // MARK/TAG SWITCHERS – tu w przyszłości możesz dorzucić obsługę sortowania JS (pod watermark/tags)
   </script>
 </body>
 </html>
