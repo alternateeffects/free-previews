@@ -353,6 +353,34 @@ footer {
 .tag-btn:hover:not(.active) {
   color: #ff3636;
 }
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
+.clip-card.portrait .video-wrapper {
+  aspect-ratio: 9/16;
+}
+.video-wrapper video,
+.video-wrapper .custom-overlay {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  top: 0; left: 0;
+}
+.video-wrapper video {
+  position: relative;
+  z-index: 1;
+}
+.custom-overlay {
+  z-index: 2;
+  pointer-events: none;
+  display: block;
+}
+
 /* PROGRESS BAR CSS */
 .clipbar-container {
   width: 97vw;
