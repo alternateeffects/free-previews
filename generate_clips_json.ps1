@@ -11,6 +11,7 @@ $tagMap = @{
 	"satisfying" = "satisfying"
 	"kinetic"    = "kinetic infographic"
 	"maps"       = "maps bars"
+	"space"      = "space clips"
     # dodawaj tu kolejne klucze/tagi według własnych zasad!
 }
 
