@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Bebas+Neue&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <style>
+    /* Overlay + wrapper for video & thumbnail (dla 100% "działało" jak kiedyś) */
     .video-wrapper {
       position: relative;
       width: 100%;
@@ -19,7 +20,6 @@
       z-index: 2;
       pointer-events: none;
       object-fit: contain;
-      /* Poniżej koduje PNG w pełni przezroczysty */
     }
     .video-wrapper video {
       display: block;
@@ -36,7 +36,7 @@
     Want watermark-free, 4K 60fps versions?<br>
     <a href="https://alternateeffects.com" class="announcement-link">Visit our shop for full access!</a>
   </div>
-  
+
   <header>
     <button class="hamburger" aria-label="menu">&#9776;</button>
     <span class="logo">ALTERNATE EFFECTS</span>
@@ -54,6 +54,22 @@
       </ul>
     </nav>
   </div>
+
+  <!-- PROGRESS BAR / CLIPBAR (u góry strony, NIE w siatce klipów!) -->
+  <div class="clipbar-container">
+    <div class="clipbar-title">
+      OUR CLIP LIBRARY:
+      <span id="clipbar-cur"></span> / <span id="clipbar-goal">60,000</span> CLIPS
+    </div>
+    <div class="clipbar-bar" id="clipbar-bar">
+      <div class="clipbar-inner" id="clipbar-inner"></div>
+      <div class="clipbar-icon" id="clipbar-icon">
+        <img src="assets/playhead.svg" alt="playhead" draggable="false"/>
+      </div>
+    </div>
+    <div class="clipbar-percent" id="clipbar-percent"></div>
+  </div>
+  <!-- /CLIPBAR -->
 
   <section class="hero">
     <h1>FREEBIE GALLERY</h1>
@@ -101,6 +117,17 @@
     document.getElementById('mobileMenuOverlay').onclick = function(e) {
       if(e.target===this) this.classList.remove('active');
     };
+
+    // PROGRESS BAR LOGIC
+    function updateClipProgress(goal = 60000) {
+      const cur = allClipsData.length;
+      const perc = Math.min(Math.floor((cur/goal)*100),100);
+      document.getElementById('clipbar-cur').textContent = cur.toLocaleString();
+      document.getElementById('clipbar-goal').textContent = goal.toLocaleString();
+      document.getElementById('clipbar-percent').textContent = `${perc}% OF GOAL`;
+      document.getElementById('clipbar-inner').style.width = perc + '%';
+      document.getElementById('clipbar-icon').style.left = `calc(${perc}% - 14px)`;
+    }
 
     // --- SORTOWANIE LOGIKA ---
     const gallery = document.getElementById('gallery');
@@ -154,6 +181,7 @@
     async function loadClips() {
       const response = await fetch('clips.json');
       allClipsData = await response.json();
+      updateClipProgress(); // <= Ważne! Pod progress bar!
       renderClips();
     }
 
@@ -162,12 +190,15 @@
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
           document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           currentOrientation = btn.dataset.filter;
           renderClips();
         });
       });
+
       document.querySelectorAll('.mark-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.mark-btn').forEach(b => b.classList.remove('active'));
@@ -176,6 +207,7 @@
           renderClips();
         });
       });
+
       document.querySelectorAll('.tag-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
