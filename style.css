@@ -296,6 +296,7 @@ footer {
   /* czerwony glow tylko na TEKŚCIE */
   text-shadow:
     0 0 8px #ff0000cc,
+	0 0 14px #ff0000cc,
     0 0 4px #ff0000cc;
 }
 .mark-btn:hover:not(.active) {
