@@ -487,15 +487,15 @@ footer {
   gap: 14px;
   align-items: stretch;
   margin-top: 21px;
-}
-.v-sep {
+  }
+  .v-sep {
   width: 97%;
   height: 2px;
   background: #ff1a1a;
   border-radius: 2px;
   margin: 3px 0 8px 0;
   align-self: center;
-}
+  }
 
   /* MODAL MENU (tylko mobile) */
   .mobile-modal-overlay {
