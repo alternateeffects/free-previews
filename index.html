@@ -6,29 +6,6 @@
   <title>Freebie Gallery | Alternate Effects</title>
   <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Bebas+Neue&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
-  <style>
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      height: auto;
-    }
-    .custom-overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 2;
-      pointer-events: none;
-      object-fit: contain;
-      /* Poniżej koduje PNG w pełni przezroczysty */
-    }
-    .video-wrapper video {
-      display: block;
-      width: 100%;
-      height: auto;
-      z-index: 1;
-      background: #000;
-    }
-  </style>
 </head>
 <body>
   <!-- Announcement bar -->
@@ -55,6 +32,21 @@
     </nav>
   </div>
 
+  <!-- FANCY PROGRESS BAR -->
+  <div class="clipbar-container">
+    <div class="clipbar-title">
+      OUR CLIP LIBRARY:
+      <span id="clipbar-cur"></span> / <span id="clipbar-goal">60,000</span> CLIPS
+    </div>
+    <div class="clipbar-bar" id="clipbar-bar">
+      <div class="clipbar-inner" id="clipbar-inner"></div>
+      <div class="clipbar-icon" id="clipbar-icon">
+        <img src="assets/playhead.svg" alt="playhead" draggable="false"/>
+      </div>
+    </div>
+    <div class="clipbar-percent" id="clipbar-percent"></div>
+  </div>
+
   <section class="hero">
     <h1>FREEBIE GALLERY</h1>
     <p class="subtitle">Professional motion clips // Royalty-free // Instant download.<br>
@@ -64,8 +56,6 @@
       <button class="filter-btn" data-filter="landscape">Landscape</button>
       <button class="filter-btn" data-filter="portrait">Portrait</button>
     </div>
-
-    <!-- FILTRY: watermark + tagi -->
     <div class="hero-filters-row">
       <div class="watermark-switch">
         <button class="mark-btn active" data-watermark="all">All</button>
@@ -101,6 +91,21 @@
     document.getElementById('mobileMenuOverlay').onclick = function(e) {
       if(e.target===this) this.classList.remove('active');
     };
+
+    // PROGRESS BAR LOGIC
+    function updateClipProgress(goal = 60000) {
+      const cur = allClipsData.length;
+      const perc = Math.min(Math.floor((cur/goal)*100),100);
+      document.getElementById('clipbar-cur').textContent = cur.toLocaleString();
+      document.getElementById('clipbar-goal').textContent = goal.toLocaleString();
+      document.getElementById('clipbar-percent').textContent = `${perc}% OF GOAL`;
+
+      // Bar + playhead icon animation
+      const bar = document.getElementById('clipbar-bar');
+      const barW = bar.offsetWidth - 32;
+      document.getElementById('clipbar-inner').style.width = perc + '%';
+      document.getElementById('clipbar-icon').style.left = `calc(${perc}% - 14px)`;
+    }
 
     // --- SORTOWANIE LOGIKA ---
     const gallery = document.getElementById('gallery');
@@ -154,6 +159,7 @@
     async function loadClips() {
       const response = await fetch('clips.json');
       allClipsData = await response.json();
+      updateClipProgress();
       renderClips();
     }
 
