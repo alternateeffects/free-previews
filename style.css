@@ -449,6 +449,7 @@ footer {
     align-items: stretch;
     box-sizing: border-box;
     overflow-x: visible;
+	height:80px;
   }
   .watermark-switch {
     display: flex;
@@ -488,7 +489,6 @@ footer {
     overflow-x: auto;
     padding-bottom: 4px;
     width: 100vw;
-	height: 20px;
     max-width: 100vw;
     margin-left: 50%;
     transform: translateX(-50%);
