@@ -1,7 +1,7 @@
 $indir = "clips-watermarked"
 $outfile = "clips.json"
 
-# Zdefiniuj tagi/klucze
+# Tag map
 $tagMap = @{
     "silhouette" = "silhouettes"
     "neon"       = "neon icons"
@@ -28,12 +28,20 @@ Get-ChildItem -Path $indir -Filter *.mp4 | ForEach-Object {
     if (([int]$w) -ge ([int]$h)) { $orientation = "landscape" } else { $orientation = "portrait" }
     # ---- END ORIENTATION ----
 
+    # ---- WATERMARK rozpoznaj po nazwie ----
+    if ($file -like "*-watermarked-light.mp4")  { $watermark = "light";  $haswatermark = $true }
+    elseif ($file -like "*-watermarked-strong.mp4") { $watermark = "strong"; $haswatermark = $true }
+    elseif ($file -like "*-watermarked-none.mp4")   { $watermark = "none"; $haswatermark = $false }
+    else { $watermark = "unknown"; $haswatermark = $false }
+
     $clipList += [PSCustomObject]@{
         title = $title
         file  = "$indir/$file"
         tags  = $tags
         thumbnail = ""
         orientation = $orientation
+        watermark = $watermark
+        has_watermark = $haswatermark
     }
 }
 
