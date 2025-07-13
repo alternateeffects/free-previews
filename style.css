@@ -227,7 +227,7 @@ header {
 .download-btn {
   display: inline-block;
   background: #ff1a1a;
-  color: #fff;
+  color: #000;
   border-radius: 24px;
   padding: 10px 36px;
   font-weight: bold;
