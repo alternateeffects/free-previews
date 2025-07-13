@@ -376,7 +376,7 @@ footer {
     justify-content: center;
     flex-wrap: wrap;
     gap: 4px;
-    width: 100%;
+    width: 50%;
   }
   .download-btn {
     text-align: center;
