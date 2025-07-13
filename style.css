@@ -194,7 +194,7 @@ header {
   width: 100%;
   height: auto;
   border-radius: 13px;
-  background: #232323;
+  # background: #232323;
   box-shadow: 0 2px 9px #0006;
   outline: none;
   margin-bottom: 17px;
