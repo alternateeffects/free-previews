@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Freebie Gallery | Alternate Effects</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400&family=Bebas+Neue&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Bebas+Neue&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -40,6 +40,27 @@
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="landscape">Landscape</button>
       <button class="filter-btn" data-filter="portrait">Portrait</button>
+    </div>
+
+    <!-- FILTRY: watermark + tagi -->
+    <div class="hero-filters-row">
+      <!-- Wybor watermark (po lewej, na stałe) -->
+      <div class="watermark-switch">
+        <button class="mark-btn active" data-watermark="all">All</button>
+        <button class="mark-btn" data-watermark="light">Light</button>
+        <button class="mark-btn" data-watermark="strong">Strong</button>
+        <button class="mark-btn" data-watermark="none">None</button>
+      </div>
+      <div class="v-sep"></div>
+      <!-- Tag-scroll: przesuwalne, po prawej -->
+      <div class="tag-scroll">
+        <button class="tag-btn active" data-tag="all">All tags</button>
+        <button class="tag-btn" data-tag="silhouettes">Silhouettes</button>
+        <button class="tag-btn" data-tag="neon">Neon icons</button>
+        <button class="tag-btn" data-tag="viral">Viral reels</button>
+        <button class="tag-btn" data-tag="paper">Paper animations</button>
+        <!-- ...więcej tagów wygenerujesz dynamicznie w JS później -->
+      </div>
     </div>
   </section>
 
@@ -106,6 +127,8 @@
         });
       });
     });
+
+    // MARK/TAG SWITCHERS – tu w przyszłości możesz dorzucić obsługę sortowania JS (pod watermark/tags)
   </script>
 </body>
 </html>
