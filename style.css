@@ -269,6 +269,7 @@ footer {
   margin: 32px auto 0 auto;
   gap: 23px;
 }
+
 .watermark-switch {
   display: flex;
   gap: 8px;
@@ -291,9 +292,11 @@ footer {
 }
 .mark-btn.active,
 .mark-btn:active {
-  color: #111;
-  /* Czerwony glow tylko na TEKŚCIE */
-  text-shadow: 0 0 8px #ff4444cc, 0 0 4px #ff4444cc, 0 1px 4px #fff;
+  color: #f00000 !important;
+  /* czerwony glow tylko na TEKŚCIE */
+  text-shadow:
+    0 0 8px #ff0000cc,
+    0 0 4px #ff0000cc;
 }
 .mark-btn:hover:not(.active) {
   color: #ff3636;
@@ -340,11 +343,13 @@ footer {
 }
 .tag-btn.active,
 .tag-btn:active {
-  color: #000;
-  text-shadow: 0 0 8px ff0000, 0 0 4px ff0000, 0 1px 4px #fff;
+  color: #f00000 !important;
+  text-shadow:
+    0 0 8px #ff0000cc,
+    0 0 4px #ff0000cc;
 }
 .tag-btn:hover:not(.active) {
-  color: ff0000;
+  color: #ff3636;
 }
 
 /* ==== RESPONSIVE MOBILE ==== */
