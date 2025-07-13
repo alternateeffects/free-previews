@@ -188,17 +188,14 @@
     loadClips();
 
     document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          currentOrientation = btn.dataset.filter;
-          renderClips();
+	  document.querySelectorAll('.filter-btn').forEach(btn => {
+	    btn.addEventListener('click', () => {
+	      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+	      btn.classList.add('active');
+	      currentOrientation = btn.dataset.filter;
+	      renderClips();
         });
       });
-
       document.querySelectorAll('.mark-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.mark-btn').forEach(b => b.classList.remove('active'));
@@ -207,7 +204,6 @@
           renderClips();
         });
       });
-
       document.querySelectorAll('.tag-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
