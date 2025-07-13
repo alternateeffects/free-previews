@@ -449,7 +449,7 @@ footer {
     align-items: stretch;
     box-sizing: border-box;
     overflow-x: visible;
-	height:80px;
+	height:100px;
   }
   .watermark-switch {
     display: flex;
