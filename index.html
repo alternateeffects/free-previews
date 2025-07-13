@@ -7,11 +7,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Bebas+Neue&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Overlay + wrapper for video & thumbnail (dla 100% "działało" jak kiedyś) */
     .video-wrapper {
       position: relative;
       width: 100%;
       height: auto;
+      cursor: pointer;
+    }
+    .clip-thumb {
+      width: 100%;
+      display: block;
+      border-radius: 0;
     }
     .custom-overlay {
       position: absolute;
@@ -20,6 +25,7 @@
       z-index: 2;
       pointer-events: none;
       object-fit: contain;
+      border-radius: 0;
     }
     .video-wrapper video {
       display: block;
@@ -28,6 +34,20 @@
       z-index: 1;
       background: #000;
     }
+    .show-more-btn {
+      display:block; 
+      margin:40px auto 60px auto; 
+      font-size:1.2em; 
+      padding:10px 30px; 
+      border-radius:16px; 
+      border:none;
+      background:#181818;
+      color:#ffe400;
+      letter-spacing:0.12em;
+      cursor:pointer;
+      transition:background .2s;
+    }
+    .show-more-btn:hover { background:#222; }
   </style>
 </head>
 <body>
@@ -55,7 +75,7 @@
     </nav>
   </div>
 
-  <!-- PROGRESS BAR / CLIPBAR (u góry strony, NIE w siatce klipów!) -->
+  <!-- PROGRESS BAR / CLIPBAR -->
   <div class="clipbar-container">
     <div class="clipbar-title">
       OUR CLIP LIBRARY:
@@ -69,7 +89,6 @@
     </div>
     <div class="clipbar-percent" id="clipbar-percent"></div>
   </div>
-  <!-- /CLIPBAR -->
 
   <section class="hero">
     <h1>FREEBIE GALLERY</h1>
@@ -119,7 +138,7 @@
     };
 
     // PROGRESS BAR LOGIC
-    function updateClipProgress(goal = 60) {
+    function updateClipProgress(goal = 60000) {
       const cur = allClipsData.length;
       const perc = Math.min(Math.floor((cur/goal)*100),100);
       document.getElementById('clipbar-cur').textContent = cur.toLocaleString();
@@ -129,7 +148,9 @@
       document.getElementById('clipbar-icon').style.left = `calc(${perc}% - 14px)`;
     }
 
-    // --- SORTOWANIE LOGIKA ---
+    // --- Infinite Scroll + Fast Thumbnails ---
+    let showCount = 30;
+    const PAGE_SIZE = 30;
     const gallery = document.getElementById('gallery');
     let allClipsData = [];
     let currentOrientation = "all";
@@ -138,22 +159,25 @@
 
     function renderClips() {
       gallery.innerHTML = "";
-      allClipsData.forEach(clip => {
-        if (currentOrientation !== "all" && clip.orientation !== currentOrientation) return;
-        if (currentWatermark !== "all" && clip.watermark !== currentWatermark) return;
-        if (currentTag !== "all" && !clip.tags.map(t => t.toLowerCase()).includes(currentTag)) return;
+      let filtered = allClipsData.filter(clip => {
+        if (currentOrientation !== "all" && clip.orientation !== currentOrientation) return false;
+        if (currentWatermark !== "all" && clip.watermark !== currentWatermark) return false;
+        if (currentTag !== "all" && !clip.tags.map(t => t.toLowerCase()).includes(currentTag)) return false;
+        return true;
+      });
 
-        const overlay = clip.thumbnail
-          ? `<img class="custom-overlay" src="${clip.thumbnail}" alt="thumbnail" />`
-          : "";
-        const cardClass = `clip-card ${clip.orientation || ""}`;
+      let shown = 0;
+      for (let i = 0; i < filtered.length && shown < showCount; i++, shown++) {
+        const clip = filtered[i];
         const card = document.createElement('div');
-        card.className = cardClass;
+        card.className = `clip-card ${clip.orientation || ""}`;
+        // Miniaturka JPG z overlayem PNG nad nią
+        const thumbJpg = `thumbs-watermarked/${clip.title}.jpg`;
 
         card.innerHTML = `
-          <div class="video-wrapper">
-            <video controls src="${clip.file}" preload="metadata" tabindex="0" style="width:100%;height:auto;display:block;"></video>
-            ${overlay}
+          <div class="video-wrapper" tabindex="0">
+            <img class="clip-thumb" src="${thumbJpg}" alt="thumbnail" />
+            <img class="custom-overlay" src="${clip.thumbnail}" alt="overlay" />
           </div>
           <div class="clip-info">
             <div class="clip-tags">
@@ -165,54 +189,73 @@
         `;
         gallery.appendChild(card);
 
-        // Hide overlay on play
-        const video = card.querySelector("video");
-        const overlayImg = card.querySelector(".custom-overlay");
-        if (video && overlayImg) {
-          video.addEventListener("play", () => overlayImg.style.display = "none");
-          video.addEventListener("pause", () => overlayImg.style.display = "");
-          video.addEventListener("seeked", () => {
-            if (video.paused) overlayImg.style.display = "";
-          });
+        // Zamień na <video> po kliknięciu/thumbnalu
+        card.querySelector('.video-wrapper').addEventListener('click', function handler() {
+          this.innerHTML = `
+            <video controls src="${clip.file}" preload="auto"
+              style="width:100%;height:auto;display:block;background:#000;border-radius:8px;"></video>
+          `;
+          this.removeEventListener('click', handler);
+        });
+      }
+
+      // Infinite scroll: Intersection Observer
+      if (shown < filtered.length) {
+        let sentinel = document.getElementById("load-sentinel");
+        if (!sentinel) {
+          sentinel = document.createElement("div");
+          sentinel.id = "load-sentinel";
+          sentinel.style.height = "40px";
+          gallery.appendChild(sentinel);
+          let observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting) {
+              showCount += PAGE_SIZE;
+              renderClips();
+            }
+          }, {threshold: 0.6});
+          observer.observe(sentinel);
         }
-      });
+      }
     }
 
     async function loadClips() {
       const response = await fetch('clips.json');
       allClipsData = await response.json();
-      updateClipProgress(); // <= Ważne! Pod progress bar!
+      updateClipProgress();
       renderClips();
     }
 
     loadClips();
 
     document.addEventListener('DOMContentLoaded', () => {
-	  document.querySelectorAll('.filter-btn').forEach(btn => {
-	    btn.addEventListener('click', () => {
-	      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-	      btn.classList.add('active');
-	      currentOrientation = btn.dataset.filter;
-	      renderClips();
+	    document.querySelectorAll('.filter-btn').forEach(btn => {
+	      btn.addEventListener('click', () => {
+	        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+	        btn.classList.add('active');
+	        currentOrientation = btn.dataset.filter;
+	        showCount = PAGE_SIZE;
+	        renderClips();
+          });
+        });
+        document.querySelectorAll('.mark-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.mark-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentWatermark = btn.dataset.watermark;
+            showCount = PAGE_SIZE;
+            renderClips();
+          });
+        });
+        document.querySelectorAll('.tag-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentTag = btn.dataset.tag;
+            showCount = PAGE_SIZE;
+            renderClips();
+          });
         });
       });
-      document.querySelectorAll('.mark-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.mark-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          currentWatermark = btn.dataset.watermark;
-          renderClips();
-        });
-      });
-      document.querySelectorAll('.tag-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          currentTag = btn.dataset.tag;
-          renderClips();
-        });
-      });
-    });
   </script>
 </body>
 </html>
