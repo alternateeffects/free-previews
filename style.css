@@ -400,6 +400,8 @@ footer {
     font-size: 1.09rem;
     flex: 1;
     justify-content: center;
+	margin-right: 48px;
+    margin-top: 6px;
     letter-spacing: 0.04em;
     text-align: center;
   }
