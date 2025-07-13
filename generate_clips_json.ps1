@@ -8,6 +8,7 @@ $tagMap = @{
     "viral"      = "viral reels"
     "paper"      = "paper animations"
     "green"      = "green screen"
+	"satisfying" = "satisfying"
     # dodawaj tu kolejne klucze/tagi według własnych zasad!
 }
 
