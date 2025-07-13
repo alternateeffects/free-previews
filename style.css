@@ -345,8 +345,9 @@ footer {
 .tag-btn:active {
   color: #f00000 !important;
   text-shadow:
-    0 0 8px #fffc00,
-    0 0 4px #fffc00;
+    0 0 8px #ff0000cc,
+	0 0 14px #ff0000cc,
+    0 0 4px #ff0000cc;
 }
 .tag-btn:hover:not(.active) {
   color: #ff3636;
