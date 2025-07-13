@@ -390,7 +390,7 @@ footer {
 }
 
 .clipbar-inner {
-  background: linear-gradient(90deg, #ff1a1a 0% , #ffe39a 100%);
+  background: linear-gradient(90deg, #ff0000 0% , #ffe400 100%);
   border-radius: 21px;
   height: 100%;
   width: 0%;
