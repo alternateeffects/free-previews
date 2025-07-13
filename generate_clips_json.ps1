@@ -9,6 +9,7 @@ $tagMap = @{
     "paper"      = "paper animations"
     "green"      = "green screen"
 	"satisfying" = "satisfying"
+	"kinetic"    = "kinetic infographic"
     # dodawaj tu kolejne klucze/tagi według własnych zasad!
 }
 
