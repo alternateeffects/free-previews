@@ -259,6 +259,93 @@ footer {
   border-top: 1px solid #222;
   background: #101010;
 }
+.hero-filters-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1100px;
+  margin: 32px auto 0 auto;
+  gap: 23px;
+}
+.watermark-switch {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.mark-btn {
+  font-family: 'Cabin', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.03rem;
+  color: #ff1a1a;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 3px 22px;
+  margin: 0;
+  border-radius: 13px;
+  cursor: pointer;
+  transition: color 0.17s, text-shadow 0.18s;
+  letter-spacing: 0.01em;
+}
+.mark-btn.active,
+.mark-btn:active {
+  color: #111;
+  /* Czerwony glow tylko na TEKŚCIE */
+  text-shadow: 0 0 8px #ff4444cc, 0 0 4px #ff4444cc, 0 1px 4px #fff;
+}
+.mark-btn:hover:not(.active) {
+  color: #ff3636;
+}
+
+.v-sep {
+  width: 2px;
+  height: 27px;
+  background: #ff1a1a;
+  border-radius: 2px;
+  margin: 0 8px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.tag-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  white-space: nowrap;
+  align-items: center;
+  flex: 1 1 0;
+  justify-content: flex-start;
+}
+.tag-scroll::-webkit-scrollbar { display: none; }
+
+.tag-btn {
+  font-family: 'Cabin', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.03rem;
+  color: #ff1a1a;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 3px 22px;
+  margin: 0;
+  border-radius: 13px;
+  cursor: pointer;
+  transition: color 0.16s, text-shadow 0.19s;
+  letter-spacing: 0.01em;
+}
+.tag-btn.active,
+.tag-btn:active {
+  color: #111;
+  text-shadow: 0 0 8px #ff4444cc, 0 0 4px #ff4444cc, 0 1px 4px #fff;
+}
+.tag-btn:hover:not(.active) {
+  color: #ff3636;
+}
 
 /* ==== RESPONSIVE MOBILE ==== */
 @media (max-width: 650px) {
@@ -395,6 +482,20 @@ footer {
     min-width: 130px;
     display: block;
   }
+  .hero-filters-row {
+  flex-direction: column;
+  gap: 14px;
+  align-items: stretch;
+  margin-top: 21px;
+}
+.v-sep {
+  width: 97%;
+  height: 2px;
+  background: #ff1a1a;
+  border-radius: 2px;
+  margin: 3px 0 8px 0;
+  align-self: center;
+}
 
   /* MODAL MENU (tylko mobile) */
   .mobile-modal-overlay {
