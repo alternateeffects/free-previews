@@ -292,8 +292,7 @@ footer {
 }
 .mark-btn.active,
 .mark-btn:active {
-  color: #f00000 !important;
-  /* czerwony glow tylko na TEKŚCIE */
+  color: #000000 !important;
   text-shadow:
     0 0 8px #ff0000cc,
     0 0 4px #ff0000cc;
@@ -343,7 +342,7 @@ footer {
 }
 .tag-btn.active,
 .tag-btn:active {
-  color: #f00000 !important;
+  color: #000000 !important;
   text-shadow:
     0 0 8px #ff0000cc,
     0 0 4px #ff0000cc;
