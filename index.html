@@ -6,6 +6,29 @@
   <title>Freebie Gallery | Alternate Effects</title>
   <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Bebas+Neue&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+    .custom-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 2;
+      pointer-events: none;
+      object-fit: contain;
+      /* Poniżej koduje PNG w pełni przezroczysty */
+    }
+    .video-wrapper video {
+      display: block;
+      width: 100%;
+      height: auto;
+      z-index: 1;
+      background: #000;
+    }
+  </style>
 </head>
 <body>
   <!-- Announcement bar -->
@@ -44,7 +67,6 @@
 
     <!-- FILTRY: watermark + tagi -->
     <div class="hero-filters-row">
-      <!-- Wybor watermark (po lewej, na stałe) -->
       <div class="watermark-switch">
         <button class="mark-btn active" data-watermark="all">All</button>
         <button class="mark-btn" data-watermark="light">Light</button>
@@ -52,7 +74,6 @@
         <button class="mark-btn" data-watermark="none">None</button>
       </div>
       <div class="v-sep"></div>
-      <!-- Tag-scroll: przesuwalne, po prawej -->
       <div class="tag-scroll" id="tagScrollBar">
         <button class="tag-btn active" data-tag="all">All tags</button>
         <button class="tag-btn" data-tag="silhouettes">Silhouettes</button>
@@ -95,13 +116,18 @@
         if (currentWatermark !== "all" && clip.watermark !== currentWatermark) return;
         if (currentTag !== "all" && !clip.tags.map(t => t.toLowerCase()).includes(currentTag)) return;
 
-        const poster = clip.thumbnail ? clip.thumbnail : '';
+        const overlay = clip.thumbnail
+          ? `<img class="custom-overlay" src="${clip.thumbnail}" alt="thumbnail" />`
+          : "";
         const cardClass = `clip-card ${clip.orientation || ""}`;
         const card = document.createElement('div');
         card.className = cardClass;
 
         card.innerHTML = `
-          <video controls src="${clip.file}" poster="${poster}" preload="metadata" tabindex="0" style="width:100%;height:auto;display:block;"></video>
+          <div class="video-wrapper">
+            <video controls src="${clip.file}" preload="metadata" tabindex="0" style="width:100%;height:auto;display:block;"></video>
+            ${overlay}
+          </div>
           <div class="clip-info">
             <div class="clip-tags">
               ${clip.tags.map(t => `<span class="tag">${t.toUpperCase()}</span>`).join("")}
@@ -111,6 +137,17 @@
           </div>
         `;
         gallery.appendChild(card);
+
+        // Hide overlay on play
+        const video = card.querySelector("video");
+        const overlayImg = card.querySelector(".custom-overlay");
+        if (video && overlayImg) {
+          video.addEventListener("play", () => overlayImg.style.display = "none");
+          video.addEventListener("pause", () => overlayImg.style.display = "");
+          video.addEventListener("seeked", () => {
+            if (video.paused) overlayImg.style.display = "";
+          });
+        }
       });
     }
 
