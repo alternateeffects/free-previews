@@ -514,7 +514,7 @@ footer {
     columns: 1 98vw;
     column-gap: 0;
     padding: 10px 0 12px 0;
-    margin: 0 auto;
+    margin: 15 auto;
     text-align: center;
   }
   .clip-card {
