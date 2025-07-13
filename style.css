@@ -340,11 +340,11 @@ footer {
 }
 .tag-btn.active,
 .tag-btn:active {
-  color: #111;
-  text-shadow: 0 0 8px #ff4444cc, 0 0 4px #ff4444cc, 0 1px 4px #fff;
+  color: #000;
+  text-shadow: 0 0 8px ff0000, 0 0 4px ff0000, 0 1px 4px #fff;
 }
 .tag-btn:hover:not(.active) {
-  color: #ff3636;
+  color: ff0000;
 }
 
 /* ==== RESPONSIVE MOBILE ==== */
