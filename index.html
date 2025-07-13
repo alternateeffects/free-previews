@@ -138,7 +138,7 @@
     };
 
     // PROGRESS BAR LOGIC
-    function updateClipProgress(goal = 60000) {
+    function updateClipProgress(goal = 6000) {
       const cur = allClipsData.length;
       const perc = Math.min(Math.floor((cur/goal)*100),100);
       document.getElementById('clipbar-cur').textContent = cur.toLocaleString();
