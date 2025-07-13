@@ -11,9 +11,9 @@
       position: relative;
       width: 100%;
       height: auto;
-	  margin-bottom: 10px;
+      margin-bottom: 10px;
       cursor: pointer;
-	  margin-top: -9px;
+      margin-top: -9px;
     }
     .clip-thumb {
       width: 100%;
@@ -50,6 +50,9 @@
       transition:background .2s;
     }
     .show-more-btn:hover { background:#222; }
+    .tag-btn {
+      text-transform: capitalize;
+    }
   </style>
 </head>
 <body>
@@ -112,11 +115,7 @@
       </div>
       <div class="v-sep"></div>
       <div class="tag-scroll" id="tagScrollBar">
-        <button class="tag-btn active" data-tag="all">All tags</button>
-        <button class="tag-btn" data-tag="silhouettes">Silhouettes</button>
-        <button class="tag-btn" data-tag="neon icons">Neon icons</button>
-        <button class="tag-btn" data-tag="viral reels">Viral reels</button>
-        <button class="tag-btn" data-tag="paper animations">Paper animations</button>
+        <!-- DYNAMICZNE! (JS wygeneruje tu przyciski) -->
       </div>
     </div>
   </section>
@@ -139,7 +138,7 @@
       if(e.target===this) this.classList.remove('active');
     };
 
-    // PROGRESS BAR LOGIC
+    // PROGRESS BAR
     function updateClipProgress(goal = 6000) {
       const cur = allClipsData.length;
       const perc = Math.min(Math.floor((cur/goal)*100),100);
@@ -159,6 +158,33 @@
     let currentWatermark = "all";
     let currentTag = "all";
 
+    // DYNAMICZNY SCROLL TAGÓW
+    function generateTagScroll() {
+      const tagScroll = document.getElementById('tagScrollBar');
+      tagScroll.innerHTML = ''; // Wyczyść stare
+      const tags = new Set(["all"]);
+      allClipsData.forEach(clip => clip.tags.forEach(t => tags.add(t)));
+      tags.forEach(tag => {
+        const btn = document.createElement('button');
+        btn.className = 'tag-btn' + (tag === "all" ? ' active' : '');
+        btn.dataset.tag = tag.toLowerCase();
+        // Capitalize
+        btn.textContent = (tag === "all" ? "All tags"
+          : tag.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' '));
+        tagScroll.appendChild(btn);
+      });
+      // Dopnij eventy
+      tagScroll.querySelectorAll('.tag-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          tagScroll.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentTag = btn.dataset.tag;
+          showCount = PAGE_SIZE;
+          renderClips();
+        });
+      });
+    }
+
     function renderClips() {
       gallery.innerHTML = "";
       let filtered = allClipsData.filter(clip => {
@@ -173,7 +199,6 @@
         const clip = filtered[i];
         const card = document.createElement('div');
         card.className = `clip-card ${clip.orientation || ""}`;
-        // Miniaturka JPG z overlayem PNG nad nią
         const thumbJpg = `thumbs-watermarked/${clip.title}.jpg`;
 
         card.innerHTML = `
@@ -183,7 +208,7 @@
           </div>
           <div class="clip-info">
             <div class="clip-tags">
-              ${clip.tags.map(t => `<span class="tag">${t.toUpperCase()}</span>`).join("")}
+              ${clip.tags.map(t => `<span class="tag">${t.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')}</span>`).join("")}
               <span class="tag orientation-tag">${clip.orientation ? clip.orientation.toUpperCase() : ""}</span>
             </div>
             <a href="${clip.file}" download class="download-btn">DOWNLOAD</a>
@@ -224,40 +249,32 @@
       const response = await fetch('clips.json');
       allClipsData = await response.json();
       updateClipProgress();
+      generateTagScroll();
       renderClips();
     }
 
     loadClips();
 
     document.addEventListener('DOMContentLoaded', () => {
-	    document.querySelectorAll('.filter-btn').forEach(btn => {
-	      btn.addEventListener('click', () => {
-	        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-	        btn.classList.add('active');
-	        currentOrientation = btn.dataset.filter;
-	        showCount = PAGE_SIZE;
-	        renderClips();
-          });
-        });
-        document.querySelectorAll('.mark-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            document.querySelectorAll('.mark-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentWatermark = btn.dataset.watermark;
-            showCount = PAGE_SIZE;
-            renderClips();
-          });
-        });
-        document.querySelectorAll('.tag-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentTag = btn.dataset.tag;
-            showCount = PAGE_SIZE;
-            renderClips();
-          });
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentOrientation = btn.dataset.filter;
+          showCount = PAGE_SIZE;
+          renderClips();
         });
       });
+      document.querySelectorAll('.mark-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.mark-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentWatermark = btn.dataset.watermark;
+          showCount = PAGE_SIZE;
+          renderClips();
+        });
+      });
+    });
   </script>
 </body>
 </html>
