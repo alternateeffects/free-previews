@@ -8,6 +8,7 @@ $tagMap = @{
     "viral"      = "viral reels"
     "paper"      = "paper animations"
     "green"      = "green screen"
+    # dodawaj tu kolejne klucze/tagi według własnych zasad!
 }
 
 $clipList = @()
@@ -34,11 +35,18 @@ Get-ChildItem -Path $indir -Filter *.mp4 | ForEach-Object {
     elseif ($file -like "*-watermarked-none.mp4")   { $watermark = "none"; $haswatermark = $false }
     else { $watermark = "unknown"; $haswatermark = $false }
 
+    # ---- THUMBNAIL: portrait/landscape ----
+    if ($orientation -eq "landscape") {
+        $thumbnail = "assets/thumbnail-landscape.png"
+    } else {
+        $thumbnail = "assets/thumbnail-portrait.png"
+    }
+
     $clipList += [PSCustomObject]@{
         title = $title
         file  = "$indir/$file"
         tags  = $tags
-        thumbnail = ""
+        thumbnail = $thumbnail
         orientation = $orientation
         watermark = $watermark
         has_watermark = $haswatermark
