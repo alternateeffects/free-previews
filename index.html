@@ -52,72 +52,6 @@
     .show-more-btn:hover { background:#222; }
     .tag-btn {
       text-transform: capitalize;
-      margin-bottom: 0;
-    }
-    .tag-scroll-wrapper {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      position: relative;
-      gap: 5px;
-    }
-    .tag-scroll {
-      display: flex;
-      flex-direction: row;
-      gap: 7px;
-      overflow-x: auto;
-      white-space: nowrap;
-      padding-bottom: 6px;
-      scrollbar-width: thin;
-      scrollbar-color: #ffe40033 #131313;
-      flex-grow: 1;
-      scroll-behavior: smooth;
-    }
-    .tag-scroll-arrow {
-      background: #181818dd;
-      color: #ffe400;
-      border: none;
-      border-radius: 50%;
-      width: 28px; height: 28px;
-      font-size: 1.33em;
-      font-family: inherit;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 1px 6px #111a;
-      margin: 0 2px;
-      transition: background .13s, color .13s;
-      z-index: 2;
-      user-select: none;
-      min-width: 28px;
-      min-height: 28px;
-    }
-    .tag-scroll-arrow:active { background: #ffe400cc; color: #181818; }
-    @media (max-width: 900px) {
-      .tag-scroll-arrow { display: none; }
-      .tag-scroll { flex-grow:1; }
-    }
-    /* FANCY FADE */
-    .tag-scroll-fade {
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 32px;
-      pointer-events: none;
-      z-index: 3;
-      transition: opacity .18s;
-    }
-    .tag-scroll-fade.left {
-      left: 0;
-      background: linear-gradient(90deg, #19181c 90%, transparent 100%);
-      opacity: 0;
-    }
-    .tag-scroll-fade.right {
-      right: 0;
-      background: linear-gradient(-90deg, #19181c 90%, transparent 100%);
-      opacity: 0;
-    }
-    .tag-scroll-fade.active { opacity: 1; }
-    @media (max-width: 900px) {
-      .tag-scroll-fade { display:none!important; }
     }
   </style>
 </head>
@@ -181,11 +115,9 @@
       </div>
       <div class="v-sep"></div>
       <div class="tag-scroll-wrapper">
-        <div class="tag-scroll-fade left"></div>
-        <button class="tag-scroll-arrow tag-scroll-left" aria-label="Scroll left">&lt;</button>
-        <div class="tag-scroll" id="tagScrollBar"></div>
-        <button class="tag-scroll-arrow tag-scroll-right" aria-label="Scroll right">&gt;</button>
-        <div class="tag-scroll-fade right"></div>
+       <button class="tag-scroll-arrow tag-scroll-left" aria-label="Scroll left">&lt;</button>
+       <div class="tag-scroll" id="tagScrollBar"></div>
+       <button class="tag-scroll-arrow tag-scroll-right" aria-label="Scroll right">&gt;</button>
       </div>
     </div>
   </section>
@@ -207,30 +139,6 @@
     document.getElementById('mobileMenuOverlay').onclick = function(e) {
       if(e.target===this) this.classList.remove('active');
     };
-
-    // TAG SCROLL ARROWS & FANCY FADE
-    function updateTagScrollFade() {
-      const tagScroll = document.getElementById('tagScrollBar');
-      const fadeL = document.querySelector('.tag-scroll-fade.left');
-      const fadeR = document.querySelector('.tag-scroll-fade.right');
-      if (!tagScroll || !fadeL || !fadeR) return;
-      if (tagScroll.scrollLeft > 2) fadeL.classList.add('active');
-      else fadeL.classList.remove('active');
-      if (tagScroll.scrollLeft < tagScroll.scrollWidth - tagScroll.clientWidth - 2) fadeR.classList.add('active');
-      else fadeR.classList.remove('active');
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      const leftBtn = document.querySelector('.tag-scroll-left');
-      const rightBtn = document.querySelector('.tag-scroll-right');
-      const tagScroll = document.getElementById('tagScrollBar');
-      function scrollTags(direction) {
-        tagScroll.scrollBy({ left: direction * 120, behavior: "smooth" });
-      }
-      leftBtn.addEventListener('click', ()=>scrollTags(-1));
-      rightBtn.addEventListener('click',()=>scrollTags(1));
-      tagScroll.addEventListener('scroll', updateTagScrollFade);
-      setTimeout(updateTagScrollFade, 400);
-    });
 
     // PROGRESS BAR
     function updateClipProgress(goal = 6000) {
@@ -255,17 +163,19 @@
     // DYNAMICZNY SCROLL TAGÓW
     function generateTagScroll() {
       const tagScroll = document.getElementById('tagScrollBar');
-      tagScroll.innerHTML = '';
+      tagScroll.innerHTML = ''; // Wyczyść stare
       const tags = new Set(["all"]);
       allClipsData.forEach(clip => clip.tags.forEach(t => tags.add(t)));
       tags.forEach(tag => {
         const btn = document.createElement('button');
         btn.className = 'tag-btn' + (tag === "all" ? ' active' : '');
         btn.dataset.tag = tag.toLowerCase();
+        // Capitalize
         btn.textContent = (tag === "all" ? "All tags"
           : tag.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' '));
         tagScroll.appendChild(btn);
       });
+      // Dopnij eventy
       tagScroll.querySelectorAll('.tag-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           tagScroll.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
@@ -275,8 +185,6 @@
           renderClips();
         });
       });
-      // Update fade after tags render
-      setTimeout(updateTagScrollFade, 60);
     }
 
     function renderClips() {
