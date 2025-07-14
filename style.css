@@ -632,13 +632,12 @@ footer {
 
   /* TAG SCROLL na mobile – naprawa! */
   .tag-scroll-wrapper {
-    width: 650px;
+    width: 400px;
     margin: 0 auto;
     position: relative;
     display: flex;
     align-items: center;
     gap: 0 !important;
-	margin-left: -120px;
   }
   .tag-scroll-fade { display: none !important; }
   .tag-scroll-arrow { display: none !important; }
@@ -650,8 +649,8 @@ footer {
     padding-bottom: 4px;
     width: 100vw !important;
     max-width: 100vw !important;
-    margin-left: 50%;
-    transform: translateX(-50%);
+    margin-left: 7%;
+    transform: translateX(-4%);
     box-sizing: border-box;
     scrollbar-width: none!important;
     -ms-overflow-style: none!important;
