@@ -483,7 +483,7 @@ footer {
   letter-spacing: 0.07em;
   text-align: center;
 }
-
+/* ==== RESPONSIVE MOBILE PROGRESS BAR ==== */
 @media (max-width:600px) {
   .clipbar-container { max-width: 99vw; }
   .clipbar-bar { min-width: 82vw;}
@@ -515,7 +515,6 @@ footer {
     box-sizing: border-box;
   }
 
-  /* HEADER MOBILE: hamburger - LOGO - (BACK HIDDEN) */
   header {
     display: flex;
     flex-direction: row;
@@ -546,14 +545,13 @@ footer {
     font-size: 1.09rem;
     flex: 1;
     justify-content: center;
-	margin-right: 48px;
+    margin-right: 48px;
     margin-top: 6px;
     letter-spacing: 0.04em;
     text-align: center;
   }
   .back-main { display: none !important; }
 
-  /* HERO + FILTRY */
   .hero, .hero h1, .subtitle {
     text-align: center !important;
   }
@@ -586,7 +584,6 @@ footer {
     box-sizing: border-box;
   }
 
-  /* HERO FILTERS (NOWY FIXED!) */
   .hero-filters-row {
     width: 100vw;
     max-width: 100vw;
@@ -597,7 +594,7 @@ footer {
     align-items: stretch;
     box-sizing: border-box;
     overflow-x: visible;
-	height:100px;
+    height: 100px;
   }
   .watermark-switch {
     display: flex;
@@ -631,13 +628,27 @@ footer {
     align-self: center;
     min-height: 2px;
   }
+
+  /* TAG SCROLL na mobile – naprawa! */
+  .tag-scroll-wrapper {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0 !important;
+  }
+  .tag-scroll-fade { display: none !important; }
+  .tag-scroll-arrow { display: none !important; }
   .tag-scroll {
     display: flex;
     gap: 8px;
     overflow-x: auto;
+    overflow-y: hidden;
     padding-bottom: 4px;
-    width: 100vw;
-    max-width: 100vw;
+    width: 100vw !important;
+    max-width: 100vw !important;
     margin-left: 50%;
     transform: translateX(-50%);
     box-sizing: border-box;
@@ -646,13 +657,36 @@ footer {
     white-space: nowrap;
     align-items: center;
     justify-content: flex-start;
-    overflow-y: hidden;
   }
   .tag-scroll::-webkit-scrollbar { display: none; }
   .tag-btn {
+    font-family: 'Cabin', Arial, sans-serif;
+    font-weight: 700;
     font-size: 1rem;
+    color: #ff1a1a;
+    background: none;
+    border: none;
+    outline: none;
     padding: 8px 13px;
     flex: 0 0 auto;
+    border-radius: 13px;
+    cursor: pointer;
+    transition: color 0.16s, text-shadow 0.19s;
+    letter-spacing: 0.01em;
+    text-transform: capitalize;
+  }
+  .tag-btn.active,
+  .tag-btn:active {
+    color: #fff !important;
+    background: #ff1a1a;
+    text-shadow:
+      0 0 8px #ff0000cc,
+      0 0 14px #ff0000cc,
+      0 0 4px #ff0000cc;
+  }
+  .tag-btn:hover:not(.active) {
+    color: #fff;
+    background: #ff3636;
   }
 
   /* GALERIA + KARTY */
@@ -682,7 +716,7 @@ footer {
     margin-left: auto;
     margin-right: auto;
     object-fit: contain;
-	margin-top: -10px;
+    margin-top: -10px;
   }
   .clip-info {
     align-items: center;
@@ -771,7 +805,6 @@ footer {
     background: #181818;
   }
 
-  /* Footer */
   footer {
     font-size: 0.85rem;
     margin: 12px 0 7px 0;
