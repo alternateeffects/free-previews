@@ -161,31 +161,36 @@
       const tagScroll = document.getElementById('tagScrollBar');
       // Scroll o 1 tag
       function tagScrollStep(direction) {
-        const btns = [...tagScroll.querySelectorAll('.tag-btn')];
-        if (!btns.length) return;
-        // Wyszukaj pierwszego, który jest tylko ledwo niewidoczny po lewej/prawej, "scroll into view"
-        const scrollPos = tagScroll.scrollLeft;
-        const vw = tagScroll.clientWidth;
-        if(direction > 0) {
-          // w prawo — znajdź pierwszy, którego right > right widoku
-          for(let i=0;i<btns.length;i++) {
-            const b = btns[i];
-            if(b.offsetLeft + b.offsetWidth > scrollPos + vw) {
-              tagScroll.scrollTo({ left: b.offsetLeft, behavior: 'smooth' });
-              break;
-            }
-          }
-        } else {
-          // w lewo — znajdź ostatni, którego left < lewy widoku
-          for(let i=btns.length-1; i>=0;i--) {
-            const b = btns[i];
-            if(b.offsetLeft < scrollPos) {
-              tagScroll.scrollTo({ left: b.offsetLeft, behavior: 'smooth' });
-              break;
-            }
-          }
+       const tagScroll = document.getElementById('tagScrollBar');
+       const btns = [...tagScroll.querySelectorAll('.tag-btn')];
+       const scrollPos = tagScroll.scrollLeft;
+       const vw = tagScroll.clientWidth;
+
+       if (direction > 0) {
+        // RIGHT – znajdź pierwszy, którego right jest "tuż" za prawą krawędzią i przewiń do niego
+        for (let i = 0; i < btns.length; i++) {
+         const b = btns[i];
+         if (b.offsetLeft + b.offsetWidth > scrollPos + vw + 2) {
+          tagScroll.scrollTo({ left: b.offsetLeft, behavior: 'smooth' });
+          return;
+         }
         }
-      }
+       // jak nie znalazło, przewiń do końca
+       tagScroll.scrollTo({ left: tagScroll.scrollWidth, behavior: 'smooth' });
+     } else {
+       // LEFT – znajdź ostatniego, którego left jest "PRZED" lewą krawędzią widoku i przewiń do niego
+       let found = false;
+       for (let i = btns.length - 1; i >= 0; i--) {
+         const b = btns[i];
+         if (b.offsetLeft < scrollPos - 1) {
+           tagScroll.scrollTo({ left: b.offsetLeft, behavior: 'smooth' });
+           found = true;
+           break;
+         }
+       }
+       if (!found) tagScroll.scrollTo({ left: 0, behavior: 'smooth' }); // wróć do początku, jeśli już wyjechałeś na max lewo
+     }
+   }
       leftBtn.addEventListener('click', ()=>tagScrollStep(-1));
       rightBtn.addEventListener('click',()=>tagScrollStep(1));
       tagScroll.addEventListener('scroll', updateTagScrollFade);
