@@ -415,9 +415,12 @@ footer {
   .tag-scroll-fade { display:none!important; }
   .tag-scroll-arrow { display: none; }
   .tag-scroll-wrapper, .tag-scroll {
-    max-width: 99vw !important;
-    width: 99vw !important;
+    max-width: 110vw !important;
+    width: 110vw !important;
     min-width: 0 !important;
+    margin-left: -5vw !important;
+    margin-right: -5vw !important;
+    box-sizing: border-box;
   }
   .tag-btn { font-size: 0.95rem; padding: 7px 13px; min-width: 65px;}
 }
