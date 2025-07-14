@@ -311,7 +311,7 @@ footer {
   margin: 0 8px;
   flex-shrink: 0;
   align-self: stretch;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 /* TAG SCROLL CSS */
 .tag-scroll-wrapper {
@@ -323,12 +323,12 @@ footer {
   position: relative;
   gap: 8px;
   box-sizing: border-box;
+  margin-top: 10px;
 }
 .tag-scroll {
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding-bottom: 4px;
   scrollbar-width: none;
   -ms-overflow-style: none;
   white-space: nowrap;
