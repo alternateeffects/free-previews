@@ -324,16 +324,34 @@ footer {
   gap: 8px;
 }
 .tag-scroll {
-  display: flex;
-  flex-direction: row;
-  gap: 7px;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding-bottom: 0;
-  scrollbar-width: none;
-  flex-grow: 1;
-  scroll-behavior: smooth;
-  -ms-overflow-style: none;
+  background: none;
+  border: none;
+  color: #ff1a1a;
+  font-family: 'Cabin', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.03rem;
+  padding: 6px 22px;
+  border-radius: 13px;
+  cursor: pointer;
+  margin: 0;
+  outline: none;
+  box-shadow: none;
+  transition: color 0.16s, text-shadow 0.19s, background 0.14s;
+  text-transform: capitalize;
+  display: inline-block;
+}
+.tag-scroll .tag-btn.active,
+.tag-scroll .tag-btn:active {
+  color: #fff;
+  background: #ff1a1a;
+  text-shadow:
+    0 0 8px #ff0000cc,
+    0 0 14px #ff0000cc,
+    0 0 4px #ff0000cc;
+}
+.tag-scroll .tag-btn:hover:not(.active) {
+  color: #fff;
+  background: #ff3636;
 }
 .tag-scroll::-webkit-scrollbar { display:none; }
 .tag-scroll-arrow {
