@@ -108,9 +108,8 @@
     <div class="hero-filters-row">
       <div class="watermark-switch">
         <button class="mark-btn active" data-watermark="all">All</button>
-        <button class="mark-btn" data-watermark="light">Light</button>
-        <button class="mark-btn" data-watermark="strong">Strong</button>
-        <button class="mark-btn" data-watermark="none">None</button>
+        <button class="mark-btn" data-watermark="free">Free</button>
+        <button class="mark-btn" data-watermark="paid">Paid</button>
       </div>
       <div class="v-sep"></div>
       <div class="tag-scroll-wrapper">
@@ -162,7 +161,6 @@
       const tagScroll = document.getElementById('tagScrollBar');
       // Scroll o 1 tag
       function tagScrollStep(direction) {
-       const tagScroll = document.getElementById('tagScrollBar');
        const btns = [...tagScroll.querySelectorAll('.tag-btn')];
        const scrollPos = tagScroll.scrollLeft;
        const vw = tagScroll.clientWidth;
@@ -248,7 +246,12 @@
       gallery.innerHTML = "";
       let filtered = allClipsData.filter(clip => {
         if (currentOrientation !== "all" && clip.orientation !== currentOrientation) return false;
-        if (currentWatermark !== "all" && clip.watermark !== currentWatermark) return false;
+
+        // --- ZMIANA WATERMARK: "free" (none), "paid" (cokolwiek innego), "all"
+        if (currentWatermark === "free" && clip.watermark !== "none") return false;
+        if (currentWatermark === "paid" && clip.watermark === "none") return false;
+        // ---
+
         if (currentTag !== "all" && !clip.tags.map(t => t.toLowerCase()).includes(currentTag)) return false;
         return true;
       });
