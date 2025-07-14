@@ -311,6 +311,7 @@ footer {
   margin: 0 8px;
   flex-shrink: 0;
   align-self: stretch;
+  margin-top: 8px;
 }
 /* TAG SCROLL CSS */
 .tag-scroll-wrapper {
