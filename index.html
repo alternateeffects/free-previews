@@ -50,8 +50,73 @@
       transition:background .2s;
     }
     .show-more-btn:hover { background:#222; }
-    .tag-btn {
-      text-transform: capitalize;
+    .tag-btn { text-transform: capitalize; }
+
+    /* TAG SCROLL - zestaw pod ikony i fade */
+    .tag-scroll-wrapper {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      position: relative;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+    .tag-scroll {
+      display: flex;
+      flex-direction: row;
+      gap: 7px;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-bottom: 0;
+      scrollbar-width: none;
+      flex-grow: 1;
+      scroll-behavior: smooth;
+      -ms-overflow-style: none;
+    }
+    .tag-scroll::-webkit-scrollbar { display:none; } /* Chrome, Safari */
+    .tag-scroll-arrow {
+      background: none;
+      border: none;
+      width: 32px; height: 32px;
+      min-width: 32px; min-height: 32px;
+      padding: 0; margin: 0 6px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      outline: none;
+      z-index: 3;
+      opacity: .95;
+      transition: background 0.16s;
+      border-radius: 50%;
+    }
+    .tag-scroll-arrow:active { background: #ffe40022; }
+    .tag-scroll-arrow img {
+      width: 26px; height:26px; display:block; pointer-events:none; user-select:none;
+      filter: drop-shadow(0 1px 2px #1116);
+    }
+    @media (max-width: 900px) {
+      .tag-scroll-arrow { display: none; }
+    }
+    /* Fade */
+    .tag-scroll-fade {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 39px;
+      pointer-events: none;
+      z-index: 2;
+      transition: opacity .18s;
+      opacity: 0;
+    }
+    .tag-scroll-fade.left {
+      left: 0;
+      background: linear-gradient(90deg, #19181c 72%, transparent 100%);
+    }
+    .tag-scroll-fade.right {
+      right: 0;
+      background: linear-gradient(-90deg, #19181c 72%, transparent 100%);
+    }
+    .tag-scroll-fade.active { opacity: 1; }
+    @media (max-width: 900px) {
+      .tag-scroll-fade { display:none!important; }
     }
   </style>
 </head>
@@ -114,8 +179,16 @@
         <button class="mark-btn" data-watermark="none">None</button>
       </div>
       <div class="v-sep"></div>
-      <div class="tag-scroll" id="tagScrollBar">
-        <!-- DYNAMICZNE! (JS wygeneruje tu przyciski) -->
+      <div class="tag-scroll-wrapper">
+        <div class="tag-scroll-fade left"></div>
+        <button class="tag-scroll-arrow tag-scroll-left" aria-label="Scroll left">
+            <img src="assets/backicon.svg" alt="Back">
+        </button>
+        <div class="tag-scroll" id="tagScrollBar"></div>
+        <button class="tag-scroll-arrow tag-scroll-right" aria-label="Scroll right">
+            <img src="assets/nexticon.svg" alt="Next">
+        </button>
+        <div class="tag-scroll-fade right"></div>
       </div>
     </div>
   </section>
@@ -137,6 +210,54 @@
     document.getElementById('mobileMenuOverlay').onclick = function(e) {
       if(e.target===this) this.classList.remove('active');
     };
+
+    // TAG SCROLL ARROWS & FANCY FADE
+    function updateTagScrollFade() {
+      const tagScroll = document.getElementById('tagScrollBar');
+      const fadeL = document.querySelector('.tag-scroll-fade.left');
+      const fadeR = document.querySelector('.tag-scroll-fade.right');
+      if (!tagScroll || !fadeL || !fadeR) return;
+      if (tagScroll.scrollLeft > 2) fadeL.classList.add('active');
+      else fadeL.classList.remove('active');
+      if (tagScroll.scrollLeft < tagScroll.scrollWidth - tagScroll.clientWidth - 2) fadeR.classList.add('active');
+      else fadeR.classList.remove('active');
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const leftBtn = document.querySelector('.tag-scroll-left');
+      const rightBtn = document.querySelector('.tag-scroll-right');
+      const tagScroll = document.getElementById('tagScrollBar');
+      // Scroll o 1 tag
+      function tagScrollStep(direction) {
+        const btns = [...tagScroll.querySelectorAll('.tag-btn')];
+        if (!btns.length) return;
+        // Wyszukaj pierwszego, który jest tylko ledwo niewidoczny po lewej/prawej, "scroll into view"
+        const scrollPos = tagScroll.scrollLeft;
+        const vw = tagScroll.clientWidth;
+        if(direction > 0) {
+          // w prawo — znajdź pierwszy, którego right > right widoku
+          for(let i=0;i<btns.length;i++) {
+            const b = btns[i];
+            if(b.offsetLeft + b.offsetWidth > scrollPos + vw) {
+              tagScroll.scrollTo({ left: b.offsetLeft, behavior: 'smooth' });
+              break;
+            }
+          }
+        } else {
+          // w lewo — znajdź ostatni, którego left < lewy widoku
+          for(let i=btns.length-1; i>=0;i--) {
+            const b = btns[i];
+            if(b.offsetLeft < scrollPos) {
+              tagScroll.scrollTo({ left: b.offsetLeft, behavior: 'smooth' });
+              break;
+            }
+          }
+        }
+      }
+      leftBtn.addEventListener('click', ()=>tagScrollStep(-1));
+      rightBtn.addEventListener('click',()=>tagScrollStep(1));
+      tagScroll.addEventListener('scroll', updateTagScrollFade);
+      setTimeout(updateTagScrollFade, 400);
+    });
 
     // PROGRESS BAR
     function updateClipProgress(goal = 6000) {
@@ -161,19 +282,17 @@
     // DYNAMICZNY SCROLL TAGÓW
     function generateTagScroll() {
       const tagScroll = document.getElementById('tagScrollBar');
-      tagScroll.innerHTML = ''; // Wyczyść stare
+      tagScroll.innerHTML = '';
       const tags = new Set(["all"]);
       allClipsData.forEach(clip => clip.tags.forEach(t => tags.add(t)));
       tags.forEach(tag => {
         const btn = document.createElement('button');
         btn.className = 'tag-btn' + (tag === "all" ? ' active' : '');
         btn.dataset.tag = tag.toLowerCase();
-        // Capitalize
         btn.textContent = (tag === "all" ? "All tags"
           : tag.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' '));
         tagScroll.appendChild(btn);
       });
-      // Dopnij eventy
       tagScroll.querySelectorAll('.tag-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           tagScroll.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
@@ -183,6 +302,7 @@
           renderClips();
         });
       });
+      setTimeout(updateTagScrollFade, 60);
     }
 
     function renderClips() {
