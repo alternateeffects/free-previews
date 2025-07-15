@@ -11,7 +11,7 @@
       position:fixed;
       left:18px; bottom:22px;
       z-index:3000;
-      background:#000000e6;
+      background:#181818;
       padding:13px 22px 12px 23px;
       color:#ff0000;
       font-weight: 800;
