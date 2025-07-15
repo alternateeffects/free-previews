@@ -1,8 +1,9 @@
 (function() {
   const min = 82, max = 344;
   let fake = Math.floor(Math.random() * (max - min + 1)) + min;
+  let trayAnimating = false; // aby nie odpalać dwóch animacji naraz
 
-  // GŁÓWNY widget (widżet zawsze na wierzchu, szufladka osobno "pod spodem" na fixed)
+  // GŁÓWNY WIDGET
   let main = document.getElementById('visitors-widget');
   if (!main) {
     main = document.createElement('div');
@@ -25,37 +26,34 @@
     `;
     document.body.appendChild(main);
   }
-
   setInterval(() => {
     const n = fake + Math.floor(Math.random()*4) - 2;
     fake = Math.min(Math.max(n, min), max);
     document.getElementById("current-visitors").textContent = fake;
   }, 4700);
 
-  // Szufladka downloadów na fixed, WYJEŻDŻAJĄCA spod main
+  // Szufladka TRAY - zawsze obecna, w startowej pozycji transform: translateY(100%);
   let tray = document.getElementById('fake-download-bubble');
   if (!tray) {
     tray = document.createElement('div');
     tray.id = 'fake-download-bubble';
     tray.style.position = 'fixed';
-    tray.style.zIndex = '2999'; // niżej niż widget główny
+    tray.style.left = '0';
+    tray.style.zIndex = '2999';
     tray.style.pointerEvents = 'none';
-    tray.style.left = '0'; // Pozycja będzie wyliczana
-    tray.style.display = 'none';
+    tray.style.opacity = '0';
     document.body.appendChild(tray);
   }
 
-  // Styl/animacja wyjeżdzania szufladki
   var styleSheet = document.createElement("style");
   styleSheet.innerText = `
-@keyframes trayReveal {
-  0% {opacity:0; transform:translateY(40px);}
-  60% {opacity:1;}
-  100% {opacity:1; transform:translateY(0);}
+@keyframes traySlideOnlyUp {
+  0% {opacity: 0; transform: translateY(100%);}
+  100% {opacity: 1; transform: translateY(0);}
 }
-@keyframes trayHide {
-  0% {opacity:1; transform:translateY(0);}
-  100% {opacity:0; transform:translateY(50px);}
+@keyframes traySlideOnlyDown {
+  0% {opacity: 1; transform: translateY(0);}
+  100% {opacity: 0; transform: translateY(100%);}
 }
 .fake-download-box {
   background: #ff0000;
@@ -70,6 +68,7 @@
   letter-spacing: .02em;
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 0 auto;
+  transition: box-shadow .17s;
 }
 .fake-download-box .dl-ico {
   width: 29px; height:29px; margin-right:7px;vertical-align:middle;
@@ -91,39 +90,56 @@
   document.head.appendChild(styleSheet);
 
   function showDownloadTray() {
-    // Pozycjonowanie tray bezpośrednio nad głównym boxem
-    const mainRect = main.getBoundingClientRect();
-    // Oblicz szerokość szufladki względem szerokości widgetu głównego
-    const trayW = Math.max(80, Math.min(mainRect.width * 0.7, 118));
-    // Liczba downloadów
-    const num = Math.floor(Math.random()*20) + 7;
+    if (trayAnimating) return;
+    trayAnimating = true;
 
+    // Wartości
+    const mainRect = main.getBoundingClientRect();
+    const trayW = Math.max(80, Math.min(mainRect.width * 0.7, 120));
+    const num = Math.floor(Math.random()*20)+7;
+    const trayH = 46; // wysokość szufladki
+
+    // Pozycjonuj tray tak, by dolna krawędź tray dotknęła górnej widgetu
     tray.style.width = trayW + 'px';
+    tray.style.height = trayH + 'px';
     tray.style.left = (mainRect.left + (mainRect.width - trayW)/2) + 'px';
-    tray.style.top = (mainRect.top - 35) + 'px'; // 35px wyżej, by dół schował się pod widget
+    tray.style.top = (mainRect.top - trayH + 3) + 'px'; // 3px overlap by stykało się gładko
 
     tray.innerHTML = `
-      <div class="fake-download-box" style="font-size:0.89em">
+      <div class="fake-download-box" style="font-size:0.89em; pointer-events:none;">
         <img src="assets/download.svg" class="dl-ico"/>
         <span class="bubble-main-num">${num}</span>
         <span class="bubble-main-label">recently</span>
       </div>
     `;
-    tray.style.opacity = "1";
-    tray.style.display = "block";
-    const trayBox = tray.firstElementChild;
-    trayBox.style.animation = "trayReveal .8s cubic-bezier(.19,1.26,.32,1.09)";
 
-    setTimeout(() => {
-      trayBox.style.animation = "trayHide .51s cubic-bezier(.29,1.27,.67,1.01)";
-      setTimeout(() => {
+    // Start: ukryta na dole
+    tray.style.opacity = '1';
+    tray.style.transform = 'translateY(100%)';
+    tray.style.display = 'block';
+
+    // Animuj tray SLIDE UP
+    setTimeout(()=>{
+      tray.style.transition = 'none';
+      tray.style.animation = "traySlideOnlyUp 0.52s cubic-bezier(.6,1,.82,1)";
+      tray.style.opacity = '1';
+      tray.style.transform = 'translateY(0)';
+    }, 1);
+
+    // Po X sekundach - slideDown
+    setTimeout(()=>{
+      tray.style.animation = "traySlideOnlyDown 0.59s cubic-bezier(.63,0,1,1) 1";
+      setTimeout(()=>{
         tray.style.display = 'none';
-      }, 500);
-    }, 2000 + Math.random() * 1100);
+        tray.style.opacity = '0';
+        tray.style.transform = 'translateY(100%)';
+        trayAnimating = false;
+      }, 570);
+    }, 1800 + Math.random()*950);
   }
 
   function repeatTray() {
-    const t = 12000 + Math.random() * 12000;
+    const t = 11000 + Math.random() * 11000;
     setTimeout(() => {
       showDownloadTray();
       repeatTray();
