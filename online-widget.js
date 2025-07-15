@@ -42,7 +42,6 @@
     tray.style.zIndex = '2999';
     tray.style.pointerEvents = 'none';
     tray.style.opacity = '1';
-    tray.style.transform = '';
     document.body.appendChild(tray);
   }
 
@@ -85,7 +84,7 @@
 }
 .fake-download-box .bubble-main-label {
   font-size: 1em;
-  font-weight: 400; /* no bold */
+  font-weight: 400;
   margin-left: 4px;
   color: #000;
   letter-spacing: 0.014em;
@@ -100,12 +99,6 @@
     const mainRect = main.getBoundingClientRect();
     const trayW = Math.max(140, Math.min(mainRect.width * 0.86, 220));
     const num = Math.floor(Math.random()*20)+7;
-    const trayH = 52;
-
-    tray.style.width = trayW + 'px';
-    tray.style.height = trayH + 'px';
-    tray.style.left = (mainRect.left + (mainRect.width - trayW)/2) + 'px';
-    tray.style.top = (mainRect.top - trayH + 3) + 'px';
 
     tray.innerHTML = `
       <div class="fake-download-box">
@@ -114,23 +107,31 @@
         <span class="bubble-main-label">recently</span>
       </div>
     `;
-    // KLUCZ: ustaw tray z boxem ZAWSZE jako block, animuj tylko box
+    tray.style.width = trayW + 'px';
+    tray.style.display = 'block';
+    tray.style.opacity = '1';
+
+    // KLUCZ: dynamicznie po osadzeniu: dolna krawędź trayBox == górnej widgetu
     const trayBox = tray.firstElementChild;
     trayBox.style.opacity = "0";
     trayBox.style.transform = "translateY(100%)";
-    trayBox.style.animation = "traySlideOnlyUp 0.7s cubic-bezier(.51,1,.62,1)";
-    trayBox.style.animationFillMode = "forwards";
+    setTimeout(() => {
+      const boxH = trayBox.offsetHeight;
+      tray.style.left = (mainRect.left + (mainRect.width - trayW)/2) + 'px';
+      tray.style.top = (mainRect.top - boxH + 1) + 'px'; // "+1" by linie zlewały się na 100%
+      trayBox.style.animation = "traySlideOnlyUp 0.7s cubic-bezier(.51,1,.62,1)";
+      trayBox.style.animationFillMode = "forwards";
+      trayBox.style.opacity = "1";
+      trayBox.style.transform = "translateY(0)";
+    }, 10);
 
-    // Animacja wejścia
-    setTimeout(()=>{trayBox.style.opacity="1";trayBox.style.transform="translateY(0)";}, 10);
-    // Animacja wyjścia
     setTimeout(()=>{
       trayBox.style.animation = "traySlideOnlyDown 0.63s cubic-bezier(.63,0,1,1)";
       trayBox.style.animationFillMode = "forwards";
       setTimeout(()=>{
-        trayBox.style.opacity="0";
-        trayBox.style.transform="translateY(100%)";
-        tray.innerHTML="";
+        trayBox.style.opacity = '0';
+        trayBox.style.transform = 'translateY(100%)';
+        tray.innerHTML = '';
         trayAnimating = false;
       }, 630);
     }, 2200 + Math.random()*970);
