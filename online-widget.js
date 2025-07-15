@@ -63,7 +63,7 @@
   font-size: 0.86em;
   line-height: 1;
   padding: 7px 15px 4px 13px;
-  min-width: 130px; max-width: 150px;
+  min-width: 100px; max-width: 130px;
   box-shadow: 0 3px 13px #ffd40025;
   letter-spacing: .02em;
   display: flex; align-items: center; justify-content: center;
@@ -107,7 +107,7 @@
 
     tray.innerHTML = `
       <div class="fake-download-box" style="font-size:0.89em; pointer-events:none;">
-        <img src="assets/download.svg" class="dl-ico"/>
+        <img src="assets/download1.svg" class="dl-ico"/>
         <span class="bubble-main-num">${num}</span>
         <span class="bubble-main-label">recently</span>
       </div>
