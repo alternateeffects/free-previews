@@ -810,4 +810,37 @@ footer {
     margin: 12px 0 7px 0;
     padding-top: 10px;
   }
+  #visitors-widget {
+    padding: 9px 12px 11px 12px !important;
+    font-size: 1.05em !important;
+    min-width: 120px !important;
+    max-width: 98vw !important;
+    border-width: 2px !important;
+  }
+  #visitors-widget img[alt="Online"] {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  #visitors-widget span#current-visitors {
+    font-size: 1.09em !important;
+  }
+  .fake-download-box {
+    font-size: 0.82em !important;
+    min-width: 64px !important;
+    max-width: 90vw !important;
+    padding: 7px 10px 4px 7px !important;
+  }
+  .fake-download-box .dl-ico {
+    width: 19px !important;
+    height: 19px !important;
+    margin-right: 5px !important;
+  }
+  .fake-download-box .bubble-main-num {
+    font-size: 1em !important;
+    margin-right: 4px !important;
+  }
+  .fake-download-box .bubble-main-label {
+    font-size: 0.78em !important;
+    margin-left: 2px !important;
+  }
 }
