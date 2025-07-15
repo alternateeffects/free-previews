@@ -83,8 +83,8 @@
         margin:7px 0 0 0;
         padding:8px 16px 6px 11px;
         border-radius:13px 15px 22px 13px;
-        background:#101012f7;
-        color:#ff0000;
+        background:#ff0000;
+        color:#000000;
         font-size:1em;
         box-shadow:0 2px 14px #ffd4000d;
         border:1.5px solid #ffd400;
