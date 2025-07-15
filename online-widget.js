@@ -1,5 +1,5 @@
 (function() {
-  const min = 8, max = 34;
+  const min = 82, max = 344;
   let fake = Math.floor(Math.random() * (max - min + 1)) + min;
 
   // Tworzymy główny widget jeśli nie istnieje
