@@ -11,34 +11,33 @@
       position:fixed;
       left:18px; bottom:22px;
       z-index:3000;
-      background:#181818;
+      background:#000;
       padding:13px 22px 12px 23px;
       color:#ff0000;
       font-weight: 800;
       font-size: 1.13em;
       letter-spacing: .035em;
-      border-radius: 15px 18px 22px 18px;
-      border:2.6px solid #ffd400;
+      border-radius: 16px 19px 22px 19px;
+      border:2.7px solid #ffd400;
       box-shadow:0 4px 26px #1119;
       display:flex;
       align-items: center;
       gap: 11px;
       min-width: 98px;
-      animation: stickyWidgetB 0.85s cubic-bezier(.4,2,.42,1.14) 1;
+      flex-direction: column-reverse;
       transition:opacity .23s;
       pointer-events:none;
       user-select: none;
-      flex-direction: column;  /* WAŻNE: dla szufladki pod spodem */
     `;
     document.body.appendChild(place);
   }
   place.innerHTML = `
-    <div id="main-visit-row" style="display:flex;align-items:center;gap:10px;">
-      <img src="assets/visitors.svg" alt="Online" style="width:26px;height:26px;vertical-align:middle;margin-right:4px;filter:drop-shadow(0 0 8px #ffd400a0);">
-      <span id="current-visitors" style="font-size:1.22em;">${fake}</span>
-      <span style="font-weight:400;font-size:.93em;letter-spacing:.014em;margin-left:2px;">online now</span>
+    <div id="fake-download-activity" style="display:none;pointer-events:none;"></div>
+    <div id="main-visit-row" style="display:flex;align-items:center;gap:12px;min-width:160px;">
+      <img src="assets/visitors.svg" alt="Online" style="width:28px;height:28px;vertical-align:middle;filter:drop-shadow(0 0 8px #ffd400a0);">
+      <span id="current-visitors" style="font-size:1.25em;">${fake}</span>
+      <span style="font-weight:400;font-size:.99em;letter-spacing:.007em;margin-left:2px;">online now</span>
     </div>
-    <div id="fake-download-activity" style="display:none"></div>
   `;
 
   setInterval(()=>{
@@ -47,72 +46,85 @@
     document.getElementById("current-visitors").textContent = fake;
   }, 4500);
 
-  // Animacja keyframes (fade-in, fly, bounce)
+  // ==== Animacja keyframes dla widgetu i szuflady ====
   var styleSheet = document.createElement("style");
   styleSheet.innerText = `
   @keyframes stickyWidgetB {
     0%{transform:translateY(42px) scale(0.89); opacity:0}
-    90%{transform:translateY(-6px) scale(1.05);}
     100%{transform:translateY(0) scale(1); opacity:1}
   }
-  @keyframes trayIn {
-    0% {opacity:0; transform:translateY(22px) scale(0.92);}
-    60% {opacity:1; transform:translateY(-4px) scale(1.04);}
-    100%{opacity:1; transform:translateY(0) scale(1);}
+  @keyframes trayInSlide {
+    0% { opacity:0; transform:translateY(45%) scale(0.95);}
+    55%{ opacity:.88; transform:translateY(-8%) scale(1.09);}
+    100%{ opacity:1; transform:translateY(0) scale(1);}
   }
-  @keyframes trayOut {
+  @keyframes trayOutSlide {
     0%{opacity:1; transform:translateY(0) scale(1);}
-    80%{opacity:.44;transform:translateY(11px) scale(0.98);}
-    100%{opacity:0;transform:translateY(34px) scale(0.93);}
+    100%{opacity:0;transform:translateY(30px) scale(0.92);}
   }
   `;
   document.head.appendChild(styleSheet);
 
-  // Dodanie randomowej szufladki downloadów
+  // Szufladka downloads (wyjeżdża spod widgetu, wyżej w DOM!)
   function showDownloadTray() {
     const tray = document.getElementById('fake-download-activity');
-    // Fake download count: losowo 8-37, losowy tekst
-    const num = Math.floor(Math.random()*30) + 8;
-    const times = ["minute", "two minutes", "last hour", "few minutes"];
-    const label = times[Math.floor(Math.random()*times.length)];
+    const num = Math.floor(Math.random()*24) + 7;
     tray.innerHTML = `
-      <div style="
-        display:flex;
-        align-items:center;
-        gap:8px;
-        margin:7px 0 0 0;
-        padding:8px 16px 6px 11px;
-        border-radius:13px 15px 22px 13px;
-        background:#ff0000;
-        color:#000000;
-        font-size:1em;
-        box-shadow:0 2px 14px #ffd4000d;
-        border:1.5px solid #ffd400;
-        font-family:'Montserrat','Arial',sans-serif;
-        font-weight:700;
-        opacity: 1;
-        animation: trayIn 0.30s cubic-bezier(.21,1.3,.48,1.2) 1;
-      ">
-        <img src="assets/download.svg" style="width:18px;height:18px;filter:drop-shadow(0 0 2px #ffd40090)"/>
-        <span>${num}</span>
-        <span style="font-size:.93em;font-weight:500;margin-left:4px;letter-spacing:0.03em;">downloads / ${label}</span>
+      <div class="traybubble">
+        <img src="assets/download.svg" style="width:17px;height:17px;margin-right:6px;vertical-align:middle;filter:drop-shadow(0 0 2px #ffd40090)"/>
+        <span style="font-size:1.09em;font-weight:700;">${num}</span>
+        <span style="font-size:0.93em;font-weight:500;margin-left:4px;">downloads recently</span>
       </div>
     `;
     tray.style.display = "flex";
-    // Ukryj po 2.7–5.5sek
-    setTimeout(() => {
-      tray.firstElementChild.style.animation = "trayOut 0.48s cubic-bezier(.38,1.2,.88,1.14) 1";
-      setTimeout(()=>{ tray.style.display = "none"; }, 440);
-    }, 2600 + Math.random()*2300);
-  }
+    const trayEl = tray.firstElementChild;
+    trayEl.style.animation = "trayInSlide .38s cubic-bezier(.41,1.32,.62,1.04) 1";
 
-  // Powtarzacz: szufladka pojawia się co 16–36 sekund
+    // Ukryj po 2.7–4.2sek
+    setTimeout(() => {
+      trayEl.style.animation = "trayOutSlide 0.44s cubic-bezier(.38,1.2,.88,1.14)";
+      setTimeout(()=>{ tray.style.display = "none"; }, 380);
+    }, 2100 + Math.random()*1800);
+  }
+  // Powtarzanie co 16–35sek
   function repeatTray() {
-    const t = 16000 + Math.random()*20000;
+    const t = 16000 + Math.random()*18000;
     setTimeout(()=>{
       showDownloadTray();
       repeatTray();
     }, t);
   }
   repeatTray();
+
+  // Styl traybubble (szufladka): węższa i nad widgetem
+  var trayStyle = document.createElement("style");
+  trayStyle.innerText = `
+    #fake-download-activity {
+      width:100%;
+      justify-content: center;
+      margin-bottom: -8px;
+      z-index: 10;
+    }
+    .traybubble {
+      background: #ff0000;
+      color: #fff;
+      border: 2.5px solid #ffd400;
+      border-radius: 12px 16px 21px 18px;
+      font-size: 1em;
+      padding: 6px 28px 7px 16px;
+      min-width: 115px;
+      max-width: 155px;
+      text-align:center;
+      font-family:'Montserrat','Arial',sans-serif;
+      font-weight:700;
+      box-shadow: 0 4px 18px #94580024;
+      letter-spacing: .013em;
+      margin-left:auto;
+      margin-right:auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+  `;
+  document.head.appendChild(trayStyle);
 })();
