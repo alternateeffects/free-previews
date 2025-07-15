@@ -1,4 +1,4 @@
-(function() {
+(function(){
   const min = 82, max = 344;
   let fake = Math.floor(Math.random() * (max - min + 1)) + min;
   let trayAnimating = false;
@@ -32,7 +32,7 @@
     document.getElementById("current-visitors").textContent = fake;
   }, 4700);
 
-  // Szufladka TRAY nad widgetem (wyjeżdża płynnie, wycentrowana)
+  // TRAY -- ZAWSZE OBECNY, animuje tylko box, NIE tray!
   let tray = document.getElementById('fake-download-bubble');
   if (!tray) {
     tray = document.createElement('div');
@@ -41,11 +41,11 @@
     tray.style.left = '0';
     tray.style.zIndex = '2999';
     tray.style.pointerEvents = 'none';
-    tray.style.opacity = '0';
+    tray.style.opacity = '1';
+    tray.style.transform = '';
     document.body.appendChild(tray);
   }
 
-  // Styl i animacja (tray szerszy, liczba większa, recently bez bolda)
   var styleSheet = document.createElement("style");
   styleSheet.innerText = `
 @keyframes traySlideOnlyUp {
@@ -70,6 +70,8 @@
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 0 auto;
   transition: box-shadow .17s;
+  opacity: 0; transform: translateY(100%);
+  will-change:transform,opacity;
 }
 .fake-download-box .dl-ico {
   width: 32px; height:32px; margin-right:10px; vertical-align:middle;
@@ -96,7 +98,7 @@
     trayAnimating = true;
 
     const mainRect = main.getBoundingClientRect();
-    const trayW = Math.max(140, Math.min(mainRect.width * 0.86, 220)); // ~86% szerokości głównego
+    const trayW = Math.max(140, Math.min(mainRect.width * 0.86, 220));
     const num = Math.floor(Math.random()*20)+7;
     const trayH = 52;
 
@@ -112,30 +114,30 @@
         <span class="bubble-main-label">recently</span>
       </div>
     `;
-    tray.style.opacity = '1';
-    tray.style.transform = 'translateY(100%)';
-    tray.style.display = 'block';
+    // KLUCZ: ustaw tray z boxem ZAWSZE jako block, animuj tylko box
+    const trayBox = tray.firstElementChild;
+    trayBox.style.opacity = "0";
+    trayBox.style.transform = "translateY(100%)";
+    trayBox.style.animation = "traySlideOnlyUp 0.7s cubic-bezier(.51,1,.62,1)";
+    trayBox.style.animationFillMode = "forwards";
 
+    // Animacja wejścia
+    setTimeout(()=>{trayBox.style.opacity="1";trayBox.style.transform="translateY(0)";}, 10);
+    // Animacja wyjścia
     setTimeout(()=>{
-      tray.style.transition = 'none';
-      tray.style.animation = "traySlideOnlyUp 0.62s cubic-bezier(.55,1,.61,1)";
-      tray.style.opacity = '1';
-      tray.style.transform = 'translateY(0)';
-    }, 10);
-
-    setTimeout(()=>{
-      tray.style.animation = "traySlideOnlyDown 0.67s cubic-bezier(.63,0,1,1) 1";
+      trayBox.style.animation = "traySlideOnlyDown 0.63s cubic-bezier(.63,0,1,1)";
+      trayBox.style.animationFillMode = "forwards";
       setTimeout(()=>{
-        tray.style.display = 'none';
-        tray.style.opacity = '0';
-        tray.style.transform = 'translateY(100%)';
+        trayBox.style.opacity="0";
+        trayBox.style.transform="translateY(100%)";
+        tray.innerHTML="";
         trayAnimating = false;
-      }, 670);
-    }, 2000 + Math.random()*950);
+      }, 630);
+    }, 2200 + Math.random()*970);
   }
 
   function repeatTray() {
-    const t = 11500 + Math.random() * 9500;
+    const t = 11000 + Math.random() * 9500;
     setTimeout(() => {
       showDownloadTray();
       repeatTray();
