@@ -65,7 +65,7 @@
   font-size: 0.86em;
   line-height: 1;
   padding: 7px 15px 4px 13px;
-  min-width: 80px; max-width: 110px;
+  min-width: 100px; max-width: 130px;
   box-shadow: 0 3px 13px #ffd40025;
   letter-spacing: .02em;
   display: flex; align-items: center; justify-content: center;
