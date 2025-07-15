@@ -1,130 +1,122 @@
 (function() {
+  // Zmienne do fake liczby online
   const min = 82, max = 344;
   let fake = Math.floor(Math.random() * (max - min + 1)) + min;
 
-  // Tworzymy główny widget jeśli nie istnieje
+  // GŁÓWNY WIDGET sticky
   let place = document.getElementById('visitors-widget');
   if (!place) {
     place = document.createElement('div');
     place.id = "visitors-widget";
     place.style.cssText = `
       position:fixed;
-      left:18px; bottom:22px;
-      z-index:3000;
-      background:#000;
-      padding:13px 22px 12px 23px;
-      color:#ff0000;
-      font-weight: 800;
-      font-size: 1.13em;
-      letter-spacing: .035em;
-      border-radius: 16px 19px 22px 19px;
-      border:2.7px solid #ffd400;
+      left:18px;bottom:22px;z-index:3000;background:#000;padding:15px 30px 15px 30px;
+      color:#ff0000;font-weight:800;font-size:1.23em;letter-spacing:.035em;
+      border-radius:20px; border:3px solid #ffd400;
       box-shadow:0 4px 26px #1119;
-      display:flex;
-      align-items: center;
-      gap: 11px;
-      min-width: 98px;
-      flex-direction: column-reverse;
-      transition:opacity .23s;
-      pointer-events:none;
-      user-select: none;
+      display:inline-flex;align-items:center;gap:14px;
+      min-width:180px; max-width:360px; pointer-events:none;user-select:none;
+      animation: stickyWidgetB .77s cubic-bezier(.37,2,.62,1.14);
     `;
     document.body.appendChild(place);
   }
+  
+  // FAKE DOWNLOAD SHOWN? Append szufladka nad widget!
+  let tray = document.getElementById('fake-download-bubble');
+  if (!tray) {
+    tray = document.createElement('div');
+    tray.id = "fake-download-bubble";
+    tray.style.display = 'none';
+    tray.style.position = 'fixed';
+    tray.style.left = '34px';
+    tray.style.bottom = (22 + 56) + 'px'; // Trochę ponad głównym widgetem
+    tray.style.zIndex = '3050';
+    tray.style.pointerEvents = 'none';
+    document.body.appendChild(tray);
+  }
+
+  // GŁÓWNA linia widgetu
   place.innerHTML = `
-    <div id="fake-download-activity" style="display:none;pointer-events:none;"></div>
-    <div id="main-visit-row" style="display:flex;align-items:center;gap:12px;min-width:160px;">
-      <img src="assets/visitors.svg" alt="Online" style="width:28px;height:28px;vertical-align:middle;filter:drop-shadow(0 0 8px #ffd400a0);">
-      <span id="current-visitors" style="font-size:1.25em;">${fake}</span>
-      <span style="font-weight:400;font-size:.99em;letter-spacing:.007em;margin-left:2px;">online now</span>
-    </div>
+    <img src="assets/visitors.svg" alt="Online" style="width:29px;height:29px;vertical-align:middle;filter:drop-shadow(0 0 8px #ffd40090);">
+    <span id="current-visitors" style="font-weight:900;color:#ff0000;font-size:1.33em;margin-left:2px;margin-right:2px;">${fake}</span>
+    <span style="font-weight:500;font-size:.99em;color:#ff0000;letter-spacing:.012em;margin-left:2px;">online now</span>
   `;
 
   setInterval(()=>{
-    const n = fake + Math.floor(Math.random()*3) - 1;
+    const n = fake + Math.floor(Math.random()*4) - 2; // ruch +/-2
     fake = Math.min(Math.max(n, min), max);
     document.getElementById("current-visitors").textContent = fake;
-  }, 4500);
+  }, 4700);
 
-  // ==== Animacja keyframes dla widgetu i szuflady ====
+  // Animacja
   var styleSheet = document.createElement("style");
   styleSheet.innerText = `
-  @keyframes stickyWidgetB {
-    0%{transform:translateY(42px) scale(0.89); opacity:0}
-    100%{transform:translateY(0) scale(1); opacity:1}
-  }
-  @keyframes trayInSlide {
-    0% { opacity:0; transform:translateY(45%) scale(0.95);}
-    55%{ opacity:.88; transform:translateY(-8%) scale(1.09);}
-    100%{ opacity:1; transform:translateY(0) scale(1);}
-  }
-  @keyframes trayOutSlide {
-    0%{opacity:1; transform:translateY(0) scale(1);}
-    100%{opacity:0;transform:translateY(30px) scale(0.92);}
-  }
-  `;
+@keyframes stickyWidgetB { 0%{transform:translateY(35px) scale(0.88); opacity:0} 100%{transform:translateY(0) scale(1); opacity:1} }
+@keyframes trayInFly {
+  0%{opacity:0;transform:translateY(40px) scale(0.81);}
+  72%{opacity:.95;transform:translateY(-9px) scale(1.12);}
+  100%{opacity:1;transform:translateY(0) scale(1);}
+}
+@keyframes trayOutFly {
+  0%{opacity:1;transform:translateY(0) scale(1);}
+  80%{opacity:.34;transform:translateY(10px) scale(0.96);}
+  100%{opacity:0;transform:translateY(34px) scale(0.9);}
+}
+.fake-download-box {
+  background: #ff0000;
+  color: #fff;
+  border: 2.5px solid #ffd400;
+  border-radius: 14px 18px 15px 16px;
+  font-size: 1.1em;
+  padding: 10px 22px 11px 19px;
+  min-width: 108px;
+  max-width: 158px;
+  text-align:center;
+  font-family:'Montserrat','Arial',sans-serif;
+  font-weight:900;
+  box-shadow: 0 4px 18px #9458001a;
+  letter-spacing: .016em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  will-change: opacity,transform;
+}
+.fake-download-box .dl-ico {
+  width: 18px; height:18px; margin-right:6px; vertical-align:middle; 
+  filter:drop-shadow(0 0 2px #ffd400a0)
+}
+`;
   document.head.appendChild(styleSheet);
 
-  // Szufladka downloads (wyjeżdża spod widgetu, wyżej w DOM!)
+  // ---- SHOW TRAY ----
   function showDownloadTray() {
-    const tray = document.getElementById('fake-download-activity');
-    const num = Math.floor(Math.random()*24) + 7;
+    const num = Math.floor(Math.random()*20) + 7;
     tray.innerHTML = `
-      <div class="traybubble">
-        <img src="assets/download.svg" style="width:17px;height:17px;margin-right:6px;vertical-align:middle;filter:drop-shadow(0 0 2px #ffd40090)"/>
-        <span style="font-size:1.09em;font-weight:700;">${num}</span>
-        <span style="font-size:0.93em;font-weight:500;margin-left:4px;">downloads recently</span>
+      <div class="fake-download-box" style="animation: trayInFly .36s cubic-bezier(.36,1.13,.68,1.07) 1;">
+        <img src="assets/download.svg" class="dl-ico"/>
+        <span style="font-size:1.12em;font-weight:900;">${num}</span>
+        <span style="font-size:0.93em;font-weight:500;margin-left:3px;">downloads recently</span>
       </div>
     `;
-    tray.style.display = "flex";
+    tray.style.display = "block";
+    // Animowane pojawienie!
     const trayEl = tray.firstElementChild;
-    trayEl.style.animation = "trayInSlide .38s cubic-bezier(.41,1.32,.62,1.04) 1";
 
-    // Ukryj po 2.7–4.2sek
+    // Po 2,2–3,4s znika z animacją fly
     setTimeout(() => {
-      trayEl.style.animation = "trayOutSlide 0.44s cubic-bezier(.38,1.2,.88,1.14)";
-      setTimeout(()=>{ tray.style.display = "none"; }, 380);
-    }, 2100 + Math.random()*1800);
+      trayEl.style.animation = "trayOutFly 0.45s cubic-bezier(.41,1.2,.78,1.11)";
+      setTimeout(() => { tray.style.display = "none"; }, 430);
+    }, 1800 + Math.random()*1450);
   }
-  // Powtarzanie co 16–35sek
+
+  // ---- POWTARZAJ ----
   function repeatTray() {
-    const t = 16000 + Math.random()*18000;
-    setTimeout(()=>{
+    const t = 12000 + Math.random() * 12000; // co 12-24 sek
+    setTimeout(() => {
       showDownloadTray();
       repeatTray();
     }, t);
   }
   repeatTray();
-
-  // Styl traybubble (szufladka): węższa i nad widgetem
-  var trayStyle = document.createElement("style");
-  trayStyle.innerText = `
-    #fake-download-activity {
-      width:100%;
-      justify-content: center;
-      margin-bottom: -8px;
-      z-index: 10;
-    }
-    .traybubble {
-      background: #ff0000;
-      color: #fff;
-      border: 2.5px solid #ffd400;
-      border-radius: 12px 16px 21px 18px;
-      font-size: 1em;
-      padding: 6px 28px 7px 16px;
-      min-width: 115px;
-      max-width: 155px;
-      text-align:center;
-      font-family:'Montserrat','Arial',sans-serif;
-      font-weight:700;
-      box-shadow: 0 4px 18px #94580024;
-      letter-spacing: .013em;
-      margin-left:auto;
-      margin-right:auto;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-  `;
-  document.head.appendChild(trayStyle);
 })();
