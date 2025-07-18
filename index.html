@@ -284,15 +284,15 @@
 
         card.innerHTML = `
           <div class="video-wrapper" tabindex="0" style="position:relative;">
-            <button class="add-to-pack-btn"
-              data-title="${clip.title}" data-thumb="${thumbJpg}"
-              title="Add to pack">
-              <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#FF1A1A"/><text x="7.6" y="12" text-anchor="middle" font-size="15" font-family="Bebas Neue,Arial" fill="#181818" font-weight="900">+</text></svg>
-              <span class="plus-txt">add to pack</span>
-            </button>
             <img class="clip-thumb" src="${thumbJpg}" alt="thumbnail" />
             <img class="custom-overlay" src="${clip.thumbnail}" alt="overlay" />
           </div>
+          <button class="add-to-pack-btn"
+            data-title="${clip.title}" data-thumb="${thumbJpg}"
+            title="Add to pack">
+            <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#FF1A1A"/><text x="7.6" y="12" text-anchor="middle" font-size="15" font-family="Bebas Neue,Arial" fill="#181818" font-weight="900">+</text></svg>
+            <span class="plus-txt">add to pack</span>
+          </button>
           <div class="clip-info">
             <div class="clip-tags">
               ${clip.tags.map(t => `<span class="tag">${t.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')}</span>`).join("")}
@@ -303,8 +303,8 @@
         `;
         gallery.appendChild(card);
 
+        // obsługa video playera
         card.querySelector('.video-wrapper').addEventListener('click', function handler(e) {
-          // sprawdz, czy klik był nie na add-to-pack
           if (e?.target?.closest('.add-to-pack-btn')) return;
           this.innerHTML = `
             <video controls src="${clip.file}" preload="auto"
@@ -322,11 +322,17 @@
             });
           }
         });
+
+        // Obsługa add to pack
+        card.querySelector('.add-to-pack-btn').addEventListener('click', function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          if(window.addToPackJs) window.addToPackJs({
+            title: clip.title,
+            thumb: thumbJpg
+          });
+        });
       }
-
-      // Binduj klikacze add-to-pack po każdym renderze galerii
-      if (window.setupAddToPackButtons) window.setupAddToPackButtons();
-
       // Infinite scroll: Intersection Observer
       if (shown < filtered.length) {
         let sentinel = document.getElementById("load-sentinel");
@@ -379,8 +385,8 @@
   </script>
   <script src="online-widget.js"></script>
   <script type="module">
-    import { injectCompareSection, setupAddToPackButtons } from './package-order.js';
-    window.setupAddToPackButtons = setupAddToPackButtons;
+    import { injectCompareSection, addToPackJs } from './package-order.js';
+    window.addToPackJs = addToPackJs;
     injectCompareSection();
   </script>
   <script type="module" src="package-order.js"></script>
