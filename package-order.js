@@ -20,7 +20,7 @@ function createWidget() {
     display:flex;align-items:center;justify-content:center
   `;
   widget.innerHTML = `
-    <img src="assets/package.svg" alt="package" style="width:71px;height:71px;display:block"/>
+    <img src="assets/package.svg" alt="package" style="width:80px;height:80px;display:block"/>
     <span id="ae_pkg_count" style="position:absolute;top:7px;right:11px;background:#FF1A1A;color:#fff;font-size:21px;font-weight:bold;border-radius:100px;padding:2px 13px;min-width:26px;text-align:center;border:2px solid #fff;box-shadow:0 0 8px #0008;display:none;"></span>
     <span id="ae_pkg_sum" style="position:absolute;bottom:5px;left:12px;font-size:13px;color:#FF1A1A;font-weight:700;background:#181818dc;border-radius:8px;padding:3px 12px 2px 10px;border:0;box-shadow:0 0 8px #0009;display:none;border:1px solid #FF1A1A;">$0</span>
   `;
