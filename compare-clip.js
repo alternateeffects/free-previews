@@ -25,7 +25,7 @@ export function injectCompareSection() {
       <style>
       @media (max-width: 750px) {
         .videoCompareBox {
-          width: 97vw !important;
+          width: 85vw !important;
           border-width: 2px !important;
           border-radius: 14px !important;
           margin: 0 auto 14px auto !important;
