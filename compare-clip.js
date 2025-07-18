@@ -1,9 +1,8 @@
 export function injectCompareSection() {
-  // Zwinieta sekcja z fancy sliderem
   const html = `
     <section id="compare-section" style="max-width:740px;margin:0 auto;">
-      <button id="cmp-expand" 
-          style="margin:30px auto 0 auto;display:block;background:#ffe400;color:#212121;font-weight:bold;padding:12px 40px;border-radius:28px;border:0;font-size:1.25em;cursor:pointer;box-shadow:0 2px 14px #0003">
+      <button id="cmp-expand"
+        style="margin:30px auto 0 auto;display:block;background:#ffe400;color:#212121;font-weight:bold;padding:12px 40px;border-radius:28px;border:0;font-size:1.25em;cursor:pointer;box-shadow:0 2px 14px #0003">
         See the difference — HD vs 4K
       </button>
       <div id="cmp-wrap" style="display:none;margin-top:40px;">
@@ -14,11 +13,9 @@ export function injectCompareSection() {
             <video id="cmpHd" src="compare/HD 24 FPS WATERMARK.mp4" width="640" height="360" autoplay muted loop playsinline></video>
           </div>
           <div id="cmp-slider-line" style="position:absolute;top:0;bottom:0;width:6px;left:320px;background:#ffe400;box-shadow:0 0 11px #ffe40080,0 0 2px #000a;z-index:20;transition:box-shadow .2s;border-radius:20px;cursor:ew-resize;"></div>
-          <div id="cmp-slider-handle" style="position:absolute;left:310px;top:50%;margin-top:-26px;width:32px;height:52px;background:#19191eaa;border-radius:18px;z-index:21;box-shadow:0 0 10px #ffe400a0,0 2px 10px #0005;display:flex;align-items:center;justify-content:center;cursor:ew-resize;transition:box-shadow .23s;border:2.5px solid #ffe400;">
-            <svg viewBox="0 0 30 52" width="24" height="38">
-              <rect x="12" y="10" width="6" height="32" rx="2" fill="#ffe400"/>
-              <rect x="8" y="23" width="14" height="6" rx="2" fill="#ffe400"/>
-            </svg>
+          <div id="cmp-slider-handle" 
+            style="position:absolute;left:307px;top:50%;margin-top:-29px;width:38px;height:58px;background:#19191ecc;border-radius:18px;z-index:21;box-shadow:0 0 10px #ffe40070,0 2px 10px #0005;display:flex;align-items:center;justify-content:center;cursor:ew-resize;transition:box-shadow .23s;border:2.5px solid #ffe400;">
+            <img src="assets/dragicon.svg" alt="Drag to compare" style="width:26px;height:44px;display:block;">
           </div>
           <div style="position:absolute;left:18px;top:18px;background:rgba(44,44,44,0.87);color:#fff;padding:5px 18px;border-radius:10px;font-size:15px;letter-spacing:0.02em;">Preview HD 24FPS</div>
           <div style="position:absolute;right:18px;top:18px;background:rgba(44,44,44,0.87);color:#fff;padding:5px 18px;border-radius:10px;font-size:15px;letter-spacing:0.02em;">Ultra 4K 60FPS</div>
@@ -30,40 +27,46 @@ export function injectCompareSection() {
   const target = document.querySelector('.hero');
   target.insertAdjacentHTML('afterend', html);
 
-  // Expand logic
+  // Toggle (expand/collapse)
   let opened = false;
-  document.getElementById('cmp-expand').onclick = function() {
+  const expandBtn = document.getElementById('cmp-expand');
+  const cmpWrap = document.getElementById('cmp-wrap');
+  expandBtn.onclick = function () {
     if (!opened) {
-      document.getElementById('cmp-wrap').style.display = '';
-      this.style.display = 'none';
+      cmpWrap.style.display = '';
+      expandBtn.textContent = "Hide HD vs 4K comparison";
       opened = true;
+    } else {
+      cmpWrap.style.display = 'none';
+      expandBtn.textContent = "See the difference — HD vs 4K";
+      opened = false;
     }
   };
 
-  // Compare logic
-  const cmpHdClip  = document.getElementById('cmpHdClip');
-  const cmpSlider  = document.getElementById('cmp-slider-line');
-  const cmpHandle  = document.getElementById('cmp-slider-handle');
+  // Slider
+  const cmpHdClip = document.getElementById('cmpHdClip');
+  const cmpSlider = document.getElementById('cmp-slider-line');
+  const cmpHandle = document.getElementById('cmp-slider-handle');
   const cmp4k = document.getElementById('cmp4k');
   const cmpHd = document.getElementById('cmpHd');
 
-  let dragging = false, curPercent = 50;
-
   function setSlider(p) {
     p = Math.max(0, Math.min(100, p));
+    const videoW = 640;
     cmpHdClip.style.width = p + "%";
-    cmpSlider.style.left = (6.4 * p) + "px";
-    cmpHandle.style.left = (6.4 * p - 10) + "px";
-    curPercent = p;
+    let leftPx = (videoW * (p / 100));
+    cmpSlider.style.left = leftPx + "px";
+    cmpHandle.style.left = (leftPx - cmpHandle.offsetWidth / 2 + cmpSlider.offsetWidth / 2) + "px";
   }
   setSlider(50);
 
-  // Obsługa drag/mouse/touch
-  cmpHandle.onmousedown = function(e) {
+  // Drag/touch events
+  let dragging = false;
+  cmpHandle.onmousedown = function (e) {
     dragging = true;
     document.body.style.userSelect = "none";
   };
-  window.onmousemove = function(e) {
+  window.onmousemove = function (e) {
     if (dragging) {
       let rect = cmpHdClip.parentElement.getBoundingClientRect();
       let x = e.clientX - rect.left;
@@ -71,14 +74,14 @@ export function injectCompareSection() {
       setSlider(percent);
     }
   };
-  window.onmouseup = function() {
+  window.onmouseup = function () {
     dragging = false;
     document.body.style.userSelect = "";
   };
-  cmpHandle.ontouchstart = function(e) {
+  cmpHandle.ontouchstart = function (e) {
     dragging = true; e.preventDefault();
   };
-  window.ontouchmove = function(e) {
+  window.ontouchmove = function (e) {
     if (!dragging) return;
     let touch = e.touches[0];
     let rect = cmpHdClip.parentElement.getBoundingClientRect();
@@ -86,11 +89,9 @@ export function injectCompareSection() {
     let percent = (x / rect.width) * 100;
     setSlider(percent);
   };
-  window.ontouchend = function() {
-    dragging = false;
-  };
+  window.ontouchend = function () { dragging = false; };
 
-  // Synchronizacja pętli
+  // Synchronize looping
   function syncTimes() {
     if (Math.abs(cmp4k.currentTime - cmpHd.currentTime) > 0.13) {
       cmpHd.currentTime = cmp4k.currentTime;
