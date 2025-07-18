@@ -6,22 +6,11 @@ export function injectCompareSection() {
         See the difference — HD vs 4K
       </button>
       <div id="cmp-wrap" style="display:none;margin-top:40px;">
-        <div class="videoCompareBox" style="position:relative;width:640px;max-width:97vw;height:360px;margin:0 auto 13px auto;
+        <div style="position:relative;width:640px;max-width:96vw;height:360px;margin:0 auto;margin-bottom:13px;
             background:#000;border-radius:22px;box-shadow:0 2px 20px #000a;border:4px solid #ffe400;overflow:hidden;">
-          <video id="cmp4k" src="compare/4K 60FPS WATERMARK.mp4"
-            autoplay muted loop playsinline
-            style="object-fit:cover;object-position:50% 50%;width:100%;height:100%;
-              position:absolute;left:50%;top:0;transform:translateX(-50%);
-              border-radius:20px;max-width:none;">
-          </video>
-          <div id="cmpHdClip" style="position:absolute;top:0;left:0;width:50%;height:100%;
-            overflow:hidden;pointer-events:none;">
-            <video id="cmpHd" src="compare/HD 24 FPS WATERMARK.mp4"
-              autoplay muted loop playsinline
-              style="object-fit:cover;object-position:50% 50%;width:100%;height:100%;
-                position:absolute;left:50%;top:0;transform:translateX(-50%);
-                border-radius:20px;max-width:none;">
-            </video>
+          <video id="cmp4k" src="compare/4K 60FPS WATERMARK.mp4" width="640" height="360" autoplay muted loop playsinline></video>
+          <div id="cmpHdClip" style="position:absolute;top:0;left:0;width:50%;height:100%;overflow:hidden;pointer-events:none;">
+            <video id="cmpHd" src="compare/HD 24 FPS WATERMARK.mp4" width="640" height="360" autoplay muted loop playsinline></video>
           </div>
           <div id="cmp-slider-line" style="position:absolute;top:0;bottom:0;width:6px;left:320px;background:#ffe400;box-shadow:0 0 11px #ffe40080,0 0 2px #000a;z-index:20;transition:box-shadow .2s;border-radius:20px;cursor:ew-resize;"></div>
           <div id="cmp-slider-handle"
@@ -33,22 +22,6 @@ export function injectCompareSection() {
         </div>
         <div style="text-align:center;margin-bottom:15px;font-size:16px;color:#ffc800;">Drag the handle left or right to compare!</div>
       </div>
-      <style>
-      @media (max-width: 750px) {
-        .videoCompareBox {
-          width: 98vw !important;
-          border-width: 2px !important;
-          border-radius: 14px !important;
-          margin: 0 auto 16px auto !important;
-          min-width: 200px !important;
-        }
-        #cmp-wrap { margin-top: 18px !important; }
-        #cmp-slider-handle {
-          width:44px !important; height:36px !important; margin-top:-18px !important;
-        }
-        #cmp-slider-handle img { width:40px !important;height:25px !important; }
-      }
-      </style>
     </section>
   `;
   const target = document.querySelector('.hero');
@@ -91,16 +64,16 @@ export function injectCompareSection() {
     curPercent = p;
   }
   requestAnimationFrame(() => setSlider(50));
-  window.addEventListener("resize", () => setSlider(curPercent));
 
   // Drag/touch events
   let dragging = false;
 
+  // Najlepiej: trzyma tylko kiedy przycisk myszki jest faktycznie wciśnięty!
   cmpHandle.onmousedown = function(e) {
     if (e.button !== 0) return;
     dragging = true;
     document.body.style.userSelect = "none";
-    e.preventDefault();
+    e.preventDefault(); // zapobiega drag&drop obrazka
   };
 
   window.addEventListener('mousemove', function(e) {
@@ -123,7 +96,7 @@ export function injectCompareSection() {
     }
   });
 
-  // Touch (na mobile)
+  // Touch
   cmpHandle.ontouchstart = function (e) { dragging = true; e.preventDefault(); };
   window.addEventListener('touchmove', function (e) {
     if (!dragging) return;
