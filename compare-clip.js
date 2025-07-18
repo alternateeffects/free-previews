@@ -8,15 +8,19 @@ export function injectCompareSection() {
       <div id="cmp-wrap" style="display:none;margin-top:40px;">
         <div class="videoCompareBox" style="position:relative;width:640px;max-width:97vw;height:360px;margin:0 auto 13px auto;
             background:#000;border-radius:22px;box-shadow:0 2px 20px #000a;border:4px solid #ffe400;overflow:hidden;">
-          <video id="cmp4k" src="compare/4K 60FPS WATERMARK.mp4" width="640" height="360"
+          <video id="cmp4k" src="compare/4K 60FPS WATERMARK.mp4"
             autoplay muted loop playsinline
-            style="object-fit:cover;object-position:center;border-radius:20px;width:100%;height:100%;">
+            style="object-fit:cover;object-position:50% 50%;width:100%;height:100%;
+              position:absolute;left:50%;top:0;transform:translateX(-50%);
+              border-radius:20px;max-width:none;">
           </video>
           <div id="cmpHdClip" style="position:absolute;top:0;left:0;width:50%;height:100%;
             overflow:hidden;pointer-events:none;">
-            <video id="cmpHd" src="compare/HD 24 FPS WATERMARK.mp4" width="640" height="360"
+            <video id="cmpHd" src="compare/HD 24 FPS WATERMARK.mp4"
               autoplay muted loop playsinline
-              style="object-fit:cover;object-position:center;border-radius:20px;width:100%;height:100%;">
+              style="object-fit:cover;object-position:50% 50%;width:100%;height:100%;
+                position:absolute;left:50%;top:0;transform:translateX(-50%);
+                border-radius:20px;max-width:none;">
             </video>
           </div>
           <div id="cmp-slider-line" style="position:absolute;top:0;bottom:0;width:6px;left:320px;background:#ffe400;box-shadow:0 0 11px #ffe40080,0 0 2px #000a;z-index:20;transition:box-shadow .2s;border-radius:20px;cursor:ew-resize;"></div>
