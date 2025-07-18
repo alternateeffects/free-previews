@@ -1,23 +1,23 @@
-// === KONFIGUROWALNE ===
-const EMAILJS_PUBLIC_KEY     = 'pwBMPOn8UbZy3p36b';      // Twój publiczny klucz
+// KONFIGUROWALNE
+const EMAILJS_PUBLIC_KEY     = 'pwBMPOn8UbZy3p36b';
 const EMAILJS_PRIVATE_KEY    = ''; // Można zostawić puste
-const EMAILJS_SERVICE_ID     = 'service_b3996lm';        // Service ID
-const EMAILJS_TEMPLATE_ID    = 'template_l1ofebk';       // Template ID
-const PRICE_PER_CLIP         = 0.5;                      // $ za jeden clip
+const EMAILJS_SERVICE_ID     = 'service_b3996lm';
+const EMAILJS_TEMPLATE_ID    = 'template_l1ofebk';
+const PRICE_PER_CLIP         = 0.5;
 
 const PACK_KEY = 'ae_clip_pack';
 const WIDGET_ID = 'ae_pkg_widget';
 
-// --- Widget (samo SVG) ---
+// Widoczny widget (samo SVG)
 function createWidget() {
-  if(document.getElementById(WIDGET_ID)) return;
+  if (document.getElementById(WIDGET_ID)) return;
   const widget = document.createElement('button');
   widget.id = WIDGET_ID;
   widget.style = `
-    position:fixed;right:24px;bottom:24px;z-index:11000;
-    width:72px;height:72px;padding:0;
-    outline:none;border:none;background:none;box-shadow:none;cursor:pointer;
-    display:flex;align-items:center;justify-content:center
+    position: fixed; right: 24px; bottom: 24px; z-index: 11000;
+    width: 80px; height: 80px; padding: 0;
+    outline: none; border: none; background: none; box-shadow: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center
   `;
   widget.innerHTML = `
     <img src="assets/package.svg" alt="package" style="width:80px;height:80px;display:block"/>
@@ -34,32 +34,32 @@ function updateWidget() {
   const sum = (cnt * PRICE_PER_CLIP).toFixed(2);
   const elCount = document.getElementById('ae_pkg_count');
   const elSum = document.getElementById('ae_pkg_sum');
-  if(elCount) { elCount.textContent = cnt; elCount.style.display = cnt ? "block" : "none"; }
-  if(elSum) { elSum.textContent = `$${sum}`; elSum.style.display = cnt ? "block" : "none";}
+  if (elCount) { elCount.textContent = cnt; elCount.style.display = cnt ? "block" : "none"; }
+  if (elSum) { elSum.textContent = `$${sum}`; elSum.style.display = cnt ? "block" : "none"; }
 }
 function animateWidget() {
   const widg = document.getElementById(WIDGET_ID);
-  if(widg){ widg.style.transform='scale(1.18)'; setTimeout(()=>{widg.style.transform='';},170);}
+  if (widg) { widg.style.transform = 'scale(1.13)'; setTimeout(() => { widg.style.transform = ''; }, 170); }
 }
 
-// --- Koszyk ---
-function getPack() { return JSON.parse(localStorage.getItem(PACK_KEY)||"[]") }
-function setPack(arr) { localStorage.setItem(PACK_KEY, JSON.stringify(arr)); updateWidget();}
+// Koszyk
+function getPack() { return JSON.parse(localStorage.getItem(PACK_KEY) || "[]"); }
+function setPack(arr) { localStorage.setItem(PACK_KEY, JSON.stringify(arr)); updateWidget(); }
 function addToPack(obj) {
   let pack = getPack();
-  if (!pack.find(x => x.title === obj.title)) { pack.push(obj); setPack(pack);}
+  if (!pack.find(x => x.title === obj.title)) { pack.push(obj); setPack(pack); }
   animateWidget();
 }
 function removeFromPack(title) {
   let pack = getPack();
   setPack(pack.filter(x => x.title !== title));
 }
-function clearPack(){ setPack([]); }
+function clearPack() { setPack([]); }
 
-// --- Modal ---
+// Modal
 let aeModal = null;
 function showModal() {
-  if(aeModal){ aeModal.style.display="flex"; renderModalBody(); return;}
+  if (aeModal) { aeModal.style.display = "flex"; renderModalBody(); return; }
   aeModal = document.createElement('div');
   aeModal.id = 'ae_pkg_modal';
   aeModal.style = `
@@ -69,7 +69,7 @@ function showModal() {
   document.body.appendChild(aeModal);
 
   const cont = document.createElement('div');
-  cont.style = `background:#181818; border-radius:22px; max-width:480px;width:80vw; min-width:320px;padding:0;overflow:hidden;box-shadow:0 8px 36px #000a; color:#fff;display:flex;flex-direction:column;`;
+  cont.style = `background:#181818; border-radius:22px; max-width:480px;width:83vw; min-width:320px;padding:0;overflow:hidden;box-shadow:0 8px 36px #000a; color:#fff;display:flex;flex-direction:column;`;
   aeModal.appendChild(cont);
 
   cont.innerHTML = `
@@ -83,9 +83,9 @@ function showModal() {
       <div id="ae_pkg_items"></div>
       <div style="margin:23px 0 13px 0;border-top:2px solid #FF1A1A;"></div>
       <form id="ae_pkg_form" autocomplete="off" style="margin-bottom:0;margin-top:0;">
-        <input required type="text" name="name" placeholder="Your name" style="width:90%;padding:12px 16px 12px 18px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;"/>
-        <input required type="email" name="email" placeholder="Your email" style="width:90%;padding:12px 16px 12px 18px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;"/>
-        <textarea name="notes" placeholder="Additional notes (optional)" style="width:91%;min-height:44px;padding:10px 16px;border-radius:9px;font-size:15px;background:#232323;color:#fff;border:2px solid #444;resize:vertical;outline:none;margin-bottom:13px;"></textarea>
+        <input required type="text" name="name" placeholder="Your name" style="width:95%;padding:12px 16px 12px 18px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;"/>
+        <input required type="email" name="email" placeholder="Your email" style="width:95%;padding:12px 16px 12px 18px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;"/>
+        <textarea name="notes" placeholder="Additional notes (optional)" style="width:97%;min-height:44px;padding:10px 16px;border-radius:9px;font-size:15px;background:#232323;color:#fff;border:2px solid #444;resize:vertical;outline:none;margin-bottom:13px;"></textarea>
         <div style="margin-bottom:16px;font-size:17px;text-align:right;">
           <strong style="color:#FF1A1A;">TOTAL: $<span id="ae_pkg_total">0.00</span></strong>
         </div>
@@ -131,16 +131,11 @@ function renderModalBody() {
   aeModal.querySelector('#ae_pkg_total').textContent = (pack.length * PRICE_PER_CLIP).toFixed(2);
 }
 
-// --- Obsługa dodawania/usuwania klipów — ten kod umieść po każdym renderze galerii (np. po renderClips()):
-export function setupAddToPackButtons() {
-  document.querySelectorAll('.add-to-pack-btn').forEach(btn => {
-    btn.onclick = function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      addToPack({title:this.getAttribute('data-title'), thumb:this.getAttribute('data-thumb')});
-    };
-  });
+// --- Add to pack logic dla HTML
+export function addToPackJs(obj) {
+  addToPack(obj);
 }
+window.addToPackJs = addToPackJs;
 
 // --- Obsługa wysyłki przez FETCH
 function sendOrderViaEmailJS({name, email, notes, clips}) {
