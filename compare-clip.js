@@ -1,5 +1,4 @@
 export function injectCompareSection() {
-  // Sekcja HTML (po angielsku, z paddingiem, ramką, border-radius)
   const html = `
     <section id="compare-section" style="max-width:740px;margin:0 auto;">
       <button id="cmp-expand"
@@ -37,7 +36,6 @@ export function injectCompareSection() {
       cmpWrap.style.display = '';
       expandBtn.textContent = "Hide HD vs 4K comparison";
       opened = true;
-      // Ustaw jawnie slider po odpaleniu (daje zawsze perfect center chwytaka)
       requestAnimationFrame(() => setSlider(curPercent));
     } else {
       cmpWrap.style.display = 'none';
@@ -57,7 +55,6 @@ export function injectCompareSection() {
 
   function setSlider(p) {
     p = Math.max(0, Math.min(100, p));
-    // Dynamic width dla responsywności:
     const wrapDiv = cmpHdClip.parentElement;
     const videoW = wrapDiv.clientWidth;
     cmpHdClip.style.width = p + "%";
@@ -66,25 +63,31 @@ export function injectCompareSection() {
     cmpHandle.style.left = (leftPx - cmpHandle.offsetWidth / 2 + cmpSlider.offsetWidth/2) + "px";
     curPercent = p;
   }
-
-  // Ustal na starcie
   requestAnimationFrame(() => setSlider(50));
 
   // Drag/touch events
   let dragging = false;
-  cmpHandle.onmousedown = function (e) {
+
+  cmpHandle.onmousedown = function(e) {
     if (e.button !== 0) return;
     dragging = true;
     document.body.style.userSelect = "none";
   };
-  window.addEventListener('mousemove', e => {
+
+  window.addEventListener('mousemove', function(e) {
     if (!dragging) return;
+    if (e.buttons !== 1) {
+      dragging = false;
+      document.body.style.userSelect = "";
+      return;
+    }
     let rect = cmpHdClip.parentElement.getBoundingClientRect();
     let x = e.clientX - rect.left;
     let percent = (x / rect.width) * 100;
     setSlider(percent);
   });
-  window.addEventListener('mouseup', e => {
+
+  window.addEventListener('mouseup', function(e) {
     if (dragging) {
       dragging = false;
       document.body.style.userSelect = "";
@@ -103,13 +106,14 @@ export function injectCompareSection() {
   });
   window.addEventListener('touchend', function () { dragging = false; });
 
-  // Synchronize looping (jak bylo)
+  // Synchronize looping
   function syncTimes() {
     if (Math.abs(cmp4k.currentTime - cmpHd.currentTime) > 0.13) {
       cmpHd.currentTime = cmp4k.currentTime;
     }
   }
   setInterval(syncTimes, 340);
+
   cmp4k.addEventListener('ended', () => {
     setTimeout(() => { if (cmpHd.currentTime > 0.3) cmpHd.currentTime = 0; }, 60);
     cmpHd.play();
