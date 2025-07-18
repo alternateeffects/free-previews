@@ -69,7 +69,7 @@ function showModal() {
   document.body.appendChild(aeModal);
 
   const cont = document.createElement('div');
-  cont.style = `background:#181818; border-radius:22px; max-width:480px;width:92vw; min-width:320px;padding:0;overflow:hidden;box-shadow:0 8px 36px #000a; color:#fff;display:flex;flex-direction:column;`;
+  cont.style = `background:#181818; border-radius:22px; max-width:480px;width:80vw; min-width:320px;padding:0;overflow:hidden;box-shadow:0 8px 36px #000a; color:#fff;display:flex;flex-direction:column;`;
   aeModal.appendChild(cont);
 
   cont.innerHTML = `
