@@ -7,6 +7,14 @@
   <link rel="icon" type="image/png" href="assets/favicon.png" sizes="32x32">
   <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Bebas+Neue&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-07BX6SW4MC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-07BX6SW4MC');
+  </script>
   <style>
     .video-wrapper {
       position: relative;
@@ -160,14 +168,11 @@
       const leftBtn = document.querySelector('.tag-scroll-left');
       const rightBtn = document.querySelector('.tag-scroll-right');
       const tagScroll = document.getElementById('tagScrollBar');
-      // Scroll o 1 tag
       function tagScrollStep(direction) {
        const btns = [...tagScroll.querySelectorAll('.tag-btn')];
        const scrollPos = tagScroll.scrollLeft;
        const vw = tagScroll.clientWidth;
-
        if (direction > 0) {
-        // RIGHT – znajdź pierwszy, którego right jest "tuż" za prawą krawędzią i przewiń do niego
         for (let i = 0; i < btns.length; i++) {
          const b = btns[i];
          if (b.offsetLeft + b.offsetWidth > scrollPos + vw + 2) {
@@ -175,10 +180,8 @@
           return;
          }
         }
-       // jak nie znalazło, przewiń do końca
        tagScroll.scrollTo({ left: tagScroll.scrollWidth, behavior: 'smooth' });
      } else {
-       // LEFT – znajdź ostatniego, którego left jest "PRZED" lewą krawędzią widoku i przewiń do niego
        let found = false;
        for (let i = btns.length - 1; i >= 0; i--) {
          const b = btns[i];
@@ -188,7 +191,7 @@
            break;
          }
        }
-       if (!found) tagScroll.scrollTo({ left: 0, behavior: 'smooth' }); // wróć do początku, jeśli już wyjechałeś na max lewo
+       if (!found) tagScroll.scrollTo({ left: 0, behavior: 'smooth' });
      }
    }
       leftBtn.addEventListener('click', ()=>tagScrollStep(-1));
@@ -217,7 +220,6 @@
     let currentWatermark = "all";
     let currentTag = "all";
 
-    // DYNAMICZNY SCROLL TAGÓW
     function generateTagScroll() {
       const tagScroll = document.getElementById('tagScrollBar');
       tagScroll.innerHTML = '';
@@ -247,12 +249,8 @@
       gallery.innerHTML = "";
       let filtered = allClipsData.filter(clip => {
         if (currentOrientation !== "all" && clip.orientation !== currentOrientation) return false;
-
-        // --- ZMIANA WATERMARK: "free" (none), "paid" (cokolwiek innego), "all"
         if (currentWatermark === "free" && clip.watermark !== "none") return false;
         if (currentWatermark === "paid" && clip.watermark === "none") return false;
-        // ---
-
         if (currentTag !== "all" && !clip.tags.map(t => t.toLowerCase()).includes(currentTag)) return false;
         return true;
       });
@@ -286,6 +284,17 @@
               style="width:100%;height:auto;display:block;background:#000;border-radius:8px;"></video>
           `;
           this.removeEventListener('click', handler);
+        });
+
+        // TRACK DOWNLOADS (Google Analytics)
+        card.querySelector('.download-btn').addEventListener('click', function() {
+          if (window.gtag) {
+            gtag('event', 'clip_download', {
+              'event_category': 'Clip',
+              'event_label': clip.title || clip.file,  // identyfikator klipu
+              'value': 1
+            });
+          }
         });
       }
 
