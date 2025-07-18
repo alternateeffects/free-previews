@@ -79,17 +79,17 @@ function showModal() {
       <button type="button" id="ae_pkg_close" style="margin-left:auto;border:none;background:none;font-size:32px;line-height:1;color:#181818;font-weight:bold;cursor:pointer;padding:0 6px 0 20px;">×</button>
     </div>
     <div style="padding:0 25px 15px 25px;">
-      <div style="border-bottom:2.5px solid #FF1A1A;margin-bottom:18px;"></div>
+      <div style="border-bottom:0px solid #FF1A1A;margin-bottom:18px;"></div>
       <div id="ae_pkg_items"></div>
       <div style="margin:23px 0 13px 0;border-top:2px solid #FF1A1A;"></div>
       <form id="ae_pkg_form" autocomplete="off" style="margin-bottom:0;margin-top:0;">
-        <input required type="text" name="name" placeholder="Your name" style="width:100%;padding:12px 16px 12px 18px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;"/>
-        <input required type="email" name="email" placeholder="Your email" style="width:100%;padding:12px 16px 12px 18px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;"/>
-        <textarea name="notes" placeholder="Additional notes (optional)" style="width:100%;min-height:44px;padding:10px 16px;border-radius:9px;font-size:15px;background:#232323;color:#fff;border:2px solid #444;resize:vertical;outline:none;margin-bottom:13px;"></textarea>
+        <input required type="text" name="name" placeholder="Your name" style="width:90%;padding:12px 16px 12px 18px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;"/>
+        <input required type="email" name="email" placeholder="Your email" style="width:90%;padding:12px 16px 12px 18px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;"/>
+        <textarea name="notes" placeholder="Additional notes (optional)" style="width:91%;min-height:44px;padding:10px 16px;border-radius:9px;font-size:15px;background:#232323;color:#fff;border:2px solid #444;resize:vertical;outline:none;margin-bottom:13px;"></textarea>
         <div style="margin-bottom:16px;font-size:17px;text-align:right;">
           <strong style="color:#FF1A1A;">TOTAL: $<span id="ae_pkg_total">0.00</span></strong>
         </div>
-        <button type="submit" style="font-size:18px;padding:13px 37px;border-radius:13px;background:#FF1A1A;color:#fff;font-weight:900;letter-spacing:1px;border:none;cursor:pointer;box-shadow:0 2px 8px #000a;margin-bottom:2px;margin-top:2px;transition:background .15s;">
+        <button type="submit" style="font-size:18px;padding:13px 37px;border-radius:13px;background:#FF1A1A;color:#000000;font-weight:900;letter-spacing:1px;border:none;cursor:pointer;box-shadow:0 2px 8px #000a;margin-bottom:2px;margin-top:2px;transition:background .15s;">
           Send order
         </button>
         <div id="ae_pkg_msg" style="display:block;margin-top:15px;font-size:15px;min-height:21px;text-align:center;"></div>
