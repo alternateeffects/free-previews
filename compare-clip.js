@@ -15,7 +15,7 @@ export function injectCompareSection() {
           <div id="cmp-slider-line" style="position:absolute;top:0;bottom:0;width:6px;left:320px;background:#ffe400;box-shadow:0 0 11px #ffe40080,0 0 2px #000a;z-index:20;transition:box-shadow .2s;border-radius:20px;cursor:ew-resize;"></div>
           <div id="cmp-slider-handle"
             style="position:absolute;left:307px;top:50%;margin-top:-22px;width:58px;height:44px;background:#19191ecc;border-radius:12px;z-index:21;box-shadow:0 0 10px #ffe40070,0 2px 10px #0005;display:flex;align-items:center;justify-content:center;cursor:ew-resize;transition:box-shadow .23s;border:2.5px solid #ffe400;">
-            <img src="assets/dragicon.svg" alt="Drag to compare" style="width:54px;height:34px;display:block;">
+            <img src="assets/dragicon.svg" alt="Drag to compare" draggable="false" style="width:54px;height:34px;display:block;pointer-events:none;">
           </div>
           <div style="position:absolute;left:18px;top:18px;background:rgba(44,44,44,0.87);color:#fff;padding:5px 18px;border-radius:10px;font-size:15px;letter-spacing:0.02em;">Preview HD 24FPS</div>
           <div style="position:absolute;right:18px;top:18px;background:rgba(44,44,44,0.87);color:#fff;padding:5px 18px;border-radius:10px;font-size:15px;letter-spacing:0.02em;">Ultra 4K 60FPS</div>
@@ -60,7 +60,7 @@ export function injectCompareSection() {
     cmpHdClip.style.width = p + "%";
     let leftPx = (videoW * (p / 100));
     cmpSlider.style.left = leftPx + "px";
-    cmpHandle.style.left = (leftPx - cmpHandle.offsetWidth / 2 + cmpSlider.offsetWidth/2) + "px";
+    cmpHandle.style.left = (leftPx - cmpHandle.offsetWidth / 2 + cmpSlider.offsetWidth / 2) + "px";
     curPercent = p;
   }
   requestAnimationFrame(() => setSlider(50));
@@ -68,10 +68,12 @@ export function injectCompareSection() {
   // Drag/touch events
   let dragging = false;
 
+  // Najlepiej: trzyma tylko kiedy przycisk myszki jest faktycznie wciśnięty!
   cmpHandle.onmousedown = function(e) {
     if (e.button !== 0) return;
     dragging = true;
     document.body.style.userSelect = "none";
+    e.preventDefault(); // zapobiega drag&drop obrazka
   };
 
   window.addEventListener('mousemove', function(e) {
