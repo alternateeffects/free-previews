@@ -6,7 +6,7 @@ export function injectCompareSection() {
         See the difference — HD vs 4K
       </button>
       <div id="cmp-wrap" style="display:none;margin-top:40px;">
-        <div style="position:relative;width:640px;max-width:96vw;height:360px;margin:0 auto;margin-bottom:13px;
+        <div class="videoCompareBox" style="position:relative;width:640px;max-width:96vw;height:360px;margin:0 auto 16px auto;
             background:#000;border-radius:22px;box-shadow:0 2px 20px #000a;border:4px solid #ffe400;overflow:hidden;">
           <video id="cmp4k" src="compare/4K 60FPS WATERMARK.mp4" width="640" height="360" autoplay muted loop playsinline></video>
           <div id="cmpHdClip" style="position:absolute;top:0;left:0;width:50%;height:100%;overflow:hidden;pointer-events:none;">
@@ -22,6 +22,22 @@ export function injectCompareSection() {
         </div>
         <div style="text-align:center;margin-bottom:15px;font-size:16px;color:#ffc800;">Drag the handle left or right to compare!</div>
       </div>
+      <style>
+      @media (max-width: 750px) {
+        .videoCompareBox {
+          width: 97vw !important;
+          border-width: 2px !important;
+          border-radius: 14px !important;
+          margin: 0 auto 14px auto !important;
+          min-width: 190px !important;
+        }
+        #cmp-wrap { margin-top: 13px !important; }
+        #cmp-slider-handle {
+          width:44px !important; height:36px !important; margin-top:-18px !important;
+        }
+        #cmp-slider-handle img { width:40px !important;height:25px !important; }
+      }
+      </style>
     </section>
   `;
   const target = document.querySelector('.hero');
@@ -68,12 +84,11 @@ export function injectCompareSection() {
   // Drag/touch events
   let dragging = false;
 
-  // Najlepiej: trzyma tylko kiedy przycisk myszki jest faktycznie wciśnięty!
   cmpHandle.onmousedown = function(e) {
     if (e.button !== 0) return;
     dragging = true;
     document.body.style.userSelect = "none";
-    e.preventDefault(); // zapobiega drag&drop obrazka
+    e.preventDefault();
   };
 
   window.addEventListener('mousemove', function(e) {
@@ -96,7 +111,7 @@ export function injectCompareSection() {
     }
   });
 
-  // Touch
+  // Touch (na mobile)
   cmpHandle.ontouchstart = function (e) { dragging = true; e.preventDefault(); };
   window.addEventListener('touchmove', function (e) {
     if (!dragging) return;
