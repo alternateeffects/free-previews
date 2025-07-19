@@ -1,38 +1,5 @@
 ﻿[
     {
-        "title":  "0701(1)-watermarked-strong",
-        "file":  "clips-watermarked/0701(1)-watermarked-strong.mp4",
-        "tags":  [
-                     "other"
-                 ],
-        "thumbnail":  "assets/thumbnail-portrait.png",
-        "orientation":  "portrait",
-        "watermark":  "strong",
-        "has_watermark":  true
-    },
-    {
-        "title":  "0701(3)-watermarked-strong",
-        "file":  "clips-watermarked/0701(3)-watermarked-strong.mp4",
-        "tags":  [
-                     "other"
-                 ],
-        "thumbnail":  "assets/thumbnail-portrait.png",
-        "orientation":  "portrait",
-        "watermark":  "strong",
-        "has_watermark":  true
-    },
-    {
-        "title":  "0701-watermarked-strong",
-        "file":  "clips-watermarked/0701-watermarked-strong.mp4",
-        "tags":  [
-                     "other"
-                 ],
-        "thumbnail":  "assets/thumbnail-portrait.png",
-        "orientation":  "portrait",
-        "watermark":  "strong",
-        "has_watermark":  true
-    },
-    {
         "title":  "2d-animations (1)-watermarked-none",
         "file":  "clips-watermarked/2d-animations (1)-watermarked-none.mp4",
         "tags":  [
