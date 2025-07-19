@@ -116,7 +116,7 @@ function renderModalBody() {
       <div style="display:flex;align-items:center;padding:11px 0 7px 0;border-bottom:1.3px solid #242424;">
         <img src="${clip.thumb}" alt="thumb" style="height:54px;width:auto;min-width:54px;border-radius:8px;background:#fff;margin-right:13px;">
         <div style="flex:1;min-width:0;overflow-wrap:break-word;color:#fff;font-size:16px;font-weight:700;">${clip.title}</div>
-        <button type="button" class="ae_pkg_remove" data-title="${clip.title}" style="margin-left:12px;background:#FF1A1A;border:none;color:#fff;border-radius:9px;width:32px;height:32px;font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 0 5px #FF1A1A80;">–</button>
+        <button type="button" class="ae_pkg_remove" data-title="${clip.title}" style="margin-left:12px;background:#FF1A1A;border:none;color:#000;border-radius:9px;width:32px;height:32px;font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 0 5px #FF1A1A80;display:flex;align-items:center;justify-content:center;">–</button>
       </div>
     `;
   }
