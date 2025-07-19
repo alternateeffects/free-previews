@@ -347,6 +347,10 @@
         });
 
         let shown = 0;
+        // 1. UTWÓRZ kontener grid (dla galerii)
+        const grid = document.createElement("div");
+        grid.className = "gallery-grid";
+
         for (
           let i = 0;
           i < filtered.length && shown < showCount;
@@ -358,51 +362,16 @@
           img.src = thumbJpg;
           img.className = "clip-thumb";
           img.alt = clip.title;
-          // Możesz przekazać index albo id jako data-atrybut:
           img.dataset.idx = i;
-          // klik = otwórz modal z gracza etc.
+
+          // --- Klik = otwórz modal
           img.onclick = function () {
-            showClipModal(clip); // Tu wywołujesz modal z opisem, playerem itd.
+            showClipModal(clip);
           };
-          gallery.appendChild(img);
-
-          // obsługa video playera
-          card
-            .querySelector(".video-wrapper")
-            .addEventListener("click", function handler(e) {
-              if (e?.target?.closest(".add-to-pack-btn")) return;
-              this.innerHTML = `
-            <video controls src="${clip.file}" preload="auto"
-              style="width:100%;height:auto;display:block;background:#000;border-radius:8px;"></video>
-          `;
-              this.removeEventListener("click", handler);
-            });
-
-          card
-            .querySelector(".download-btn")
-            .addEventListener("click", function () {
-              if (window.gtag) {
-                gtag("event", "clip_download", {
-                  event_category: "Clip",
-                  event_label: clip.title || clip.file,
-                  value: 1,
-                });
-              }
-            });
-
-          // Obsługa add to pack
-          card
-            .querySelector(".add-to-pack-btn")
-            .addEventListener("click", function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-              if (window.addToPackJs)
-                window.addToPackJs({
-                  title: clip.title,
-                  thumb: thumbJpg,
-                });
-            });
+          grid.appendChild(img);
         }
+        gallery.appendChild(grid);
+
         // Infinite scroll: Intersection Observer
         if (shown < filtered.length) {
           let sentinel = document.getElementById("load-sentinel");
