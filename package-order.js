@@ -83,9 +83,9 @@ function showModal() {
       <div id="ae_pkg_items" style="max-height: 230px; overflow-y: auto; margin-bottom: 14px;"></div>
       <div style="margin:23px 0 13px 0;border-top:2px solid #FF1A1A;"></div>
       <form id="ae_pkg_form" autocomplete="off" style="margin-bottom:0;margin-top:0;">
-        <input required type="text" name="name" placeholder="Your name" style="width:90%;padding:12px 10px 12px 15px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;"/>
-        <input required type="email" name="email" placeholder="Your email" style="width:90%;padding:12px 10px 12px 15px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;"/>
-        <textarea name="notes" placeholder="Additional notes (optional)" style="width:89%;min-height:44px;padding:10px 16px;border-radius:9px;font-size:15px;background:#232323;color:#fff;border:2px solid #444;resize:vertical;outline:none;margin-bottom:13px;"></textarea>
+        <input required type="text" name="name" placeholder="Your name" style="width:90%;padding:12px 10px 12px 15px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;display:block;margin-left:auto;margin-right:auto;"/>
+        <input required type="email" name="email" placeholder="Your email" style="width:90%;padding:12px 10px 12px 15px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;display:block;margin-left:auto;margin-right:auto;"/>
+        <textarea name="notes" placeholder="Additional notes (optional)" style="width:89%;min-height:44px;padding:10px 16px;border-radius:9px;font-size:15px;background:#232323;color:#fff;border:2px solid #444;resize:vertical;outline:none;margin-bottom:13px;display:block;margin-left:auto;margin-right:auto;"></textarea>
         <div style="margin-bottom:16px;font-size:17px;text-align:right;">
           <strong style="color:#FF1A1A;">TOTAL: $<span id="ae_pkg_total">0.00</span></strong>
         </div>
