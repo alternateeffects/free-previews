@@ -139,19 +139,16 @@ window.addToPackJs = addToPackJs;
 
 // --- Obsługa wysyłki przez FETCH
 function sendOrderViaEmailJS({name, email, notes, clips}) {
-  // clips = tablica obiektów clip {title: ..., thumb: ...}
-  const cleanNotes = typeof notes === "string" ? notes : "";
-  const clipTitles = Array.isArray(clips) ? clips.map(c => c.title) : [];
-  const clipList = clipTitles.length
-    ? "<ul>" + clipTitles.map(t => `<li>${t}</li>`).join('') + "</ul>"
-    : "<ul><li>No clips selected.</li></ul>";
+  // clips = tablica obiektów typu: {title: "...", ...}
+  const clipsText = Array.isArray(clips) && clips.length > 0
+    ? clips.map(c => c.title).join('\n')
+    : "No clips selected.";
 
   const params = {
     name: name || "",
     email: email || "",
-    notes: cleanNotes,
-    each_clips: clipTitles,
-    clips: clipList
+    notes: notes || "",
+    clips: clipsText
   };
 
   const body = {
