@@ -476,9 +476,12 @@
     </script>
     <script src="online-widget.js"></script>
     <script type="module">
-      import { injectCompareSection, addToPackJs } from "./package-order.js";
-      window.addToPackJs = addToPackJs;
+      import { injectCompareSection } from "./compare-clip.js";
       injectCompareSection();
+    </script>
+    <script type="module">
+      import { addToPackJs } from "./package-order.js";
+      window.addToPackJs = addToPackJs;
     </script>
     <script type="module" src="package-order.js"></script>
   </body>
