@@ -1,5 +1,5 @@
 @echo off
-set input_folder=clips
+set input_folder=clips-watermarked
 set output_folder=thumbs-watermarked
 
 if not exist "%output_folder%" mkdir "%output_folder%"
