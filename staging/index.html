@@ -353,32 +353,18 @@
           i++, shown++
         ) {
           const clip = filtered[i];
-          const card = document.createElement("div");
-          card.className = `clip-card ${clip.orientation || ""}`;
           const thumbJpg = `thumbs-watermarked/${clip.title}.jpg`;
-
-          // prettier-ignore
-          card.innerHTML = `
-          <div class="video-wrapper" tabindex="0" style="position:relative;">
-            <button class="add-to-pack-btn"
-              data-title="${clip.title}" data-thumb="${thumbJpg}"
-              title="Add to pack"
-              style="position:absolute;top:8px;right:8px;z-index:50;">
-              <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#FF1A1A"/><text x="7.6" y="13" text-anchor="middle" font-size="15" font-family="Bebas Neue,Arial" fill="#181818" font-weight="900">+</text></svg>
-              <span class="plus-txt">add to pack</span>
-            </button>
-            <img class="clip-thumb" src="${thumbJpg}" alt="thumbnail" />
-            <img class="custom-overlay" src="${clip.thumbnail}" alt="overlay" />
-          </div>
-          <div class="clip-info">
-            <div class="clip-tags">
-              ${clip.tags.map(t => `<span class="tag">${t.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')}</span>`).join("")}
-              <span class="tag orientation-tag">${clip.orientation ? clip.orientation.toUpperCase() : ""}</span>
-            </div>
-            <a href="${clip.file}" download class="download-btn">DOWNLOAD</a>
-          </div>
-        `;
-          gallery.appendChild(card);
+          const img = document.createElement("img");
+          img.src = thumbJpg;
+          img.className = "clip-thumb";
+          img.alt = clip.title;
+          // Możesz przekazać index albo id jako data-atrybut:
+          img.dataset.idx = i;
+          // klik = otwórz modal z gracza etc.
+          img.onclick = function () {
+            showClipModal(clip); // Tu wywołujesz modal z opisem, playerem itd.
+          };
+          gallery.appendChild(img);
 
           // obsługa video playera
           card
