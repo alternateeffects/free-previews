@@ -139,19 +139,28 @@ window.addToPackJs = addToPackJs;
 
 // --- Obsługa wysyłki przez FETCH
 function sendOrderViaEmailJS({name, email, notes, clips}) {
+  // clips = tablica obiektów clip {title: ..., thumb: ...}
+  const cleanNotes = typeof notes === "string" ? notes : "";
+  const clipTitles = Array.isArray(clips) ? clips.map(c => c.title) : [];
+  const clipList = clipTitles.length
+    ? "<ul>" + clipTitles.map(t => `<li>${t}</li>`).join('') + "</ul>"
+    : "<ul><li>No clips selected.</li></ul>";
+
   const params = {
-    name: name,
-    email: email,
-    notes: notes,
-    clips: "<ul>"+clips.map(c=>`<li>${c.title}</li>`).join('')+"</ul>",
-    each_clips: clips.map(c=>c.title)
+    name: name || "",
+    email: email || "",
+    notes: cleanNotes,
+    each_clips: clipTitles,
+    clips: clipList
   };
+
   const body = {
     service_id: EMAILJS_SERVICE_ID,
     template_id: EMAILJS_TEMPLATE_ID,
     user_id: EMAILJS_PUBLIC_KEY,
     template_params: params
   };
+
   if (EMAILJS_PRIVATE_KEY) {
     body.accessToken = EMAILJS_PRIVATE_KEY;
   }
