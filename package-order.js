@@ -186,7 +186,7 @@ document.addEventListener('submit', function(e) {
     msg.textContent = "";
     sendOrderViaEmailJS({
       name: name,
-      email: email,
+      user_email: email,
       notes: notes,
       clips: pack
     }).then(() => {
