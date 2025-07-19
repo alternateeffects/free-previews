@@ -141,7 +141,7 @@ window.addToPackJs = addToPackJs;
 function sendOrderViaEmailJS({name, email, notes, clips}) {
   const params = {
     name: name,
-    user_email: email,
+    email: email,
     notes: notes,
     clips: "<ul>"+clips.map(c=>`<li>${c.title}</li>`).join('')+"</ul>",
     each_clips: clips.map(c=>c.title)
@@ -186,7 +186,7 @@ document.addEventListener('submit', function(e) {
     msg.textContent = "";
     sendOrderViaEmailJS({
       name: name,
-      user_email: email,
+      email: email,
       notes: notes,
       clips: pack
     }).then(() => {
