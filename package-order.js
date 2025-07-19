@@ -191,7 +191,7 @@ document.addEventListener('submit', function(e) {
       clips: pack
     }).then(() => {
       msg.style.color="#19d43a";
-      msg.textContent = "Thank you! Your order has been sent. We'll contact you soon.";
+      msg.textContent = "Thank you! Your order has been sent. We'll contact you soon. Check SPAM FOLDER.";
       clearPack();
       renderModalBody();
       updateWidget();
