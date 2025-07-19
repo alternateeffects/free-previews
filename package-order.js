@@ -80,7 +80,7 @@ function showModal() {
     </div>
     <div style="padding:0 25px 15px 25px;">
       <div style="border-bottom:0px solid #FF1A1A;margin-bottom:18px;"></div>
-      <div id="ae_pkg_items" style="max-height: 230px; overflow-y: auto; margin-bottom: 14px;"></div>
+      <div id="ae_pkg_items" style="max-height:140px;overflow-y:auto;margin-bottom:14px;scrollbar-width:thin;scrollbar-color:#FF1A1A00 transparent;"></div>
       <div style="margin:23px 0 13px 0;border-top:2px solid #FF1A1A;"></div>
       <form id="ae_pkg_form" autocomplete="off" style="margin-bottom:0;margin-top:0;">
         <input required type="text" name="name" placeholder="Your name" style="width:90%;padding:12px 10px 12px 15px;margin-bottom:13px;border-radius:9px;border:2.5px solid #FF1A1A;font-size:16px;background:#222;color:#fff;outline:none;display:block;margin-left:auto;margin-right:auto;"/>
