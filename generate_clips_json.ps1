@@ -15,6 +15,8 @@ $tagMap = @{
 	"2d"         = "2d animations"
 	"3d"         = "3d animations"
 	"broll"      = "b-roll"
+    "twerking"   = "twerking"
+    "horror"     = "horror"
     # dodawaj tu kolejne klucze/tagi według własnych zasad!
 }
 
