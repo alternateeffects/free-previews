@@ -22,27 +22,6 @@
       gtag("config", "G-07BX6SW4MC");
     </script>
     <style>
-      /* Scrollbar styl (czerwony, zaokrąglony, czarne tło) */
-      body {
-        background: #000 !important;
-      }
-      body::-webkit-scrollbar {
-        width: 13px;
-        background: #000;
-      }
-      body::-webkit-scrollbar-thumb {
-        background: #e60026;
-        border-radius: 8px;
-        border: 2px solid #000;
-      }
-      body::-webkit-scrollbar-thumb:hover {
-        background: #ff3344;
-      }
-      body {
-        scrollbar-width: thin;
-        scrollbar-color: #e60026 #000;
-      }
-      /* --- Reszta twojego stylu --- */
       .video-wrapper {
         position: relative;
         width: 100%;
@@ -64,17 +43,7 @@
         display: block;
         border-radius: 10px;
       }
-      .custom-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-        pointer-events: none;
-        object-fit: contain;
-        border-radius: 10px;
-      }
+      /* .custom-overlay - usunięty */
       .video-wrapper video {
         display: block;
         width: 100%;
@@ -82,40 +51,7 @@
         z-index: 1;
         background: #000;
       }
-      .add-to-pack-btn {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        z-index: 50;
-        display: flex;
-        align-items: center;
-        gap: 3px;
-        background: #ffe400;
-        border: 2px solid #ff1a1a;
-        padding: 2px 11px 2px 5px;
-        border-radius: 17px;
-        box-shadow: 0 0 6px #0004, 0 4px 16px #0002;
-        cursor: pointer;
-        font-weight: bold;
-        font-family: "Montserrat", sans-serif;
-        font-size: 13px;
-        transition: box-shadow 0.17s, background 0.17s;
-      }
-      .add-to-pack-btn:hover {
-        background: #ffd530;
-        box-shadow: 0 0 12px #ff1a1a99;
-      }
-      .add-to-pack-btn svg {
-        min-width: 17px;
-        min-height: 17px;
-      }
-      .add-to-pack-btn .plus-txt {
-        font-weight: 600;
-        letter-spacing: 1px;
-        padding-left: 2px;
-        color: #181818;
-        text-shadow: 0 1px 1px #ffe40070;
-      }
+      /* .add-to-pack-btn - usunięty */
       .show-more-btn {
         display: block;
         margin: 40px auto 60px auto;
@@ -240,7 +176,7 @@
         </div>
       </div>
     </section>
-    <section id="compare-section"></section>
+    <!-- compare-section usunięty -->
 
     <main id="gallery"></main>
 
@@ -402,36 +338,27 @@
 
           // prettier-ignore
           card.innerHTML = `
-          <div class="video-wrapper" tabindex="0" style="position:relative;">
-            <button class="add-to-pack-btn"
-              data-title="${clip.title}" data-thumb="${thumbJpg}"
-              title="Add to pack"
-              style="position:absolute;top:8px;right:8px;z-index:50;">
-              <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#FF1A1A"/><text x="7.6" y="13" text-anchor="middle" font-size="15" font-family="Bebas Neue,Arial" fill="#181818" font-weight="900">+</text></svg>
-              <span class="plus-txt">add to pack</span>
-            </button>
-            <img class="clip-thumb" src="${thumbJpg}" alt="thumbnail" />
-            <img class="custom-overlay" src="${clip.thumbnail}" alt="overlay" />
-          </div>
-          <div class="clip-info">
-            <div class="clip-tags">
-              ${clip.tags.map(t => `<span class="tag">${t.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')}</span>`).join("")}
-              <span class="tag orientation-tag">${clip.orientation ? clip.orientation.toUpperCase() : ""}</span>
+            <div class="video-wrapper" tabindex="0" style="position:relative;">
+              <img class="clip-thumb" src="${thumbJpg}" alt="thumbnail" />
             </div>
-            <a href="${clip.file}" download class="download-btn">DOWNLOAD</a>
-          </div>
-        `;
+            <div class="clip-info">
+              <div class="clip-tags">
+                ${clip.tags.map(t => `<span class="tag">${t.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')}</span>`).join("")}
+                <span class="tag orientation-tag">${clip.orientation ? clip.orientation.toUpperCase() : ""}</span>
+              </div>
+              <a href="${clip.file}" download class="download-btn">DOWNLOAD</a>
+            </div>
+          `;
           gallery.appendChild(card);
 
           // obsługa video playera
           card
             .querySelector(".video-wrapper")
             .addEventListener("click", function handler(e) {
-              if (e?.target?.closest(".add-to-pack-btn")) return;
               this.innerHTML = `
-            <video controls src="${clip.file}" preload="auto"
-              style="width:100%;height:auto;display:block;background:#000;border-radius:8px;"></video>
-          `;
+                <video controls src="${clip.file}" preload="auto"
+                  style="width:100%;height:auto;display:block;background:#000;border-radius:8px;"></video>
+              `;
               this.removeEventListener("click", handler);
             });
 
@@ -445,19 +372,6 @@
                   value: 1,
                 });
               }
-            });
-
-          // Obsługa add to pack
-          card
-            .querySelector(".add-to-pack-btn")
-            .addEventListener("click", function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-              if (window.addToPackJs)
-                window.addToPackJs({
-                  title: clip.title,
-                  thumb: thumbJpg,
-                });
             });
         }
         // Infinite scroll: Intersection Observer
@@ -517,15 +431,5 @@
         });
       });
     </script>
-    <script src="online-widget.js"></script>
-    <script type="module">
-      import { injectCompareSection } from "./compare-clip.js";
-      injectCompareSection();
-    </script>
-    <script type="module">
-      import { addToPackJs } from "./package-order.js";
-      window.addToPackJs = addToPackJs;
-    </script>
-    <script type="module" src="package-order.js"></script>
   </body>
 </html>
