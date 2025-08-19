@@ -107,6 +107,20 @@
         text-transform: capitalize;
       }
     </style>
+    <script>
+      // Sprawdź czy adres zawiera "/embed" albo parametr embed
+      const isEmbed =
+        window.location.pathname.includes("/embed") ||
+        window.location.search.includes("embed=1");
+      if (isEmbed) {
+        // SCHOWAJ header, announcement-bar (ustaw swoje klasy jeśli są inne)
+        document.addEventListener("DOMContentLoaded", function () {
+          document.querySelector(".announcement-bar")?.remove();
+          document.querySelector("header")?.remove();
+        });
+        // Ewentualnie: body.classList.add('is-embed');
+      }
+    </script>
   </head>
   <body>
     <!-- Announcement bar -->
